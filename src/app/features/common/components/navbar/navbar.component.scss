@@ -1,0 +1,129 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.example-is-mobile .example-toolbar {
+  position: fixed;
+  z-index: 2;
+}
+
+
+.titulo-pagina {
+  margin-left: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+.example-sidenav-container {
+  flex: 1;
+}
+
+.example-is-mobile .example-sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+     `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+
+a {
+  display: flex;                          /* Aligns items in a flexible box layout */
+  align-items: center;                   /* Centers items vertically within the flex container */
+  position: relative;                    /* Positions the element relative to its normal position */
+  outline: none;                         /* Removes the default outline */
+  text-decoration: none;
+  color: var(--text-color);             /* Sets the text color using a CSS variable */
+  cursor: pointer;                       /* Changes the cursor to a pointer on hover */
+  padding: 0.5rem 1rem;                 /* Adds padding around the text */
+  border-radius: 8px;                   /* Rounds the corners of the element */
+  transition: background-color var(--transition-duration),  /* Smooth transition for background color */
+              box-shadow var(--transition-duration);      /* Smooth transition for box shadow */
+}
+
+
+.descripcion{
+  font-family: 'Roboto', sans-serif;
+  color: black;
+}
+
+.sidenav{
+  position: fixed;
+  width: fit-content;
+  top: 4rem;
+}
+
+.flex {
+  display: flex;
+  align-items: center; 
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.ml-2 {
+  margin-left: 0.5rem; 
+}
+
+.descripcion {
+  flex: 1; 
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.example-toolbar .spacer {
+  flex: 1 1 auto;
+}
+
+.color-black{
+  color: black;
+}
+
+:host::ng-deep {
+  .p-panelmenu-panel {
+    background: none; 
+    border-width: none; 
+    border-style: none; 
+    border-color: none ;
+  }
+  .p-panelmenu{
+    gap: 0;
+  }
+
+  .mat-drawer-inner-container{
+    border-radius: 10px;
+  }
+
+  .mat-drawer-transition .mat-drawer-content{
+    border-radius: 10px;
+  }
+
+  .p-panelmenu-panel{
+    margin-left: 10px;
+  }
+
+}
+
+.contenido-container{
+  padding: 6rem 2rem 0;
+}
+
+.toolbar-container{
+  position: fixed;
+  height: 4rem;
+  z-index: 997;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.sidenav-container{
+  position: fixed;
+  top: 4rem;
+  left: 1rem;
+}

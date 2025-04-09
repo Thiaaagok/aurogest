@@ -1,0 +1,24 @@
+<mat-form-field [ngClass]="classList">
+    <mat-label>{{placeholder}}</mat-label>
+    <mat-select [multiple]="multiple" [disabled]="disabled" [title]="title" [required]="required"
+        (ngModelChange)="onChange()" [compareWith]="compareObjects" [(ngModel)]="value" name="value"
+        #valueModel="ngModel">
+        <mat-option>
+            <ngx-mat-select-search placeholderLabel='Buscar' noEntriesFoundLabel='Sin coincidencias'
+                [formControl]="elementosFilterCtrl"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngIf="!multiple">Ninguno</mat-option>
+        <mat-option *ngFor="let option of elementosFiltrados | async" [value]="option" [title]="option.Descripcion">
+            {{option.Descripcion}}
+        </mat-option>
+    </mat-select>
+    @if(valueModel.touched && mensajeError){
+    <mat-error>
+        {{mensajeError}}
+    </mat-error>
+    }
+    <button tabindex="-1" title="Recarga el combo" matSuffix mat-icon-button aria-label="Clear"
+        (click)="$event.stopPropagation(); recargarCombo()">
+        <mat-icon>refresh</mat-icon>
+    </button>
+</mat-form-field>

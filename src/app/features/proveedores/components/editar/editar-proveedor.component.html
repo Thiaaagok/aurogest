@@ -1,0 +1,104 @@
+<div class="botonera-flotante">
+    <div class="botonera-contenedor">
+      <button mat-mini-fab color="accent" matTooltip="Volver a la grilla" (click)="volver()">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+  
+      <button mat-mini-fab color="primary" matTooltip="Guardar proveedor editado" [disabled]="!form.valid" (click)="onSubmit()">
+        <i class="fa-solid fa-floppy-disk"></i>
+      </button>
+  
+      @if(proveedorEditar.Activo){
+        <button mat-mini-fab color="primary" class="boton-eliminar" matTooltip="Eliminar proveedor" [disabled]="!form.pristine" (click)="eliminarProveedor()">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      }@else{
+        <button mat-mini-fab color="primary" matTooltip="Reactivar proveedor" [disabled]="!form.pristine" (click)="reactivarProveedor()">
+          <i class="fa-solid fa-unlock"></i>
+        </button>
+      }
+    </div>
+
+</div>
+  
+<div class="card flex flex-col gap-4">
+    <div class="font-semibold text-xl">Editar Proveedor</div>
+  
+    <form #form="ngForm" novalidate="">
+      <div class="flex flex-col md:flex-row gap-8">
+        <div class="flex flex-col grow basis-0 gap-2">
+          <mat-form-field class="full-width">
+            <mat-label>Descripción</mat-label>
+            <input matInput [(ngModel)]="proveedorEditar.Descripcion" type="text" name="descripcion" autocomplete="off" required>
+            <mat-error>Escriba la descripción del proveedor</mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div class="flex flex-col grow basis-0 gap-2">
+          <mat-form-field class="full-width">
+            <mat-label>CUIT</mat-label>
+            <input matInput [(ngModel)]="proveedorEditar.Cuit" type="text" name="cuit" autocomplete="off" required>
+            <mat-error>Escriba el CUIT</mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div class="flex flex-col grow basis-0 gap-2">
+          <mat-form-field class="full-width">
+            <mat-label>Código</mat-label>
+            <input matInput [(ngModel)]="proveedorEditar.Codigo" type="text" name="codigo" autocomplete="off" required>
+            <mat-error>Escriba un código válido</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+  
+      <div class="flex flex-col md:flex-row gap-8">
+        <div class="flex flex-col grow basis-0 gap-2">
+          <mat-form-field class="full-width">
+            <mat-label>Teléfono</mat-label>
+            <input matInput [(ngModel)]="proveedorEditar.Telefono" type="text" name="telefono" autocomplete="off">
+          </mat-form-field>
+        </div>
+  
+        <div class="flex flex-col grow basis-0 gap-2">
+          <mat-form-field class="full-width">
+            <mat-label>Mail</mat-label>
+            <input matInput [(ngModel)]="proveedorEditar.Email" type="email" name="mail" autocomplete="off">
+            <mat-error>Escriba un mail válido</mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div class="flex flex-col grow basis-0 gap-2">
+          <mat-form-field class="full-width">
+            <mat-label>Web</mat-label>
+            <input matInput [(ngModel)]="proveedorEditar.Web" type="text" name="web" autocomplete="off">
+          </mat-form-field>
+        </div>
+      </div>
+  
+      <div class="flex flex-col md:flex-row gap-8">
+        <div class="flex flex-col grow basis-0 gap-2">
+          <mat-form-field class="full-width">
+            <mat-label>Dirección</mat-label>
+            <input matInput [(ngModel)]="proveedorEditar.Direccion" type="text" name="direccion" autocomplete="off">
+            <mat-error>Escriba una dirección válida</mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div class="flex flex-col grow basis-0 gap-2">
+          <mat-form-field class="full-width">
+            <mat-label>Código Postal</mat-label>
+            <input matInput [(ngModel)]="proveedorEditar.CodigoPostal" type="text" name="codigopostal" autocomplete="off">
+            <mat-error>Escriba un código postal válido</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+  
+      <div class="flex flex-col md:flex-row gap-8">
+        <div class="flex flex-col grow basis-0 gap-2">
+          <mat-form-field class="full-width">
+            <textarea matInput [(ngModel)]="proveedorEditar.Observaciones" name="observaciones" placeholder="Observaciones" autocomplete="off" title="Observaciones"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+</div>

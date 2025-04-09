@@ -1,0 +1,108 @@
+<div class="botonera-flotante">
+    <div class="botonera-contenedor">
+      <button mat-mini-fab color="accent" matTooltip="Volver a la grilla" (click)="volver()">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+  
+      <button mat-mini-fab color="primary" matTooltip="Guardar usuario editado" [disabled]="!form.valid" (click)="onSubmit()">
+        <i class="fa-solid fa-floppy-disk"></i>
+      </button>
+
+      @if(empresaEditar.Activo){
+        <button mat-mini-fab color="primary" class="boton-eliminar" matTooltip="Eliminar usuario" [disabled]="!form.pristine" (click)="eliminarEmpresa()">
+            <i class="fa-solid fa-trash"></i>
+        </button>
+      }@else{
+        <button mat-mini-fab color="primary" matTooltip="Reactivar usuario" [disabled]="!form.pristine" (click)="reactivarEmpresa()">
+            <i class="fa-solid fa-unlock"></i>
+        </button>
+      }
+    </div>
+</div> 
+<div class="card flex flex-col gap-4">
+    <div class="font-semibold text-xl">Editar Empresa</div>
+
+    <form #form="ngForm" novalidate="">
+        <div class="flex flex-col md:flex-row gap-8">
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>Descripción</mat-label>
+                    <input matInput [(ngModel)]="empresaEditar.Descripcion" type="text" name="nombre" autocomplete="off"
+                        required>
+                    <mat-error>Escriba el nombre de la empresa</mat-error>
+                </mat-form-field>
+            </div>
+    
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>CUIT</mat-label>
+                    <input matInput [(ngModel)]="empresaEditar.Cuit" type="text" name="cuit" autocomplete="off" required>
+                    <mat-error>Escriba el CUIT</mat-error>
+                </mat-form-field>
+            </div>
+    
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>Razón Social</mat-label>
+                    <input matInput [(ngModel)]="empresaEditar.RazonSocial" type="text" name="razonSocial" autocomplete="off"
+                        required>
+                    <mat-error>Escriba la razón social</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    
+        <div class="flex flex-col md:flex-row gap-8">
+    
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>Teléfono</mat-label>
+                    <input matInput [(ngModel)]="empresaEditar.Telefono" type="text" name="telefono" autocomplete="off">
+                </mat-form-field>
+            </div>
+    
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>Mail</mat-label>
+                    <input matInput [(ngModel)]="empresaEditar.Email" type="email" name="mail" autocomplete="off">
+                    <mat-error>Escriba un mail válido</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    
+        <div class="flex flex-col md:flex-row gap-8">
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>Dirección</mat-label>
+                    <input matInput [(ngModel)]="empresaEditar.Direccion" type="text" name="direccion" autocomplete="off">
+                    <mat-error>Escriba una dirección válida</mat-error>
+                </mat-form-field>
+            </div>
+    
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>Localidad</mat-label>
+                    <input matInput [(ngModel)]="empresaEditar.Localidad" type="text" name="localidad" autocomplete="off">
+                    <mat-error>Escriba una localidad válida</mat-error>
+                </mat-form-field>
+            </div>
+    
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>Código Postal</mat-label>
+                    <input matInput [(ngModel)]="empresaEditar.CodigoPostal" type="text" name="codigopostal" autocomplete="off">
+                    <mat-error>Escriba un código portal válido</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    
+    
+        <div class="flex flex-col md:flex-row gap-8">
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <textarea matInput [(ngModel)]="empresaEditar.Observaciones" name="observaciones"
+                        placeholder="Observaciones" autocomplete="off" title="Observaciones"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</div>

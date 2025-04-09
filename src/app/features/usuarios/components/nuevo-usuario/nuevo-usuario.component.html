@@ -1,0 +1,84 @@
+<div class="botonera-flotante">
+    <div class="botonera-contenedor">
+      <button mat-mini-fab color="accent" matTooltip="Volver a la grilla" (click)="volver()">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+  
+      <button mat-mini-fab color="primary" matTooltip="Guardar nuevo usuario" [disabled]="!form.valid" (click)="onSubmit()">
+        <i class="fa-solid fa-floppy-disk"></i>
+      </button>
+    </div>
+</div> 
+<div class="card flex flex-col gap-4">
+    <div class="font-semibold text-xl">Nuevo Usuario</div>
+    <form #form="ngForm" novalidate="">
+        <div class="flex flex-col md:flex-row gap-8">
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>Usuario</mat-label>
+                    <input matInput [(ngModel)]="nuevoUsuario.Usuario" type="text" name="usuario" autocomplete="off"
+                        title="Descripción" required>
+                    <mat-error>Escriba un nombre de usuario</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput [(ngModel)]="nuevoUsuario.Contrasenia" type="text" name="contraseña" autocomplete="off"
+                    title="Contaseña" required>
+                    <mat-error>Escriba la contraseña del usuario</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>Mail</mat-label>
+                    <input matInput [(ngModel)]="nuevoUsuario.Mail" type="mail" name="mail" autocomplete="off"
+                        title="Mail" required>
+                    <mat-error>Escriba el mail del usuario</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        
+        <div class="flex flex-col md:flex-row gap-8">
+            <div class="flex flex-col grow basis-0 gap-2">
+                <app-select-chosen class="full-width" title="Empresa"
+                [(ngModel)]="nuevoUsuario.Empresa" name="empresa" placeholder="Empresa del usuario"
+                [dataSource]="empresasDropdown" (recargar)="cargarEmpresasDrodpwon()">
+              </app-select-chosen>
+            </div>
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>Legajo</mat-label>
+                    <input matInput [(ngModel)]="nuevoUsuario.Legajo" type="text" name="legajo" autocomplete="off"
+                        title="Legajo" required>
+                    <mat-error>Escriba el legajo del usuario</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>Intentos Conexión</mat-label>
+                    <input matInput [(ngModel)]="nuevoUsuario.intentosConexion" type="number" name="intentosConexion" autocomplete="off"
+                        title="Mail" required>
+                    <mat-error>Escriba el maximo de intentos de conexión</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>Expiración Tiempo (en seg)</mat-label>
+                    <input matInput [(ngModel)]="nuevoUsuario.expiracionTiempo" type="number" name="expiracionTiempo" autocomplete="off"
+                        title="Mail" required>
+                    <mat-error>Escriba un tiempo de expiración</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    
+        <div class="flex flex-col md:flex-row gap-8">
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <textarea matInput [(ngModel)]="nuevoUsuario.Observaciones" name="observaciones"
+                        placeholder="Observaciones" autocomplete="off" title="Observaciones"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</div>

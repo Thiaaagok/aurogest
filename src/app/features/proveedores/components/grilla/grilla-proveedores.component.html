@@ -1,0 +1,82 @@
+<div class="botonera-flotante">
+    <div class="botonera-contenedor">
+      <button mat-mini-fab color="accent" matTooltip="Cargar las proveedores" (click)="obtenerProveedores()">
+        <i class="fa-solid fa-arrows-rotate"></i>
+      </button>
+  
+      <button mat-mini-fab color="primary" matTooltip="Crear una nueva proveedor" (click)="crearProveedor()">
+        <i class="fa-solid fa-square-plus"></i>
+      </button>
+  
+      <mat-slide-toggle color="primary" [(ngModel)]="registrosGrillaActivos" (ngModelChange)="cargarGrilla()"
+        matTooltip="Mostrar activos/inactivos">
+        <span class="toggle-label">Activos</span>
+      </mat-slide-toggle>
+    </div>
+  </div>
+  <div class="card">
+    <div class="font-semibold text-xl mb-4">Proveedores</div>
+    <p-table #grillaProveedores [value]="proveedores" dataKey="Id" [rows]="10" [loading]="cargando" [rowHover]="true"
+      [showGridlines]="true" [paginator]="true"
+      [globalFilterFields]="['Descripcion', 'Cuit', 'Email', 'Telefono', 'Localidad', 'CodigoPostal']"
+      responsiveLayout="scroll">
+      <ng-template #caption>
+        <div class="flex justify-between items-center flex-column sm:flex-row">
+          <button pButton label="Limpiar filtros" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+            (click)="limpiarFiltrado(grillaProveedores)"></button>
+          <p-iconfield iconPosition="left" class="ml-auto">
+            <p-inputicon>
+              <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input #filter pInputText type="text" (input)="filtrarProveedores(grillaProveedores, $event)"
+              placeholder="Buscar..." />
+          </p-iconfield>
+        </div>
+      </ng-template>
+  
+      <ng-template #header>
+        <tr>
+            <th>
+                <div class="flex justify-between items-center">Código <p-columnFilter type="text" field="Descripcion"
+                    display="menu"></p-columnFilter></div>
+            </th>
+            <th>
+                <div class="flex justify-between items-center">Descripción <p-columnFilter type="text" field="Descripcion"
+                    display="menu"></p-columnFilter></div>
+            </th>
+            <th>
+                <div class="flex justify-between items-center">CUIT <p-columnFilter type="text" field="Cuit"
+                    display="menu"></p-columnFilter></div>
+            </th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Localidad</th>
+            <th>Código Postal</th>
+        </tr>
+      </ng-template>
+  
+      <ng-template #body let-proveedor>
+        <tr (click)="editarProveedor(proveedor.Id)" class="cursor-pointer">
+          <td>{{ proveedor.Codigo }}</td>
+          <td>{{ proveedor.Descripcion }}</td>
+          <td>{{ proveedor.Cuit }}</td>
+          <td>{{ proveedor.Email }}</td>
+          <td>{{ proveedor.Telefono }}</td>
+          <td>{{ proveedor.Localidad }}</td>
+          <td>{{ proveedor.CodigoPostal }}</td>
+        </tr>
+      </ng-template>
+  
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="8">No se encontraron proveedores.</td>
+        </tr>
+      </ng-template>
+  
+      <ng-template #loadingbody>
+        <tr>
+          <td colspan="8">Cargando proveedores...</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
