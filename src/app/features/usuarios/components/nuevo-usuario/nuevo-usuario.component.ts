@@ -39,7 +39,7 @@ export class NuevoUsuarioComponent {
     this.usuariosService.crear(this.nuevoUsuario).subscribe({
       next: (response: Usuario) => {
         this.cargando = false;
-        
+        this.limpiarModel();
       },
       error: (err) => {
         console.log(err);

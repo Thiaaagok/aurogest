@@ -53,7 +53,8 @@
             <div class="flex flex-col grow basis-0 gap-2">
                 <app-select-chosen class="full-width" title="Empresa"
                 [(ngModel)]="usuarioEditar.Empresa" name="empresa" placeholder="Empresa del usuario"
-                [dataSource]="empresasDropdown" (recargar)="cargarEmpresasDrodpwon()" [required]="true">
+                [dataSource]="empresasDropdown" (recargar)="cargarEmpresasDrodpwon()" [required]="true"
+                mensajeError="Seleccione una empresa">
               </app-select-chosen>
             </div>
             <div class="flex flex-col grow basis-0 gap-2">
