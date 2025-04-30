@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { VentasSignalService } from '../../../services/ventas-signals.service';
 import { ProductoModel } from '../../../../productos/models/producto.model';
 import { PrimeNgModule } from '../../../../common/material/primeng.module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-muestra-productos',
@@ -35,4 +36,9 @@ export class MuestraProductosComponent {
   ];
   
   private ventasSignals = inject(VentasSignalService);
+  private router = inject(Router);
+
+  volver(){
+    this.router.navigateByUrl('/home')
+  }
 }
