@@ -26,12 +26,21 @@
 }
 
 ::ng-deep button.mat-mini-fab i {
-  font-size: 1.1rem;
+  font-size: 0.5rem;
   color: red;
+}
+
+::ng-deep button.mat-mdc-mini-fab.mat-mdc-button-base {
+  width: 35px !important;
+  height: 35px !important;
 }
 
 ::ng-deep button.mat-mini-fab{
   width: fit-content;
+}
+
+::ng-deep .mdc-switch__track {
+  height: 30px;
 }
 
 .toggle-label {

@@ -14,6 +14,22 @@ export const Modulos: MenuItem[] = [
     route: '/inicio',
   },
   {
+    label: 'Ventas',
+    icon: 'pi pi-shopping-cart',
+    items: [
+      {
+        label: 'Venta',
+        icon: 'pi pi-cart-arrow-down',
+        route: 'ventas/nueva'
+      },
+      {
+        label: 'Ventas',
+        icon: 'pi pi-list',
+        route: 'ventas/grilla'
+      }
+    ]
+  },
+  {
     label: 'Usuarios',
     icon: 'pi pi-users',
     items: [

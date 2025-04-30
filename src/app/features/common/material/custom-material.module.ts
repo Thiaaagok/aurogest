@@ -37,6 +37,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -77,6 +78,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatTooltipModule,
     MatTreeModule,
     DragDropModule,
+    FormsModule
   ],
   exports: [
     CdkTableModule,
@@ -115,6 +117,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatTooltipModule,
     MatTreeModule,
     DragDropModule,
+    FormsModule
   ],
   providers: [
     {

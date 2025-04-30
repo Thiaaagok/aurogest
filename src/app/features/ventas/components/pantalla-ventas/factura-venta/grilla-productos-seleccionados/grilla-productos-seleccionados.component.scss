@@ -1,0 +1,9 @@
+:host {
+  display: block;
+}
+
+
+::ng-deep p-table tbody tr td {
+  padding-top: 2.5px !important;
+  padding-bottom: 2.5px !important;
+}

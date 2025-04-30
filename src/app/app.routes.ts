@@ -8,6 +8,7 @@ import { EditarEmpresaComponent } from './features/empresas/components/editar/ed
 import { GrillaProveedoresComponent } from './features/proveedores/components/grilla/grilla-proveedores.component';
 import { NuevoProveedorComponent } from './features/proveedores/components/nuevo/nuevo-proveedor.component';
 import { EditarProveedorComponent } from './features/proveedores/components/editar/editar-proveedor.component';
+import { PantallaVentasComponent } from './features/ventas/components/pantalla-ventas/pantalla-ventas.component';
 
 export const routes: Routes = [
     {
@@ -46,4 +47,8 @@ export const routes: Routes = [
         path: 'proveedores/editar/:id',
         component: EditarProveedorComponent
     },
+    {
+        path: 'ventas/nueva',
+        component: PantallaVentasComponent
+    }
 ];

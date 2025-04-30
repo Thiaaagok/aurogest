@@ -26,6 +26,7 @@ export class NavbarComponent {
 
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
+  ventaNueva: boolean = true;
   
   constructor() {
     const changeDetectorRef = inject(ChangeDetectorRef);

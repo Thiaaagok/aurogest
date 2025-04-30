@@ -54,7 +54,7 @@ a {
 .sidenav{
   position: fixed;
   width: fit-content;
-  top: 4rem;
+  top: 3.2rem;
 }
 
 .flex {
@@ -109,8 +109,12 @@ a {
 
 }
 
+.contenido-container-toolbar{
+  padding: 5.6rem 2rem 0;
+}
+
 .contenido-container{
-  padding: 6rem 2rem 0;
+  padding: 1rem 0.5rem 0;
 }
 
 .toolbar-container{
@@ -124,6 +128,6 @@ a {
 
 .sidenav-container{
   position: fixed;
-  top: 4rem;
+  top: 3rem;
   left: 1rem;
 }

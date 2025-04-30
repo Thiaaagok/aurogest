@@ -34,6 +34,15 @@
   width: fit-content;
 }
 
+::ng-deep button.mat-mdc-mini-fab.mat-mdc-button-base {
+  width: 35px !important;
+  height: 35px !important;
+}
+
+::ng-deep .mdc-switch__track {
+  height: 30px;
+}
+
 .toggle-label {
   margin-left: 8px;
   font-weight: 500;
