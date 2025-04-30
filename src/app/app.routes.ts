@@ -9,8 +9,14 @@ import { GrillaProveedoresComponent } from './features/proveedores/components/gr
 import { NuevoProveedorComponent } from './features/proveedores/components/nuevo/nuevo-proveedor.component';
 import { EditarProveedorComponent } from './features/proveedores/components/editar/editar-proveedor.component';
 import { PantallaVentasComponent } from './features/ventas/components/pantalla-ventas/pantalla-ventas.component';
+import { GrillaProductosComponent } from './features/productos/components/grilla/grilla-productos.component';
+import { HomeComponent } from './features/common/components/home/home.component';
 
 export const routes: Routes = [
+    {
+        path: 'home',
+        component: HomeComponent
+    },
     {
         path: 'usuarios',
         component: GrillaUsuariosComponent
@@ -50,5 +56,9 @@ export const routes: Routes = [
     {
         path: 'ventas/nueva',
         component: PantallaVentasComponent
+    },
+    {
+        path: 'productos',
+        component: GrillaProductosComponent
     }
 ];

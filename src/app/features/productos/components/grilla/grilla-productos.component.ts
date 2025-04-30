@@ -1,41 +1,39 @@
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { ProductoModel } from '../../models/producto.model';
+import { Router, RouterModule } from '@angular/router';
+import { GrillaUtilService } from '../../../common/services/grilla-util.service';
+import { Table } from 'primeng/table';
+import { ProductosService } from '../../services/producto.service';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-import { Usuario } from '../../models/usuario.model';
-import { Table } from 'primeng/table';
-import { UsuariosService } from '../../services/usuarios.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
 import { FormsModule } from '@angular/forms';
-import { GrillaUtilService } from '../../../common/services/grilla-util.service';
-import { HttpClientModule } from '@angular/common/http';
-
 
 @Component({
-  selector: 'app-grilla-usuarios',
-  imports: [
+  selector: 'app-grilla-productos',
+  imports: [    
     PrimeNgModule,
     CommonModule,
     RouterModule,
     FontAwesomeModule,
     CustomMaterialModule,
-    FormsModule
-  ],
-  templateUrl: './grilla-usuarios.component.html',
-  styleUrl: './grilla-usuarios.component.scss',
+    FormsModule],
+  templateUrl: './grilla-productos.component.html',
+  styleUrl: './grilla-productos.component.scss',
 })
-export class GrillaUsuariosComponent {
+export class GrillaProductosComponent { 
+
   @ViewChild('filter') filter!: ElementRef;
 
-  usuarios: Usuario[] = [];
-  usuariosFiltro: Usuario[] = [];
+  productos: ProductoModel[] = [];
+  productosFiltro: ProductoModel[] = [];
 
   cargando: boolean;
   registrosGrillaActivos: boolean;
 
   private router = inject(Router);
-  private usuariosService = inject(UsuariosService);
+  private productosService = inject(ProductosService);
   private GrillaUtilService = inject(GrillaUtilService);
 
   constructor() {
@@ -43,15 +41,15 @@ export class GrillaUsuariosComponent {
   }
 
   ngOnInit() {
-    this.obtenerUsuarios();
+    this.obtenerProductos();
   }
 
-  obtenerUsuarios() {
+  obtenerProductos() {
     this.cargando = true;
-    this.usuariosService.obtenerTodos().subscribe({
-      next: (response: Usuario[]) => {
+    this.productosService.obtenerTodos().subscribe({
+      next: (response: ProductoModel[]) => {
         this.cargando = false;
-        this.usuariosFiltro = response;
+        this.productosFiltro = response;
         this.cargarGrilla();
       },
       error: (err) => {
@@ -62,17 +60,17 @@ export class GrillaUsuariosComponent {
     });
   }
 
-  crearUsuario() {
-    this.router.navigateByUrl(`usuarios/nuevo`);
+  crearProducto() {
+    this.router.navigateByUrl(`productos/nuevo`);
   }
 
-  editarUsuario(id: string) {
-    this.router.navigateByUrl(`usuarios/editar/${id}`);
+  editarProducto(id: string) {
+    this.router.navigateByUrl(`productos/editar/${id}`);
   }
 
   cargarGrilla() {
-    this.usuarios = this.GrillaUtilService.cargarGrilla(
-      this.usuariosFiltro,
+    this.productos = this.GrillaUtilService.cargarGrilla(
+      this.productosFiltro,
       this.registrosGrillaActivos
     );
   }
@@ -81,7 +79,8 @@ export class GrillaUsuariosComponent {
     this.GrillaUtilService.limpiarFiltrado(table);
   }
 
-  filtrarUsuarios(table: Table, event: Event) {
+  filtrarProductos(table: Table, event: Event) {
     this.GrillaUtilService.filtrarGlobal(table, event);
   }
+
 }

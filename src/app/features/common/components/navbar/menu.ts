@@ -77,4 +77,9 @@ export const Modulos: MenuItem[] = [
       }
     ]
   },
+  {
+    label: 'Productos',
+    icon: 'pi pi-box',
+    route: 'productos'
+  }
 ];

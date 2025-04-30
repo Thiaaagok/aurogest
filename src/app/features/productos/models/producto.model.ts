@@ -1,3 +1,4 @@
+import { MarcaModel } from "../../marcas/models/marca.model";
 import { ProveedorModel } from "../../proveedores/models/proveedor.model";
 import { ProductoTipoModel } from "./producto-tipo.model";
 
@@ -9,7 +10,7 @@ export class ProductoModel {
     PrecioVenta: number;
     PrecioCompra: number;
     Tipo: ProductoTipoModel
-    Marca: any;
+    Marca: MarcaModel;
     Stock: number;
     Proveedores: ProveedorModel[]
     Imagenes: string[]

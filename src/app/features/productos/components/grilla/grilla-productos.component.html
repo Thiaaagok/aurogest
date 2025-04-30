@@ -1,0 +1,92 @@
+<div class="botonera-flotante">
+    <div class="botonera-contenedor">
+      <button mat-mini-fab color="accent" matTooltip="Cargar los productos" (click)="obtenerProductos()">
+        <i class="fa-solid fa-arrows-rotate"></i>
+      </button>
+  
+      <button mat-mini-fab color="primary" matTooltip="Crear un nuevo producto" (click)="crearProducto()">
+        <i class="fa-solid fa-square-plus"></i>
+      </button>
+  
+      <mat-slide-toggle color="primary"
+        [(ngModel)]="registrosGrillaActivos"
+        (ngModelChange)="cargarGrilla()"
+        matTooltip="Mostrar activos/inactivos">
+        <span class="toggle-label">Activos</span>
+      </mat-slide-toggle>
+    </div>
+</div>  
+<div class="card"> 
+    <div class="font-semibold text-xl mb-4">Productos</div>
+    <p-table
+        #grillaProductos
+        [value]="productos"
+        dataKey="Id"
+        [rows]="10"
+        [loading]="cargando"
+        [rowHover]="true"
+        [showGridlines]="true"
+        [paginator]="true"
+        [globalFilterFields]="['Usuario', 'Mail']"
+        responsiveLayout="scroll"
+    >
+        <ng-template #caption>
+            <div class="flex justify-between items-center flex-column sm:flex-row">
+                <button pButton label="Limpiar filtros" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="limpiarFiltrado(grillaProductos)"></button>
+                <p-iconfield iconPosition="left" class="ml-auto">
+                    <p-inputicon>
+                        <i class="pi pi-search"></i>
+                    </p-inputicon>
+                    <input #filter pInputText type="text" (input)="filtrarProductos(grillaProductos, $event)" placeholder="Buscar" />
+                </p-iconfield>
+            </div>
+        </ng-template>
+        <ng-template #header>
+            <tr>
+              <th style="min-width: 12rem">
+                <div class="flex justify-between items-center">
+                  Descripción
+                  <p-columnFilter type="text" field="Descripcion" display="menu" placeholder="Buscar por descripción"></p-columnFilter>
+                </div>
+              </th>
+              <th style="min-width: 10rem">
+                <div class="flex justify-between items-center">
+                  Código
+                  <p-columnFilter type="text" field="Codigo" display="menu" placeholder="Buscar por código"></p-columnFilter>
+                </div>
+              </th>
+              <th style="min-width: 10rem">
+                <div class="flex justify-between items-center">
+                  Tipo
+                  <p-columnFilter type="text" field="Tipo.Nombre" display="menu" placeholder="Buscar por tipo"></p-columnFilter>
+                </div>
+              </th>
+              <th style="min-width: 10rem">
+                <div class="flex justify-between items-center">
+                  Marca
+                  <p-columnFilter type="text" field="Marca.Descripcion" display="menu" placeholder="Buscar por marca"></p-columnFilter>
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+          
+          <ng-template #body let-producto>
+            <tr (click)="editarProducto(producto.Id)" class="cursor-pointer">
+              <td>{{ producto.Descripcion }}</td>
+              <td>{{ producto.Codigo }}</td>
+              <td>{{ producto.Tipo?.Nombre }}</td>
+              <td>{{ producto.Marca?.Descripcion }}</td>
+            </tr>
+          </ng-template>
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="8">No se encontraron productos.</td>
+            </tr>
+        </ng-template>
+        <ng-template #loadingbody>
+            <tr>
+                <td colspan="8">Cargando productos</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
