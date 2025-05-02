@@ -1,3 +1,91 @@
-:host {
-  display: block;
+.hr-w{
+  width: 20vw;
+}
+
+.boton-carrito {
+  background-color: #000000 !important;
+  color: white !important;
+  border-radius: 20px !important;
+  padding: 0.5rem 1rem !important;
+}
+
+.boton-carrito:hover {
+  background-color: #444444 !important;
+}
+
+.w-18vw{
+  width: 18vw;
+}
+
+.w-10vw{
+  width: 10vw;
+}
+
+.w-13vw{
+  width: 13vw;
+}
+
+.v-15vw{
+  width: 15vw;
+}
+.w-50vw{
+  width: 50vw;
+}
+
+::ng-deep .carousel-personalizado .p-carousel-items-content {
+  min-width: 100% !important; /* fuerza que el área del carrusel siempre tenga el mismo ancho */
+  max-width: 100% !important;
+}
+
+::ng-deep .carousel-personalizado .p-carousel-item {
+  flex: 0 0 calc(100% / 3) !important; /* fuerza cada ítem a ocupar 1/3 del ancho */
+  max-width: calc(100% / 3) !important;
+  box-sizing: border-box !important;
+}
+
+.detalles-scrollable {
+  max-height: calc(100vh - 500px);
+  overflow-y: auto;
+}
+
+
+.botonera-flotante {
+  position: fixed;
+  top: 65px;
+  right: 2%;
+  z-index: 100;
+  background: rgba(240, 240, 240, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 14px 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease-in-out;
+
+  @media (min-width: 576px) { width: 30%; }
+  @media (min-width: 768px) { width: 25%; }
+  @media (min-width: 992px) { width: 19%; }
+  @media (min-width: 1200px) { width: 14%; }
+}
+
+.botonera-contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+::ng-deep button.mat-mini-fab i {
+  font-size: 1.1rem;
+  color: white;
+}
+
+::ng-deep button.mat-mini-fab{
+  width: fit-content;
+}
+
+::ng-deep button.mat-mdc-mini-fab.mat-mdc-button-base {
+  width: 35px !important;
+  height: 35px !important;
 }

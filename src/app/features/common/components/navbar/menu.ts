@@ -80,6 +80,22 @@ export const Modulos: MenuItem[] = [
   {
     label: 'Productos',
     icon: 'pi pi-box',
-    route: 'productos'
+    items: [
+      {
+        label: 'Grilla',
+        icon: 'pi pi-list',
+        route: 'productos'
+      },
+      {
+        label: 'Nuevo',
+        icon: 'pi pi-plus',
+        route: 'productos/nuevo'
+      },
+      {
+        label: 'Marcas',
+        icon: 'pi pi-tag',
+        route: 'marcas'
+      }
+    ]
   }
 ];

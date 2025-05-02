@@ -1,1 +1,238 @@
-<p>editar-producto works!</p>,
+<div class="botonera-flotante">
+    <div class="botonera-contenedor">
+      <button mat-mini-fab color="accent" matTooltip="Volver a la grilla" (click)="volver()">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+  
+      <button mat-mini-fab color="primary" matTooltip="Guardar producto editado" (click)="onSubmit()">
+        <i class="fa-solid fa-floppy-disk"></i>
+      </button>
+
+      @if(productoEditar.Activo){
+        <button mat-mini-fab color="primary" class="boton-eliminar" matTooltip="Eliminar usuario" [disabled]="cargando" (click)="eliminarProducto()">
+            <i class="fa-solid fa-trash"></i>
+        </button>
+      }@else{
+        <button mat-mini-fab color="primary" matTooltip="Reactivar usuario" [disabled]="cargando" (click)="reactivarProducto()">
+            <i class="fa-solid fa-unlock"></i>
+        </button>
+      }
+    </div>
+</div>
+<p-stepper [value]="1" class="basis-[50rem]">
+    <p-step-list class="w-50vw">
+        <p-step [value]="1">Cabecera</p-step>
+        <p-step [value]="2">Presentación</p-step>
+    </p-step-list>
+    <p-step-panels>
+        <p-step-panel [value]="1">
+            <ng-template #content let-activateCallback="activateCallback">
+                <div class="card flex flex-col gap-4">
+                    <form #form="ngForm" novalidate>
+                        <div class="flex flex-col md:flex-row gap-8">
+                          <div class="flex flex-col grow basis-0 gap-2">
+                            <mat-form-field class="full-width">
+                              <mat-label>Codigo</mat-label>
+                              <input matInput [(ngModel)]="productoEditar.Codigo" type="text" name="codigo" autocomplete="off" title="Codigo" required>
+                              <mat-error>Escriba un codigo unico para el producto</mat-error>
+                            </mat-form-field>
+                          </div>
+                          <div class="flex flex-col grow basis-0 gap-2">
+                            <mat-form-field class="full-width">
+                              <mat-label>Nombre</mat-label>
+                              <input matInput [(ngModel)]="productoEditar.Nombre" type="text" name="nombre" autocomplete="off" title="Nombre" required>
+                              <mat-error>Escriba un nombre para el producto</mat-error>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="flex flex-col grow basis-0 gap-2">
+                                <mat-form-field class="full-width">
+                                <mat-label>Descripción</mat-label>
+                                <textarea matInput [(ngModel)]="productoEditar.Descripcion" name="descripcion" rows="3" required></textarea>
+                                <mat-error>Escriba una descripción para el producto</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                      
+                        <div class="flex flex-col md:flex-row gap-8">
+                          <div class="flex flex-col grow basis-0 gap-2">
+                            <app-select-chosen class="full-width" title="Tipo"
+                              [(ngModel)]="productoEditar.Tipo" name="tipo" placeholder="Tipo de Producto"
+                              [dataSource]="tiposProductosCombo" (recargar)="cargarTiposProductosCombo()">
+                            </app-select-chosen>
+                          </div>
+                          <div class="flex flex-col grow basis-0 gap-2">
+                            <app-select-chosen class="full-width" title="Marca"
+                              [(ngModel)]="productoEditar.Marca" name="marca" placeholder="Marca del Producto"
+                              [dataSource]="marcasProductosCombo" (recargar)="cargarMarcasProductosCombo()">
+                            </app-select-chosen>
+                          </div>
+                        </div>
+                      
+                        <div class="flex flex-col md:flex-row gap-8">
+                          <div class="flex flex-col grow basis-0 gap-2">
+                            <mat-form-field class="full-width">
+                              <mat-label>Proveedores</mat-label>
+                              <mat-select [(ngModel)]="productoEditar.Proveedores" name="proveedores" multiple>
+                                <mat-option *ngFor="let proveedor of proveedoresCombo" [value]="proveedor">
+                                  {{ proveedor.Descripcion }}
+                                </mat-option>
+                              </mat-select>
+                              <mat-error>Seleccione al menos un proveedor</mat-error>
+                              <button tabindex="-1" title="Recarga el combo" matSuffix mat-icon-button aria-label="Clear"
+                                    (click)="$event.stopPropagation(); cargarProveedoresCombo()">
+                                    <mat-icon>refresh</mat-icon>
+                                </button>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="flex flex-col grow basis-0 gap-2">
+                                <mat-form-field class="full-width">
+                                  <mat-label>Stock</mat-label>
+                                  <input matInput type="number" [(ngModel)]="productoEditar.Stock" name="stock">
+                                </mat-form-field>
+                              </div>
+                              <div class="flex flex-col grow basis-0 gap-2">
+                                <mat-form-field class="full-width">
+                                  <mat-label>Código de Barras</mat-label>
+                                  <input matInput [(ngModel)]="productoEditar.CodigoBarras" type="text" name="codigoBarras">
+                                </mat-form-field>
+                              </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="flex flex-col grow basis-0 gap-2">
+                                <mat-form-field class="full-width">
+                                  <mat-label>Precio Compra</mat-label>
+                                  <input matInput type="number" [(ngModel)]="productoEditar.PrecioCompra" name="preciocompra" required>
+                                  <span matTextPrefix>$&nbsp;</span>
+                                </mat-form-field>
+                              </div>
+                              <div class="flex flex-col grow basis-0 gap-2">
+                                <mat-form-field class="full-width">
+                                  <mat-label>Precio Venta</mat-label>
+                                  <input matInput [(ngModel)]="productoEditar.PrecioVenta" type="precioventa" name="precioventa">
+                                  <span matTextPrefix>$&nbsp;</span>
+                                </mat-form-field>
+                              </div>
+                        </div>
+                      </form>
+                </div>
+            </ng-template>
+        </p-step-panel>
+
+        <p-step-panel [value]="2">
+            <ng-template #content let-activateCallback="activateCallback">
+                <div class="flex gap-2 align-center">
+                    <div class="flex-col">
+                        <form #form="ngForm" class="flex flex-col gap-6 p-4 bg-white rounded-lg shadow-md w-full max-w-4xl" novalidate>
+                            <div class="flex flex-col md:flex-row gap-3">
+                                <div class="flex flex-col items-center">
+                                    <label class="font-semibold mb-1">Imagen Principal</label>
+                                    <div class="relative w-full max-w-sm h-90 w-18vw border-2 border-dashed border-gray-400 rounded-md flex items-center justify-center cursor-pointer bg-gray-100 hover:bg-gray-200 transition"
+                                         (click)="imagenPrincipalInput.click()">
+                                      <ng-container *ngIf="productoEditar.ImagenPresentacion; else placeholderPrincipal">
+                                        <img [src]="productoEditar.ImagenPresentacion" class="w-full h-full rounded-md" />
+                                      </ng-container>
+                                      <ng-template #placeholderPrincipal>
+                                        <span class="text-gray-500 text-center items-center px-4">Haz clic para subir imagen aquí</span>
+                                      </ng-template>
+                                      <input type="file" hidden #imagenPrincipalInput (change)="onImagenPrincipalChange($event)" accept="image/*">
+                                    </div>
+                                  </div>
+                                <div class="flex flex-col">
+                                    <div class="mt-6 flex flex-col"> 
+                                        <span class="font-bold text-2xl">{{productoEditar.Nombre}}</span>
+                                        <hr class="border-t border-gray-300 my-4 hr-w">
+                                        <span class="text-1xl font-medium">${{productoEditar.PrecioVenta | number:'1.0-0'}}</span>
+                                    </div>
+                                    <div class="mt-6 flex flex-col">
+                                        <span>{{productoEditar.Descripcion}}</span>
+                                    </div>
+    
+                                    <div class="mt-6 flex md:flex-row flex-col">
+                                        <div class="flex flex-col">
+    
+                                            <button mat-fab extended class="boton-carrito">
+                                                <mat-icon>add_shopping_cart</mat-icon>
+                                                AGREGAR AL CARRITO
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <div class="flex flex-col">
+                                <label class="font-semibold mb-1">Imágenes Opcionales</label>
+                                <div class="flex gap-4">
+                                    <div class="flex-col relative w-full h-10 m-2 border-2 border-dashed border-gray-400 rounded-md flex items-center justify-center cursor-pointer bg-gray-100 hover:bg-gray-200 transition"
+                                        (click)="imagenesAdicionalesInput.click()">
+                                        <span class="text-gray-500 text-center px-2">Agregar imágenes</span>
+                                        <input type="file" hidden #imagenesAdicionalesInput (change)="onImagenesAdicionalesChange($event)" accept="image/*">
+                                    </div>
+                                </div>
+                                <div class="flex-col">
+                                    <p-carousel 
+                                        class="carousel-personalizado" 
+                                        [value]="productoEditar.Imagenes" 
+                                        [numVisible]="3" 
+                                        [numScroll]="3" 
+                                        [circular]="true">
+                                        
+                                        <ng-template let-imagen pTemplate="item">
+                                            <div class="carousel-item-fijo border border-surface rounded-border m-2 p-4">
+                                            <div class="mb-4">
+                                                <div class="relative mx-auto h-40">
+                                                <img [src]="imagen" class="w-full h-40 rounded-border" />
+                                                <button (click)="eliminarImagen(imagen)" 
+                                                        class="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full hover:bg-red-700">
+                                                    X
+                                                </button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </ng-template>
+                                    </p-carousel>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="flex flex-col w-full h-full">
+                        <form #form="ngForm" 
+                            class="flex flex-col p-8 bg-white rounded-lg shadow-md w-full max-w-4xl overflow-y-auto max-h-[calc(100vh-210px)]" 
+                            novalidate>
+                            <label class="font-semibold mb-1">Detalles</label>
+                            @for(detalle of productoEditar.Detalles;let i = $index ;track $index){
+                                <div class="flex flex-col grow basis-0 gap-2">
+                                    <mat-form-field class="full-width">
+                                      <mat-label>Titulo</mat-label>
+                                      <input matInput [(ngModel)]="detalle.Titulo" type="text"  [name]="'titulo[' + i + ']'"  autocomplete="off" title="Titulo" required>
+                                      <mat-error>Escriba un titulo para el detalle</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex flex-col md:flex-row gap-8">
+                                    <div class="flex flex-col grow basis-0 gap-2">
+                                        <mat-form-field class="full-width">
+                                        <mat-label>Descripción</mat-label>
+                                        <textarea matInput [(ngModel)]="detalle.Descripcion" [name]="'descripcionDetalle[' + i + ']'"  rows="3" required></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <button class="w-10vw mb-4" (click)="eliminarDetalle(i)" mat-mini-fab>
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            }
+                            <button class="w-10vw" (click)="agregarNuevoDetalle()" mat-fab extended>
+                                <mat-icon>add_box</mat-icon>
+                                Nuevo Detalle
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </ng-template>
+        </p-step-panel>
+    </p-step-panels>
+</p-stepper>

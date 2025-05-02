@@ -11,6 +11,9 @@ import { EditarProveedorComponent } from './features/proveedores/components/edit
 import { PantallaVentasComponent } from './features/ventas/components/pantalla-ventas/pantalla-ventas.component';
 import { GrillaProductosComponent } from './features/productos/components/grilla/grilla-productos.component';
 import { HomeComponent } from './features/common/components/home/home.component';
+import { NuevoProductoComponent } from './features/productos/components/nuevo/nuevo-producto.component';
+import { EditarProductoComponent } from './features/productos/components/editar/editar-producto.component';
+import { MarcasComponent } from './features/marcas/components/marcas/marcas.component';
 
 export const routes: Routes = [
     {
@@ -60,5 +63,17 @@ export const routes: Routes = [
     {
         path: 'productos',
         component: GrillaProductosComponent
+    },
+    {
+        path: 'productos/nuevo',
+        component: NuevoProductoComponent
+    },
+    {
+        path: 'productos/editar/:id',
+        component: EditarProductoComponent
+    },
+    {
+        path: 'marcas',
+        component: MarcasComponent
     }
 ];

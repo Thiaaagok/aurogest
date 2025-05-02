@@ -4,16 +4,27 @@ import { ProductoTipoModel } from "./producto-tipo.model";
 
 export class ProductoModel {
     Id: string;
-    Descripcion: string;
     Codigo: string;
-    Activo: string;
-    PrecioVenta: number;
+    CodigoBarras: string;
+    Nombre: string;
+    Descripcion: string;
+    Detalles: ProductoDetalleModel[];
+    Tipo?: ProductoTipoModel;
+    Marca?: MarcaModel;
+    Proveedores?: ProveedorModel[];
     PrecioCompra: number;
-    Tipo: ProductoTipoModel
-    Marca: MarcaModel;
+    PrecioVenta: number;
     Stock: number;
-    Proveedores: ProveedorModel[]
-    Imagenes: string[]
+    Imagenes: string[];
     ImagenPresentacion: string;
-    Detalles: string;
+    FechaCreacion: Date;
+    FechaActualizacion: Date;
+    PermitirVenta: boolean;
+    Activo: boolean;
+} 
+
+
+export class ProductoDetalleModel {
+    Titulo: string;
+    Descripcion: string;
 }
