@@ -1,5 +1,6 @@
 import { MarcaModel } from "../../marcas/models/marca.model";
 import { ProveedorModel } from "../../proveedores/models/proveedor.model";
+import { ProductoCategoriaModel } from "./producto-categoria.model";
 import { ProductoTipoModel } from "./producto-tipo.model";
 
 export class ProductoModel {
@@ -10,6 +11,7 @@ export class ProductoModel {
     Descripcion: string;
     Detalles: ProductoDetalleModel[];
     Tipo?: ProductoTipoModel;
+    Categoria?: ProductoCategoriaModel;
     Marca?: MarcaModel;
     Proveedores?: ProveedorModel[];
     PrecioCompra: number;
@@ -21,6 +23,12 @@ export class ProductoModel {
     FechaActualizacion: Date;
     PermitirVenta: boolean;
     Activo: boolean;
+
+    constructor(){
+        this.Detalles = [];
+        this.Proveedores = [];
+        this.Imagenes = [];
+    }
 } 
 
 

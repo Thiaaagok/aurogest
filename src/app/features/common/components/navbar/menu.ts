@@ -95,6 +95,16 @@ export const Modulos: MenuItem[] = [
         label: 'Marcas',
         icon: 'pi pi-tag',
         route: 'marcas'
+      },
+      {
+        label: 'Tipos',
+        icon: 'pi pi-cog',
+        route: 'productos-tipo'
+      },
+      {
+        label: 'Categorias',
+        icon: 'pi pi-cog',
+        route: 'productos-categoria'
       }
     ]
   }

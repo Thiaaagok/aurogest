@@ -49,6 +49,22 @@ export class MarcasComponent {
       });
   }
 
+  onSubmit(){
+    this.cargando = true;
+    this.marcasService.crear(this.nuevaMarca)
+      .subscribe({
+        next: (response: MarcaModel) => {
+          this.cargando = false;
+          this.limpiarModel();
+          this.obtenerMarcas();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {},
+      });
+  }
+
 
   cargarGrilla() {
     this.marcas = this.GrillaUtilService.cargarGrilla(
@@ -67,4 +83,7 @@ export class MarcasComponent {
 
   editarMarca(id:string){}
 
+  limpiarModel(){
+    this.nuevaMarca = new MarcaModel();
+  }
 }

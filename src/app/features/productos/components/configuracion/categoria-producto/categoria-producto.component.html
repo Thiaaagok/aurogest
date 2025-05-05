@@ -1,10 +1,10 @@
 <div class="botonera-flotante">
     <div class="botonera-contenedor">
-      <button mat-mini-fab color="accent" matTooltip="Cargar las marcas" (click)="obtenerMarcas()">
+      <button mat-mini-fab color="accent" matTooltip="Cargar los tipos de producto" (click)="obtenerCategorias()">
         <i class="fa-solid fa-arrows-rotate"></i>
       </button>
   
-      <button mat-mini-fab color="primary" matTooltip="Crear una nueva marca" [disabled]="!form.valid" (click)="onSubmit()">
+      <button mat-mini-fab color="primary" matTooltip="Crear un nuevo tipo de producto" [disabled]="!form.valid" (click)="onSubmit()">
         <i class="fa-solid fa-square-plus"></i>
       </button>
   
@@ -17,33 +17,33 @@
     </div>
 </div>
 <div class="card flex flex-col gap-4">
-    <div class="font-semibold text-xl">Nueva Marca</div>
+    <div class="font-semibold text-xl">Nueva Categoria</div>
     <form #form="ngForm" novalidate="">
         <div class="flex flex-col md:flex-row gap-8">
             <div class="flex flex-col grow basis-0 gap-2">
                 <mat-form-field class="full-width">
-                    <mat-label>Codigo</mat-label>
-                    <input matInput [(ngModel)]="nuevaMarca.Codigo" type="text" name="codigo" autocomplete="off"
+                    <mat-label>Código</mat-label>
+                    <input matInput [(ngModel)]="nuevaCategoriaProducto.Codigo" type="text" name="codigo" autocomplete="off"
                         title="Descripción" required>
-                    <mat-error>Escriba un codigo para hacer referencia a la marca</mat-error>
+                    <mat-error>Escriba un codigo para hacer referencia a la categoria</mat-error>
                 </mat-form-field>
             </div>
             <div class="flex flex-col grow basis-0 gap-2">
                 <mat-form-field class="full-width">
                     <mat-label>Descripción</mat-label>
-                    <input matInput [(ngModel)]="nuevaMarca.Descripcion" type="text" name="descripcion" autocomplete="off"
+                    <input matInput [(ngModel)]="nuevaCategoriaProducto.Descripcion" type="text" name="descripcion" autocomplete="off"
                     title="Contaseña" required>
-                    <mat-error>Escriba una descripción para hacer referencia a la marca</mat-error>
+                    <mat-error>Escriba una descripción para hacer referencia a la categoria</mat-error>
                 </mat-form-field>
             </div>
         </div>
     </form>
 </div>
 <div class="card"> 
-    <div class="font-semibold text-xl mb-4">Marcas</div>
+    <div class="font-semibold text-xl mb-4">Categorias</div>
     <p-table
-        #grillaMarcas
-        [value]="marcas"
+        #grillaTiposProductos
+        [value]="categorias"
         dataKey="Id"
         [rows]="10"
         [loading]="cargando"
@@ -55,12 +55,12 @@
     >
         <ng-template #caption>
             <div class="flex justify-between items-center flex-column sm:flex-row">
-                <button pButton label="Limpiar filtros" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="limpiarFiltrado(grillaMarcas)"></button>
+                <button pButton label="Limpiar filtros" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="limpiarFiltrado(grillaTiposProductos)"></button>
                 <p-iconfield iconPosition="left" class="ml-auto">
                     <p-inputicon>
                         <i class="pi pi-search"></i>
                     </p-inputicon>
-                    <input #filter pInputText type="text" (input)="filtrarMarcas(grillaMarcas, $event)" placeholder="Buscar" />
+                    <input #filter pInputText type="text" (input)="filtrarCategorias(grillaTiposProductos, $event)" placeholder="Buscar" />
                 </p-iconfield>
             </div>
         </ng-template>
@@ -82,22 +82,22 @@
             </tr>
         </ng-template>
 
-        <ng-template #body let-marca>
-            <tr (click)="editarMarca(marca.Id)" class="cursor-pointer">
-                <td>{{ marca.Codigo }}</td>
-                <td>{{ marca.Descripcion }}</td>
+        <ng-template #body let-tipoProducto>
+            <tr (click)="editar(tipoProducto.Id)" class="cursor-pointer">
+                <td>{{ tipoProducto.Codigo }}</td>
+                <td>{{ tipoProducto.Descripcion }}</td>
             </tr>
         </ng-template>
 
         <ng-template #emptymessage>
             <tr>
-                <td colspan="2">No se encontraron marcas.</td>
+                <td colspan="2">No se encontraron categorias.</td>
             </tr>
         </ng-template>
 
         <ng-template #loadingbody>
             <tr>
-                <td colspan="2">Cargando marcas...</td>
+                <td colspan="2">Cargando categorias...</td>
             </tr>
         </ng-template>
     </p-table>

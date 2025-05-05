@@ -1,3 +1,40 @@
-:host {
-  display: block;
+.botonera-flotante {
+  position: fixed;
+  top: 65px;
+  right: 2%;
+  z-index: 100;
+  background: rgba(240, 240, 240, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 14px 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease-in-out;
+
+  @media (min-width: 576px) { width: 30%; }
+  @media (min-width: 768px) { width: 25%; }
+  @media (min-width: 992px) { width: 19%; }
+  @media (min-width: 1200px) { width: 14%; }
+}
+
+.botonera-contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+::ng-deep button.mat-mini-fab i {
+  font-size: 1.1rem;
+  color: white;
+}
+
+::ng-deep button.mat-mini-fab{
+  width: fit-content;
+}
+
+::ng-deep button.mat-mdc-mini-fab.mat-mdc-button-base {
+  width: 35px !important;
+  height: 35px !important;
 }

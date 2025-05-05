@@ -1,22 +1,22 @@
 import { Component, inject } from '@angular/core';
-import { ProductoTipoModel } from '../../../models/producto-tipo.model';
+import { PrimeNgModule } from '../../../../common/material/primeng.module';
+import { CustomMaterialModule } from '../../../../common/material/custom-material.module';
+import { ProductoCategoriaModel } from '../../../models/producto-categoria.model';
 import { ProductoTiposService } from '../../../services/producto-tipo.service';
 import { GrillaUtilService } from '../../../../common/services/grilla-util.service';
 import { Table } from 'primeng/table';
-import { PrimeNgModule } from '../../../../common/material/primeng.module';
-import { CustomMaterialModule } from '../../../../common/material/custom-material.module';
 
 @Component({
-  selector: 'app-tipo-producto',
+  selector: 'app-categoria-producto',
   imports: [CustomMaterialModule, PrimeNgModule],
-  templateUrl: './tipo-producto.component.html',
-  styleUrl: './tipo-producto.component.scss',
+  templateUrl: './categoria-producto.component.html',
+  styleUrl: './categoria-producto.component.scss',
 })
-export class TipoProductoComponent { 
+export class CategoriaProductoComponent { 
 
-  nuevoTipoProducto: ProductoTipoModel = new ProductoTipoModel();
-  tiposProducto: ProductoTipoModel[] = [];
-  tiposProductoFiltro: ProductoTipoModel[] = [];
+  nuevaCategoriaProducto: ProductoCategoriaModel = new ProductoCategoriaModel();
+  categorias: ProductoCategoriaModel[] = [];
+  categoriasFiltro: ProductoCategoriaModel[] = [];
 
   cargando: boolean;
   registrosGrillaActivos: boolean;
@@ -29,16 +29,16 @@ export class TipoProductoComponent {
   }
 
   ngOnInit() {
-    this.obtenerTiposProducto();
+    this.obtenerCategorias();
   }
 
-  obtenerTiposProducto() {
+  obtenerCategorias() {
     this.cargando = true;
     this.productoTiposService.obtenerTodos()
       .subscribe({
-        next: (response: ProductoTipoModel[]) => {
+        next: (response: ProductoCategoriaModel[]) => {
           this.cargando = false;
-          this.tiposProductoFiltro = response;
+          this.categoriasFiltro = response;
           this.cargarGrilla();
         },
         error: (err) => {
@@ -51,12 +51,12 @@ export class TipoProductoComponent {
 
   onSubmit(){
     this.cargando = true;
-    this.productoTiposService.crear(this.nuevoTipoProducto)
+    this.productoTiposService.crear(this.nuevaCategoriaProducto)
       .subscribe({
-        next: (response: ProductoTipoModel) => {
+        next: (response: ProductoCategoriaModel) => {
           this.cargando = false;
           this.limpiarModel();
-          this.obtenerTiposProducto();
+          this.obtenerCategorias();
         },
         error: (err) => {
           console.log(err);
@@ -67,8 +67,8 @@ export class TipoProductoComponent {
 
 
   cargarGrilla() {
-    this.tiposProducto = this.GrillaUtilService.cargarGrilla(
-      this.tiposProductoFiltro,
+    this.categorias = this.GrillaUtilService.cargarGrilla(
+      this.categoriasFiltro,
       this.registrosGrillaActivos
     );
   }
@@ -77,13 +77,13 @@ export class TipoProductoComponent {
     this.GrillaUtilService.limpiarFiltrado(table);
   }
 
-  filtrarTiposProducto(table: Table, event: Event) {
+  filtrarCategorias(table: Table, event: Event) {
     this.GrillaUtilService.filtrarGlobal(table, event);
   }
 
   editar(id:string){}
 
   limpiarModel(){
-    this.nuevoTipoProducto = new ProductoTipoModel();
+    this.nuevaCategoriaProducto = new ProductoCategoriaModel();
   }
 }

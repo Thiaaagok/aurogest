@@ -14,6 +14,8 @@ import { HomeComponent } from './features/common/components/home/home.component'
 import { NuevoProductoComponent } from './features/productos/components/nuevo/nuevo-producto.component';
 import { EditarProductoComponent } from './features/productos/components/editar/editar-producto.component';
 import { MarcasComponent } from './features/marcas/components/marcas/marcas.component';
+import { TipoProductoComponent } from './features/productos/components/configuracion/tipo-producto/tipo-producto.component';
+import { CategoriaProductoComponent } from './features/productos/components/configuracion/categoria-producto/categoria-producto.component';
 
 export const routes: Routes = [
     {
@@ -75,5 +77,13 @@ export const routes: Routes = [
     {
         path: 'marcas',
         component: MarcasComponent
+    },
+    {
+        path: 'productos-tipo',
+        component: TipoProductoComponent
+    },
+    {
+        path: 'productos-categoria',
+        component: CategoriaProductoComponent
     }
 ];
