@@ -1,3 +1,4 @@
+import { EmpresaModel } from "../../empresas/models/empresa.model";
 import { MarcaModel } from "../../marcas/models/marca.model";
 import { ProveedorModel } from "../../proveedores/models/proveedor.model";
 import { ProductoCategoriaModel } from "./producto-categoria.model";
@@ -22,6 +23,7 @@ export class ProductoModel {
     FechaCreacion: Date;
     FechaActualizacion: Date;
     PermitirVenta: boolean;
+    Empresa: EmpresaModel;
     Activo: boolean;
 
     constructor(){

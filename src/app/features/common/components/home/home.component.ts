@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { UtilitiesService } from '../../services/utilities.services';
 
 @Component({
   selector: 'app-home',
@@ -6,4 +7,11 @@ import { Component } from '@angular/core';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent { }
+export class HomeComponent { 
+
+  utilitiesService = inject(UtilitiesService);
+
+  constructor(){
+    this.utilitiesService.setTituloPagina('Home');
+  }
+}

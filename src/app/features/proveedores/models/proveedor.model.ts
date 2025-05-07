@@ -1,3 +1,5 @@
+import { EmpresaModel } from "../../empresas/models/empresa.model";
+
 export class ProveedorModel {
     Id: string;
     Descripcion: string;
@@ -9,5 +11,6 @@ export class ProveedorModel {
     Observaciones: string;
     Direccion: string;
     CodigoPostal: string;
+    Empresa: EmpresaModel;
     Activo: boolean;
 }

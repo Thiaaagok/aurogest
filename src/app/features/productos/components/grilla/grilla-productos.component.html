@@ -37,7 +37,7 @@
                     <p-inputicon>
                         <i class="pi pi-search"></i>
                     </p-inputicon>
-                    <input #filter pInputText type="text" (input)="filtrarProductos(grillaProductos, $event)" placeholder="Buscar" />
+                    <input #filter pInputText class="w-50vw" type="text" (input)="filtrarProductos(grillaProductos, $event)" placeholder="Buscar" />
                 </p-iconfield>
             </div>
         </ng-template>
@@ -58,13 +58,25 @@
               <th style="min-width: 10rem">
                 <div class="flex justify-between items-center">
                   Tipo
-                  <p-columnFilter type="text" field="Tipo.Nombre" display="menu" placeholder="Buscar por tipo"></p-columnFilter>
+                  <p-columnFilter type="text" field="Tipo.Descripcion" display="menu" placeholder="Buscar por tipo"></p-columnFilter>
                 </div>
               </th>
               <th style="min-width: 10rem">
                 <div class="flex justify-between items-center">
                   Marca
                   <p-columnFilter type="text" field="Marca.Descripcion" display="menu" placeholder="Buscar por marca"></p-columnFilter>
+                </div>
+              </th>
+              <th style="min-width: 10rem">
+                <div class="flex justify-between items-center">
+                  Categoria
+                  <p-columnFilter type="text" field="Categoria.Descripcion" display="menu" placeholder="Buscar por categoria"></p-columnFilter>
+                </div>
+              </th>
+              <th style="min-width: 10rem">
+                <div class="flex justify-between items-center">
+                  Stock
+                  <p-columnFilter type="text" field="Stock" display="menu" placeholder="Buscar por stock"></p-columnFilter>
                 </div>
               </th>
             </tr>
@@ -76,6 +88,8 @@
               <td>{{ producto.Codigo }}</td>
               <td>{{ producto.Tipo?.Nombre }}</td>
               <td>{{ producto.Marca?.Descripcion }}</td>
+              <td>{{ producto.Categoria?.Descripcion }}</td>
+              <td>{{ producto.Stock }}</td>
             </tr>
           </ng-template>
         <ng-template #emptymessage>

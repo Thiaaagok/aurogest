@@ -9,6 +9,7 @@ import { SelectChosenComponent } from '../../../common/components/select-chosen/
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { timer } from 'rxjs';
+import { ProductoCategoriaModel } from '../../models/producto-categoria.model';
 
 @Component({
   selector: 'app-editar-producto',
@@ -24,6 +25,7 @@ export class EditarProductoComponent {
   tiposProductosCombo: ProductoTipoModel[] = [];
   marcasProductosCombo: MarcaModel[] = [];
   proveedoresCombo: ProveedorModel[] = [];
+    categoriasProductosCombo: ProductoCategoriaModel[] = [];
 
   private router = inject(Router);
   private productosService = inject(ProductosService);
@@ -112,6 +114,8 @@ export class EditarProductoComponent {
   cargarMarcasProductosCombo(){}
 
   cargarProveedoresCombo(){}
+
+  cargarCategoriasProductosCombo(){}
 
   limpiarModel(){
     this.productoEditar = new ProductoModel();

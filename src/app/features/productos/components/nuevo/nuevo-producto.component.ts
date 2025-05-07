@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { ProductoDetalleModel, ProductoModel } from '../../models/producto.model';
 import { Router } from '@angular/router';
 import { ProductosService } from '../../services/producto.service';
@@ -9,10 +9,13 @@ import { ProductoTipoModel } from '../../models/producto-tipo.model';
 import { MarcaModel } from '../../../marcas/models/marca.model';
 import { ProveedorModel } from '../../../proveedores/models/proveedor.model';
 import { ProveedoresService } from '../../../proveedores/services/proveedores.service';
+import { ProductoCategoriaModel } from '../../models/producto-categoria.model';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-nuevo-producto',
-  imports: [PrimeNgModule, CustomMaterialModule, SelectChosenComponent],
+  imports: [PrimeNgModule, CustomMaterialModule, SelectChosenComponent, ReactiveFormsModule, FormsModule, CommonModule],
   templateUrl: './nuevo-producto.component.html',
   styleUrl: './nuevo-producto.component.scss',
 })
@@ -24,10 +27,14 @@ export class NuevoProductoComponent {
   tiposProductosCombo: ProductoTipoModel[] = [];
   marcasProductosCombo: MarcaModel[] = [];
   proveedoresCombo: ProveedorModel[] = [];
+  categoriasProductosCombo: ProductoCategoriaModel[] = [];
 
   private router = inject(Router);
   private productosService = inject(ProductosService);
   private proveedoresService = inject(ProveedoresService);
+
+  constructor(){
+  }
 
   ngOnInit() {
     this.cargarTiposProductosCombo();
@@ -57,6 +64,8 @@ export class NuevoProductoComponent {
   cargarTiposProductosCombo(){}
 
   cargarMarcasProductosCombo(){}
+
+  cargarCategoriasProductosCombo(){}
 
   cargarProveedoresCombo(){
     this.proveedoresService.obtenerTodos()

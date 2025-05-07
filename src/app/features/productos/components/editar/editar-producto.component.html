@@ -69,6 +69,12 @@
                               [dataSource]="marcasProductosCombo" (recargar)="cargarMarcasProductosCombo()">
                             </app-select-chosen>
                           </div>
+                          <div class="flex flex-col grow basis-0 gap-2">
+                            <app-select-chosen class="full-width" title="Categoria"
+                              [(ngModel)]="productoEditar.Categoria" name="categoria" placeholder="Categoria del Producto"
+                              [dataSource]="categoriasProductosCombo" (recargar)="cargarCategoriasProductosCombo()">
+                            </app-select-chosen>
+                          </div>
                         </div>
                       
                         <div class="flex flex-col md:flex-row gap-8">

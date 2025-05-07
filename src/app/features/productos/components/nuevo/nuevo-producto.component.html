@@ -4,7 +4,7 @@
         <i class="fa-solid fa-arrow-left"></i>
       </button>
   
-      <button mat-mini-fab color="primary" matTooltip="Guardar nuevo usuario" (click)="onSubmit()">
+      <button mat-mini-fab color="primary" matTooltip="Guardar nuevo producto" [disabled]="!formPrincipal.valid" (click)="onSubmit()">
         <i class="fa-solid fa-floppy-disk"></i>
       </button>
     </div>
@@ -16,102 +16,108 @@
     </p-step-list>
     <p-step-panels>
         <p-step-panel [value]="1">
+          <form #formPrincipal="ngForm" novalidate>
             <ng-template #content let-activateCallback="activateCallback">
-                <div class="card flex flex-col gap-4">
-                    <form #form="ngForm" novalidate>
-                        <div class="flex flex-col md:flex-row gap-8">
-                          <div class="flex flex-col grow basis-0 gap-2">
-                            <mat-form-field class="full-width">
-                              <mat-label>Codigo</mat-label>
-                              <input matInput [(ngModel)]="nuevoProducto.Codigo" type="text" name="codigo" autocomplete="off" title="Codigo" required>
-                              <mat-error>Escriba un codigo unico para el producto</mat-error>
-                            </mat-form-field>
-                          </div>
-                          <div class="flex flex-col grow basis-0 gap-2">
-                            <mat-form-field class="full-width">
-                              <mat-label>Nombre</mat-label>
-                              <input matInput [(ngModel)]="nuevoProducto.Nombre" type="text" name="nombre" autocomplete="off" title="Nombre" required>
-                              <mat-error>Escriba un nombre para el producto</mat-error>
-                            </mat-form-field>
-                          </div>
+              <div class="card flex flex-col gap-4">
+                      <div class="flex flex-col md:flex-row gap-8">
+                        <div class="flex flex-col grow basis-0 gap-2">
+                          <mat-form-field class="full-width">
+                            <mat-label>Codigo</mat-label>
+                            <input matInput [(ngModel)]="nuevoProducto.Codigo" type="text" name="codigo" autocomplete="off" title="Codigo" required>
+                            <mat-error>Escriba un codigo unico para el producto</mat-error>
+                          </mat-form-field>
                         </div>
-                      
-                        <div class="flex flex-col md:flex-row gap-8">
-                            <div class="flex flex-col grow basis-0 gap-2">
-                                <mat-form-field class="full-width">
-                                <mat-label>Descripción</mat-label>
-                                <textarea matInput [(ngModel)]="nuevoProducto.Descripcion" name="descripcion" rows="3" required></textarea>
-                                <mat-error>Escriba una descripción para el producto</mat-error>
-                                </mat-form-field>
-                            </div>
+                        <div class="flex flex-col grow basis-0 gap-2">
+                          <mat-form-field class="full-width">
+                            <mat-label>Nombre</mat-label>
+                            <input matInput [(ngModel)]="nuevoProducto.Nombre" type="text" name="nombre" autocomplete="off" title="Nombre" required>
+                            <mat-error>Escriba un nombre para el producto</mat-error>
+                          </mat-form-field>
                         </div>
-                      
-                        <div class="flex flex-col md:flex-row gap-8">
+                      </div>
+                    
+                      <div class="flex flex-col md:flex-row gap-8">
                           <div class="flex flex-col grow basis-0 gap-2">
-                            <app-select-chosen class="full-width" title="Tipo"
-                              [(ngModel)]="nuevoProducto.Tipo" name="tipo" placeholder="Tipo de Producto"
-                              [dataSource]="tiposProductosCombo" (recargar)="cargarTiposProductosCombo()">
-                            </app-select-chosen>
+                              <mat-form-field class="full-width">
+                              <mat-label>Descripción</mat-label>
+                              <textarea matInput [(ngModel)]="nuevoProducto.Descripcion" name="descripcion" rows="3" required></textarea>
+                              <mat-error>Escriba una descripción para el producto</mat-error>
+                              </mat-form-field>
                           </div>
-                          <div class="flex flex-col grow basis-0 gap-2">
-                            <app-select-chosen class="full-width" title="Marca"
-                              [(ngModel)]="nuevoProducto.Marca" name="marca" placeholder="Marca del Producto"
-                              [dataSource]="marcasProductosCombo" (recargar)="cargarMarcasProductosCombo()">
-                            </app-select-chosen>
-                          </div>
+                      </div>
+                    
+                      <div class="flex flex-col md:flex-row gap-8">
+                        <div class="flex flex-col grow basis-0 gap-2">
+                          <app-select-chosen class="full-width" title="Tipo"
+                            [(ngModel)]="nuevoProducto.Tipo" name="tipo" placeholder="Tipo de Producto"
+                            [dataSource]="tiposProductosCombo" (recargar)="cargarTiposProductosCombo()">
+                          </app-select-chosen>
                         </div>
-                      
-                        <div class="flex flex-col md:flex-row gap-8">
-                          <div class="flex flex-col grow basis-0 gap-2">
-                            <mat-form-field class="full-width">
-                              <mat-label>Proveedores</mat-label>
-                              <mat-select [(ngModel)]="nuevoProducto.Proveedores" name="proveedores" multiple>
-                                <mat-option *ngFor="let proveedor of proveedoresCombo" [value]="proveedor">
-                                  {{ proveedor.Descripcion }}
-                                </mat-option>
-                              </mat-select>
-                              <mat-error>Seleccione al menos un proveedor</mat-error>
-                              <button tabindex="-1" title="Recarga el combo" matSuffix mat-icon-button aria-label="Clear"
-                                    (click)="$event.stopPropagation(); cargarProveedoresCombo()">
-                                    <mat-icon>refresh</mat-icon>
-                                </button>
-                            </mat-form-field>
-                          </div>
+                        <div class="flex flex-col grow basis-0 gap-2">
+                          <app-select-chosen class="full-width" title="Marca"
+                            [(ngModel)]="nuevoProducto.Marca" name="marca" placeholder="Marca del Producto"
+                            [dataSource]="marcasProductosCombo" (recargar)="cargarMarcasProductosCombo()">
+                          </app-select-chosen>
                         </div>
+                        <div class="flex flex-col grow basis-0 gap-2">
+                          <app-select-chosen class="full-width" title="Categoria"
+                            [(ngModel)]="nuevoProducto.Categoria" name="categoria" placeholder="Categoria del Producto"
+                            [dataSource]="categoriasProductosCombo" (recargar)="cargarCategoriasProductosCombo()">
+                          </app-select-chosen>
+                        </div>
+                      </div>
+                    
+                      <div class="flex flex-col md:flex-row gap-8">
+                        <div class="flex flex-col grow basis-0 gap-2">
+                          <mat-form-field class="full-width">
+                            <mat-label>Proveedores</mat-label>
+                            <mat-select [(ngModel)]="nuevoProducto.Proveedores" name="proveedores" multiple>
+                              <mat-option *ngFor="let proveedor of proveedoresCombo" [value]="proveedor">
+                                {{ proveedor.Descripcion }}
+                              </mat-option>
+                            </mat-select>
+                            <mat-error>Seleccione al menos un proveedor</mat-error>
+                            <button tabindex="-1" title="Recarga el combo" matSuffix mat-icon-button aria-label="Clear"
+                                  (click)="$event.stopPropagation(); cargarProveedoresCombo()">
+                                  <mat-icon>refresh</mat-icon>
+                              </button>
+                          </mat-form-field>
+                        </div>
+                      </div>
 
-                        <div class="flex flex-col md:flex-row gap-8">
+                      <div class="flex flex-col md:flex-row gap-8">
+                          <div class="flex flex-col grow basis-0 gap-2">
+                              <mat-form-field class="full-width">
+                                <mat-label>Stock</mat-label>
+                                <input matInput type="number" [(ngModel)]="nuevoProducto.Stock" name="stock" required>
+                              </mat-form-field>
+                            </div>
                             <div class="flex flex-col grow basis-0 gap-2">
-                                <mat-form-field class="full-width">
-                                  <mat-label>Stock</mat-label>
-                                  <input matInput type="number" [(ngModel)]="nuevoProducto.Stock" name="stock">
-                                </mat-form-field>
-                              </div>
-                              <div class="flex flex-col grow basis-0 gap-2">
-                                <mat-form-field class="full-width">
-                                  <mat-label>Código de Barras</mat-label>
-                                  <input matInput [(ngModel)]="nuevoProducto.CodigoBarras" type="text" name="codigoBarras">
-                                </mat-form-field>
-                              </div>
-                        </div>
-                        <div class="flex flex-col md:flex-row gap-8">
+                              <mat-form-field class="full-width">
+                                <mat-label>Código de Barras</mat-label>
+                                <input matInput [(ngModel)]="nuevoProducto.CodigoBarras" type="text" name="codigoBarras">
+                              </mat-form-field>
+                            </div>
+                      </div>
+                      <div class="flex flex-col md:flex-row gap-8">
+                          <div class="flex flex-col grow basis-0 gap-2">
+                              <mat-form-field class="full-width">
+                                <mat-label>Precio Compra</mat-label>
+                                <input matInput type="text" [(ngModel)]="nuevoProducto.PrecioCompra" name="preciocompra" required>
+                                <span matTextPrefix>$&nbsp;</span>
+                              </mat-form-field>
+                            </div>
                             <div class="flex flex-col grow basis-0 gap-2">
-                                <mat-form-field class="full-width">
-                                  <mat-label>Precio Compra</mat-label>
-                                  <input matInput type="number" [(ngModel)]="nuevoProducto.PrecioCompra" name="preciocompra" required>
-                                  <span matTextPrefix>$&nbsp;</span>
-                                </mat-form-field>
-                              </div>
-                              <div class="flex flex-col grow basis-0 gap-2">
-                                <mat-form-field class="full-width">
-                                  <mat-label>Precio Venta</mat-label>
-                                  <input matInput [(ngModel)]="nuevoProducto.PrecioVenta" type="precioventa" name="precioventa">
-                                  <span matTextPrefix>$&nbsp;</span>
-                                </mat-form-field>
-                              </div>
-                        </div>
-                      </form>
-                </div>
+                              <mat-form-field class="full-width">
+                                <mat-label>Precio Venta</mat-label>
+                                <input matInput [(ngModel)]="nuevoProducto.PrecioVenta" type="text" name="precioventa">
+                                <span matTextPrefix>$&nbsp;</span>
+                              </mat-form-field>
+                            </div>
+                      </div>
+              </div>
             </ng-template>
+          </form>
         </p-step-panel>
 
         <p-step-panel [value]="2">
