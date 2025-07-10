@@ -12,6 +12,9 @@ import { ProveedoresService } from '../../../proveedores/services/proveedores.se
 import { ProductoCategoriaModel } from '../../models/producto-categoria.model';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ProductoTiposService } from '../../services/producto-tipo.service';
+import { ProductoCategoriasService } from '../../services/producto-categoria.service';
+import { MarcasService } from '../../../marcas/services/marcas.service';
 
 @Component({
   selector: 'app-nuevo-producto',
@@ -23,7 +26,6 @@ export class NuevoProductoComponent {
 
   nuevoProducto: ProductoModel = new ProductoModel();
   cargando: boolean;
-  cantidad: number = 1;
   tiposProductosCombo: ProductoTipoModel[] = [];
   marcasProductosCombo: MarcaModel[] = [];
   proveedoresCombo: ProveedorModel[] = [];
@@ -32,6 +34,9 @@ export class NuevoProductoComponent {
   private router = inject(Router);
   private productosService = inject(ProductosService);
   private proveedoresService = inject(ProveedoresService);
+  private productoTiposService = inject(ProductoTiposService);
+  private productoCategoriasService = inject(ProductoCategoriasService);
+  private marcasService = inject(MarcasService)
 
   constructor(){
   }
@@ -39,6 +44,7 @@ export class NuevoProductoComponent {
   ngOnInit() {
     this.cargarTiposProductosCombo();
     this.cargarMarcasProductosCombo();
+    this.cargarCategoriasProductosCombo();
     this.cargarProveedoresCombo();
   }
 
@@ -61,11 +67,47 @@ export class NuevoProductoComponent {
     this.router.navigateByUrl('productos');
   }
   
-  cargarTiposProductosCombo(){}
+  cargarTiposProductosCombo(){
+    this.productoTiposService.obtenerTodos()
+    .subscribe({
+      next: (response: ProductoTipoModel[]) => {
+        this.cargando = false;
+        this.tiposProductosCombo = response;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {},
+    });
+  }
 
-  cargarMarcasProductosCombo(){}
+  cargarMarcasProductosCombo(){
+    this.marcasService.obtenerTodos()
+    .subscribe({
+      next: (response: MarcaModel[]) => {
+        this.cargando = false;
+        this.marcasProductosCombo = response;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {},
+    });
+  }
 
-  cargarCategoriasProductosCombo(){}
+  cargarCategoriasProductosCombo(){
+    this.productoCategoriasService.obtenerTodos()
+    .subscribe({
+      next: (response: ProductoCategoriaModel[]) => {
+        this.cargando = false;
+        this.categoriasProductosCombo = response;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {},
+    });
+  }
 
   cargarProveedoresCombo(){
     this.proveedoresService.obtenerTodos()
@@ -84,38 +126,5 @@ export class NuevoProductoComponent {
   limpiarModel(){
     this.nuevoProducto = new ProductoModel();
   }
-
-  onImagenPrincipalChange(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => this.nuevoProducto.ImagenPresentacion = reader.result as string;
-      reader.readAsDataURL(file);
-    }
-  }
-
-  onImagenesAdicionalesChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-
-    if (input.files && input.files.length > 0) {
-      const file: File = input.files[0];
-      const imageUrl = URL.createObjectURL(file);
-      this.nuevoProducto.Imagenes = [...this.nuevoProducto.Imagenes, imageUrl];
-    }
-  }
-
-  eliminarImagen(imagenEliminar: string) {
-    this.nuevoProducto.Imagenes = this.nuevoProducto.Imagenes.filter(
-      imagen => imagen !== imagenEliminar
-    );
-  }
-
-  agregarNuevoDetalle(){
-    const nuevoDetalle: ProductoDetalleModel = new ProductoDetalleModel();
-    this.nuevoProducto.Detalles.push(nuevoDetalle);
-  }
-
-  eliminarDetalle(i:number){
-    this.nuevoProducto.Detalles.splice(i, 1);
-  }
+  
 }

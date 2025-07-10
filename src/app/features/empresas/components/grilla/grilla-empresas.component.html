@@ -37,6 +37,10 @@
     <ng-template #header>
       <tr>
         <th>
+          <div class="flex justify-between items-center"> Código <p-columnFilter type="text" field="Codigo"
+              display="menu"></p-columnFilter></div>
+        </th>
+        <th>
           <div class="flex justify-between items-center">Descripción <p-columnFilter type="text" field="Descripcion"
               display="menu"></p-columnFilter></div>
         </th>
@@ -53,6 +57,7 @@
 
     <ng-template #body let-empresa>
       <tr (click)="editarEmpresa(empresa.Id)" class="cursor-pointer">
+        <td>{{ empresa.Codigo }}</td>
         <td>{{ empresa.Descripcion }}</td>
         <td>{{ empresa.Cuit }}</td>
         <td>{{ empresa.Email }}</td>

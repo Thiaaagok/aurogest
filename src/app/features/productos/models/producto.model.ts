@@ -7,9 +7,8 @@ import { ProductoTipoModel } from "./producto-tipo.model";
 export class ProductoModel {
     Id: string;
     Codigo: string;
-    CodigoBarras: string;
+    CodigoBarra: string;
     Nombre: string;
-    Descripcion: string;
     Detalles: ProductoDetalleModel[];
     Tipo?: ProductoTipoModel;
     Categoria?: ProductoCategoriaModel;
@@ -18,8 +17,6 @@ export class ProductoModel {
     PrecioCompra: number;
     PrecioVenta: number;
     Stock: number;
-    Imagenes: string[];
-    ImagenPresentacion: string;
     FechaCreacion: Date;
     FechaActualizacion: Date;
     PermitirVenta: boolean;
@@ -29,7 +26,6 @@ export class ProductoModel {
     constructor(){
         this.Detalles = [];
         this.Proveedores = [];
-        this.Imagenes = [];
     }
 } 
 

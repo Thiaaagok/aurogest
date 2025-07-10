@@ -5,6 +5,7 @@ import { ProductoCategoriaModel } from '../../../models/producto-categoria.model
 import { ProductoTiposService } from '../../../services/producto-tipo.service';
 import { GrillaUtilService } from '../../../../common/services/grilla-util.service';
 import { Table } from 'primeng/table';
+import { ProductoCategoriasService } from '../../../services/producto-categoria.service';
 
 @Component({
   selector: 'app-categoria-producto',
@@ -21,8 +22,9 @@ export class CategoriaProductoComponent {
   cargando: boolean;
   registrosGrillaActivos: boolean;
 
-  private productoTiposService = inject(ProductoTiposService);
+  private productoCategoriasService = inject(ProductoCategoriasService);
   private GrillaUtilService = inject(GrillaUtilService);
+  
 
   constructor() {
     this.registrosGrillaActivos = true;
@@ -34,7 +36,7 @@ export class CategoriaProductoComponent {
 
   obtenerCategorias() {
     this.cargando = true;
-    this.productoTiposService.obtenerTodos()
+    this.productoCategoriasService.obtenerTodos()
       .subscribe({
         next: (response: ProductoCategoriaModel[]) => {
           this.cargando = false;
@@ -51,7 +53,7 @@ export class CategoriaProductoComponent {
 
   onSubmit(){
     this.cargando = true;
-    this.productoTiposService.crear(this.nuevaCategoriaProducto)
+    this.productoCategoriasService.crear(this.nuevaCategoriaProducto)
       .subscribe({
         next: (response: ProductoCategoriaModel) => {
           this.cargando = false;

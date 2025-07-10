@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { EmpresaModel } from '../../../empresas/models/empresa.model';
 import { SelectChosenComponent } from '../../../common/components/select-chosen/select-chosen.component';
 import { UsuariosService } from '../../services/usuarios.service';
+import { EmpresaService } from '../../../empresas/services/empresa.service';
 
 @Component({
   selector: 'app-nuevo-usuario',
@@ -29,6 +30,7 @@ export class NuevoUsuarioComponent {
 
   private router = inject(Router);
   private usuariosService = inject(UsuariosService);
+  private empresasService = inject(EmpresaService);
 
   ngOnInit() {
     this.cargarEmpresasDrodpwon();
@@ -52,8 +54,18 @@ export class NuevoUsuarioComponent {
     this.router.navigateByUrl('usuarios');
   }
 
-  cargarEmpresasDrodpwon() {/* 
-    this.empresasDropdown = empresasEjemplo; */
+  cargarEmpresasDrodpwon() {
+    this.empresasService.obtenerTodos()
+    .subscribe({
+      next: ((response: EmpresaModel[]) => {
+        this.cargando = false;
+        this.empresasDropdown = response;
+      }),
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {}
+    })
   }
 
   limpiarModel(){

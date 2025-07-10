@@ -10,6 +10,10 @@ import { CustomMaterialModule } from '../../../common/material/custom-material.m
 import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { timer } from 'rxjs';
 import { ProductoCategoriaModel } from '../../models/producto-categoria.model';
+import { ProductoTiposService } from '../../services/producto-tipo.service';
+import { ProductoCategoriasService } from '../../services/producto-categoria.service';
+import { MarcasService } from '../../../marcas/services/marcas.service';
+import { ProveedoresService } from '../../../proveedores/services/proveedores.service';
 
 @Component({
   selector: 'app-editar-producto',
@@ -25,11 +29,15 @@ export class EditarProductoComponent {
   tiposProductosCombo: ProductoTipoModel[] = [];
   marcasProductosCombo: MarcaModel[] = [];
   proveedoresCombo: ProveedorModel[] = [];
-    categoriasProductosCombo: ProductoCategoriaModel[] = [];
+  categoriasProductosCombo: ProductoCategoriaModel[] = [];
 
   private router = inject(Router);
   private productosService = inject(ProductosService);
   private activatedRoute = inject(ActivatedRoute);
+  private proveedoresService = inject(ProveedoresService);
+  private productoTiposService = inject(ProductoTiposService);
+  private productoCategoriasService = inject(ProductoCategoriasService);
+  private marcasService = inject(MarcasService)
 
   constructor() {
     this.activatedRoute.params.subscribe((params) => {
@@ -41,15 +49,19 @@ export class EditarProductoComponent {
   ngOnInit() {
     this.cargarTiposProductosCombo();
     this.cargarMarcasProductosCombo();
+    this.cargarCategoriasProductosCombo();
     this.cargarProveedoresCombo();
   }
 
   onSubmit() {
     this.cargando = true;
-    this.productosService.crear(this.productoEditar).subscribe({
+    this.productosService.editar(this.productoEditar.Id,this.productoEditar).subscribe({
       next: (response: ProductoModel) => {
-        this.cargando = false;
-        this.limpiarModel();
+        timer(2000)
+        .subscribe(() => {
+          this.cargando = false;
+          this.obtenerProducto();
+        })
       },
       error: (err) => {
         console.log(err);
@@ -109,41 +121,68 @@ export class EditarProductoComponent {
     this.router.navigateByUrl('productos');
   }
   
-  cargarTiposProductosCombo(){}
+  cargarTiposProductosCombo(){
+    this.productoTiposService.obtenerTodos()
+    .subscribe({
+      next: (response: ProductoTipoModel[]) => {
+        this.cargando = false;
+        this.tiposProductosCombo = response;
+      },
+      error: (err) => {
+        this.cargando = false;
+        console.log(err);
+      },
+      complete: () => {},
+    });
+  }
 
-  cargarMarcasProductosCombo(){}
+  cargarMarcasProductosCombo(){
+    this.marcasService.obtenerTodos()
+    .subscribe({
+      next: (response: MarcaModel[]) => {
+        this.cargando = false;
+        this.marcasProductosCombo = response;
+      },
+      error: (err) => {
+        this.cargando = false;
+        console.log(err);
+      },
+      complete: () => {},
+    });
+  }
 
-  cargarProveedoresCombo(){}
+  cargarCategoriasProductosCombo(){
+    this.productoCategoriasService.obtenerTodos()
+    .subscribe({
+      next: (response: ProductoCategoriaModel[]) => {
+        this.cargando = false;
+        this.categoriasProductosCombo = response;
+      },
+      error: (err) => {
+        this.cargando = false;
+        console.log(err);
+      },
+      complete: () => {},
+    });
+  }
 
-  cargarCategoriasProductosCombo(){}
+  cargarProveedoresCombo(){
+    this.proveedoresService.obtenerTodos()
+    .subscribe({
+      next: (response: ProveedorModel[]) => {
+        this.cargando = false;
+        this.proveedoresCombo = response;
+      },
+      error: (err) => {
+        this.cargando = false;
+        console.log(err);
+      },
+      complete: () => {},
+    });
+  }
 
   limpiarModel(){
     this.productoEditar = new ProductoModel();
-  }
-
-  onImagenPrincipalChange(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => this.productoEditar.ImagenPresentacion = reader.result as string;
-      reader.readAsDataURL(file);
-    }
-  }
-
-  onImagenesAdicionalesChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-
-    if (input.files && input.files.length > 0) {
-      const file: File = input.files[0];
-      const imageUrl = URL.createObjectURL(file);
-      this.productoEditar.Imagenes = [...this.productoEditar.Imagenes, imageUrl];
-    }
-  }
-
-  eliminarImagen(imagenEliminar: string) {
-    this.productoEditar.Imagenes = this.productoEditar.Imagenes.filter(
-      imagen => imagen !== imagenEliminar
-    );
   }
 
   agregarNuevoDetalle(){

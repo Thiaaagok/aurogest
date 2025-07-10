@@ -1,5 +1,6 @@
 export class EmpresaModel {
     Id: string;
+    Codigo: string;
     Descripcion: string;
     Observaciones?: string;
     Activo: boolean;

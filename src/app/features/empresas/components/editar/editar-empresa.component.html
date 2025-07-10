@@ -24,6 +24,16 @@
 
     <form #form="ngForm" novalidate="">
         <div class="flex flex-col md:flex-row gap-8">
+            
+            <div class="flex flex-col grow basis-0 gap-2">
+                <mat-form-field class="full-width">
+                    <mat-label>Código</mat-label>
+                    <input matInput [(ngModel)]="empresaEditar.Codigo" type="text" name="codgio" autocomplete="off"
+                        required>
+                    <mat-error>Escriba el código de la empresa</mat-error>
+                </mat-form-field>
+            </div>
+
             <div class="flex flex-col grow basis-0 gap-2">
                 <mat-form-field class="full-width">
                     <mat-label>Descripción</mat-label>

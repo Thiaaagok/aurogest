@@ -45,8 +45,8 @@
             <tr>
               <th style="min-width: 12rem">
                 <div class="flex justify-between items-center">
-                  Descripción
-                  <p-columnFilter type="text" field="Descripcion" display="menu" placeholder="Buscar por descripción"></p-columnFilter>
+                  Nombre
+                  <p-columnFilter type="text" field="Nombre" display="menu" placeholder="Buscar por nombre"></p-columnFilter>
                 </div>
               </th>
               <th style="min-width: 10rem">
@@ -84,9 +84,9 @@
           
           <ng-template #body let-producto>
             <tr (click)="editarProducto(producto.Id)" class="cursor-pointer">
-              <td>{{ producto.Descripcion }}</td>
+              <td>{{ producto.Nombre }}</td>
               <td>{{ producto.Codigo }}</td>
-              <td>{{ producto.Tipo?.Nombre }}</td>
+              <td>{{ producto.Tipo?.Descripcion }}</td>
               <td>{{ producto.Marca?.Descripcion }}</td>
               <td>{{ producto.Categoria?.Descripcion }}</td>
               <td>{{ producto.Stock }}</td>

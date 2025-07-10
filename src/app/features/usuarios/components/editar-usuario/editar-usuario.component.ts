@@ -9,6 +9,7 @@ import { UsuariosService } from '../../services/usuarios.service';
 import { EmpresaModel } from '../../../empresas/models/empresa.model';
 import { SelectChosenComponent } from '../../../common/components/select-chosen/select-chosen.component';
 import { timer } from 'rxjs';
+import { EmpresaService } from '../../../empresas/services/empresa.service';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -32,6 +33,7 @@ export class EditarUsuarioComponent {
   private activatedRoute = inject(ActivatedRoute);
   private usuarioService = inject(UsuariosService);
   private router = inject(Router);
+  private empresasService = inject(EmpresaService);
 
   constructor() {
     this.activatedRoute.params.subscribe((params) => {
@@ -50,8 +52,10 @@ export class EditarUsuarioComponent {
       next: (response: Usuario) => {
         this.cargando = false;
         this.usuarioEditar = response;
+        console.log(response)
       },
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => {},
@@ -71,6 +75,7 @@ export class EditarUsuarioComponent {
         this.obtenerUsuario();
       }),
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => {}
@@ -87,6 +92,7 @@ export class EditarUsuarioComponent {
         });
       }),
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => {}
@@ -103,6 +109,7 @@ export class EditarUsuarioComponent {
         });
       }),
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => {}
@@ -110,6 +117,17 @@ export class EditarUsuarioComponent {
   }
 
   cargarEmpresasDrodpwon() {
-    /* this.empresasDropdown = empresasEjemplo; */
+    this.empresasService.obtenerTodos()
+    .subscribe({
+      next: ((response: EmpresaModel[]) => {
+        this.cargando = false;
+        this.empresasDropdown = response;
+      }),
+      error: (err) => {
+        this.cargando = false;
+        console.error(err);
+      },
+      complete: () => {}
+    })
   }
 }

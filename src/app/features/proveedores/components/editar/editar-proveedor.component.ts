@@ -50,8 +50,11 @@ export class EditarProveedorComponent {
     this.proveedorService.editar(this.proveedorEditar.Id, this.proveedorEditar)
     .subscribe({
       next: ((response: ProveedorModel) => {
-        this.cargando = false;
-        this.obtenerProveedor();
+        timer(2000)
+        .subscribe(() => {
+          this.cargando = false;
+          this.obtenerProveedor();
+        })
       }),
       error: (err) => {
         console.log(err);
