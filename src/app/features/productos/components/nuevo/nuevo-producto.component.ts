@@ -15,10 +15,20 @@ import { CommonModule } from '@angular/common';
 import { ProductoTiposService } from '../../services/producto-tipo.service';
 import { ProductoCategoriasService } from '../../services/producto-categoria.service';
 import { MarcasService } from '../../../marcas/services/marcas.service';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { FloatLabel } from 'primeng/floatlabel';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'app-nuevo-producto',
-  imports: [PrimeNgModule, CustomMaterialModule, SelectChosenComponent, ReactiveFormsModule, FormsModule, CommonModule],
+  imports: [PrimeNgModule, CustomMaterialModule, SelectChosenComponent, ReactiveFormsModule, FormsModule, CommonModule,
+    InputTextModule,
+    ToastModule,
+    FloatLabel,
+    TextareaModule
+  ],
   templateUrl: './nuevo-producto.component.html',
   styleUrl: './nuevo-producto.component.scss',
 })
@@ -31,7 +41,8 @@ export class NuevoProductoComponent {
   proveedoresCombo: ProveedorModel[] = [];
   categoriasProductosCombo: ProductoCategoriaModel[] = [];
 
-  private router = inject(Router);
+  private ref = inject(DynamicDialogRef);
+  private config = inject(DynamicDialogConfig);
   private productosService = inject(ProductosService);
   private proveedoresService = inject(ProveedoresService);
   private productoTiposService = inject(ProductoTiposService);
@@ -57,21 +68,21 @@ export class NuevoProductoComponent {
           this.limpiarModel();
         },
         error: (err) => {
+          this.cargando = false;
           console.log(err);
         },
         complete: () => {},
       });
   }
 
-  volver() {
-    this.router.navigateByUrl('productos');
+  cerrar() {
+    this.ref.close();
   }
-  
+
   cargarTiposProductosCombo(){
     this.productoTiposService.obtenerTodos()
     .subscribe({
       next: (response: ProductoTipoModel[]) => {
-        this.cargando = false;
         this.tiposProductosCombo = response;
       },
       error: (err) => {
@@ -85,7 +96,6 @@ export class NuevoProductoComponent {
     this.marcasService.obtenerTodos()
     .subscribe({
       next: (response: MarcaModel[]) => {
-        this.cargando = false;
         this.marcasProductosCombo = response;
       },
       error: (err) => {
@@ -99,7 +109,6 @@ export class NuevoProductoComponent {
     this.productoCategoriasService.obtenerTodos()
     .subscribe({
       next: (response: ProductoCategoriaModel[]) => {
-        this.cargando = false;
         this.categoriasProductosCombo = response;
       },
       error: (err) => {
@@ -113,7 +122,6 @@ export class NuevoProductoComponent {
     this.proveedoresService.obtenerTodos()
     .subscribe({
       next: (response: ProveedorModel[]) => {
-        this.cargando = false;
         this.proveedoresCombo = response;
       },
       error: (err) => {

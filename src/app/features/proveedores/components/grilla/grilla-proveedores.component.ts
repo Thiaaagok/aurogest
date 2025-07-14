@@ -2,13 +2,16 @@ import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { ProveedorModel } from '../../models/proveedor.model';
 import { ProveedoresService } from '../../services/proveedores.service';
 import { GrillaUtilService } from '../../../common/services/grilla-util.service';
 import { Table } from 'primeng/table';
+import { DialogService } from 'primeng/dynamicdialog';
+import { NuevoProveedorComponent } from '../nuevo/nuevo-proveedor.component';
+import { EditarProveedorComponent } from '../editar/editar-proveedor.component';
 
 @Component({
   selector: 'app-grilla-proveedores',
@@ -25,8 +28,8 @@ export class GrillaProveedoresComponent {
   cargando: boolean;
 
   private GrillaUtilService = inject(GrillaUtilService);
-  private router = inject(Router);
   private proveedoresService = inject(ProveedoresService);
+  private dialogService = inject(DialogService);
 
   ngOnInit(){
     this.registrosGrillaActivos = true;
@@ -49,14 +52,6 @@ export class GrillaProveedoresComponent {
     })
   }
 
-  crearProveedor(){
-    this.router.navigateByUrl(`proveedores/nueva`);
-  }
-
-  editarProveedor(id: string){
-    this.router.navigateByUrl(`proveedores/editar/${id}`);
-  }
-
   cargarGrilla(){
     this.proveedores = this.GrillaUtilService.cargarGrilla(this.proveedoresFiltro, this.registrosGrillaActivos);
   }
@@ -67,5 +62,28 @@ export class GrillaProveedoresComponent {
 
   limpiarFiltrado(table: Table){
     this.GrillaUtilService.limpiarFiltrado(table);
+  }
+
+  crearProveedor() {
+    this.dialogService.open(NuevoProveedorComponent, {
+      header: 'Crear Proveedor',
+      width: '50%',
+      height: 'fit-content',
+      modal: true,
+      data: {
+      },
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
+    });
+  }
+
+  editarProveedor(id: string) {
+    this.dialogService.open(EditarProveedorComponent, {
+      header: 'Editar Proveedor',
+      width: '50%',
+      height: 'fit-content',
+      modal: true,
+      data: id ,
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
+    });
   }
 }

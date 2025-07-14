@@ -1,103 +1,85 @@
-<div class="botonera-flotante">
-    <div class="botonera-contenedor">
-      <button mat-mini-fab color="accent" matTooltip="Volver a la grilla" (click)="volver()">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-  
-      <button mat-mini-fab color="primary" matTooltip="Guardar nuevo productowdadawawdwadaw" [disabled]="!formPrincipal.valid" (click)="onSubmit()">
-        <i class="fa-solid fa-floppy-disk"></i>
-      </button>
-    </div>
-</div>
 <div class="card flex flex-col gap-4">
-  <div class="font-semibold text-xl">Nuevo Producto</div>
-  <form #formPrincipal="ngForm" novalidate>
-    <div class="card flex flex-col gap-4">
-      <div class="flex flex-col md:flex-row gap-8">
-        <div class="flex flex-col grow basis-0 gap-2">
-          <mat-form-field class="full-width">
-            <mat-label>Código</mat-label>
-            <input matInput [(ngModel)]="nuevoProducto.Codigo" type="text" name="codigo" autocomplete="off" title="Codigo" required>
-            <mat-error>Escriba un codigo unico para el producto</mat-error>
-          </mat-form-field>
-        </div>
-        <div class="flex flex-col grow basis-0 gap-2">
-          <mat-form-field class="full-width">
-            <mat-label>Nombre</mat-label>
-            <input matInput [(ngModel)]="nuevoProducto.Nombre" type="text" name="nombre" autocomplete="off" title="Nombre" required>
-            <mat-error>Escriba un nombre para el producto</mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="flex flex-col md:flex-row gap-8">
-        <div class="flex flex-col grow basis-0 gap-2">
-          <app-select-chosen class="full-width" title="Tipo"
-            [(ngModel)]="nuevoProducto.Tipo" name="tipo" placeholder="Tipo de Producto"
-            [dataSource]="tiposProductosCombo" (recargar)="cargarTiposProductosCombo()">
-          </app-select-chosen>
-        </div>
-        <div class="flex flex-col grow basis-0 gap-2">
-          <app-select-chosen class="full-width" title="Marca"
-            [(ngModel)]="nuevoProducto.Marca" name="marca" placeholder="Marca del Producto"
-            [dataSource]="marcasProductosCombo" (recargar)="cargarMarcasProductosCombo()">
-          </app-select-chosen>
-        </div>
-        <div class="flex flex-col grow basis-0 gap-2">
-          <app-select-chosen class="full-width" title="Categoria"
-            [(ngModel)]="nuevoProducto.Categoria" name="categoria" placeholder="Categoria del Producto"
-            [dataSource]="categoriasProductosCombo" (recargar)="cargarCategoriasProductosCombo()">
-          </app-select-chosen>
-        </div>
-      </div>
-    
-      <div class="flex flex-col md:flex-row gap-8">
-        <div class="flex flex-col grow basis-0 gap-2">
-          <mat-form-field class="full-width">
-            <mat-label>Proveedores</mat-label>
-            <mat-select [(ngModel)]="nuevoProducto.Proveedores" name="proveedores" multiple>
-              <mat-option *ngFor="let proveedor of proveedoresCombo" [value]="proveedor">
-                {{ proveedor.Descripcion }}
-              </mat-option>
-            </mat-select>
-            <mat-error>Seleccione al menos un proveedor</mat-error>
-            <button tabindex="-1" title="Recarga el combo" matSuffix mat-icon-button aria-label="Clear"
-                  (click)="$event.stopPropagation(); cargarProveedoresCombo()">
-                  <mat-icon>refresh</mat-icon>
-              </button>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div class="flex flex-col md:flex-row gap-8">
-          <div class="flex flex-col grow basis-0 gap-2">
-              <mat-form-field class="full-width">
-                <mat-label>Stock</mat-label>
-                <input matInput type="number" [(ngModel)]="nuevoProducto.Stock" name="stock" required>
-              </mat-form-field>
-            </div>
-            <div class="flex flex-col grow basis-0 gap-2">
-              <mat-form-field class="full-width">
-                <mat-label>Código de Barra</mat-label>
-                <input matInput [(ngModel)]="nuevoProducto.CodigoBarra" type="text" name="codigoBarras">
-              </mat-form-field>
-            </div>
-      </div>
-      <div class="flex flex-col md:flex-row gap-8">
-          <div class="flex flex-col grow basis-0 gap-2">
-              <mat-form-field class="full-width">
-                <mat-label>Precio Compra</mat-label>
-                <input matInput type="text" [(ngModel)]="nuevoProducto.PrecioCompra" name="preciocompra" required>
-                <span matTextPrefix>$&nbsp;</span>
-              </mat-form-field>
-            </div>
-            <div class="flex flex-col grow basis-0 gap-2">
-              <mat-form-field class="full-width">
-                <mat-label>Precio Venta</mat-label>
-                <input matInput [(ngModel)]="nuevoProducto.PrecioVenta" type="text" name="precioventa">
-                <span matTextPrefix>$&nbsp;</span>
-              </mat-form-field>
-            </div>
-      </div>
+  <form #form="ngForm" novalidate class="flex flex-col gap-4">
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <input pInputText type="text" id="empresa" #empresa="ngModel" class="w-100" name="username"
+          [(ngModel)]="nuevoProducto.Codigo" required />
+        <label for="empresa">Empresa</label>
+        <!-- @if (empresa.invalid && (empresa.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Empresa es requerido.</p-message>
+                } -->
+      </p-floatlabel>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <input pInputText type="text" id="nombre" class="w-100" #nombre="ngModel" name="nombre"
+          [(ngModel)]="nuevoProducto.Nombre" required />
+        <label for="nombre">Contraseña</label>
+        <!-- @if (nombre.invalid && (nombre.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Contraseña es requerido.</p-message>
+                } -->
+      </p-floatlabel>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <app-select-chosen class="w-100" title="Tipo" [(ngModel)]="nuevoProducto.Tipo" name="tipo"
+        placeholder="Tipo de producto" [dataSource]="tiposProductosCombo"
+        (recargar)="cargarTiposProductosCombo()"></app-select-chosen>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <app-select-chosen class="w-100" title="marca" [(ngModel)]="nuevoProducto.Marca" name="marca"
+        placeholder="Marca del producto" [dataSource]="marcasProductosCombo"
+        (recargar)="cargarMarcasProductosCombo()"></app-select-chosen>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <app-select-chosen class="w-100" title="Categoria" [(ngModel)]="nuevoProducto.Categoria" name="categoria"
+        placeholder="Categoria del producto" [dataSource]="categoriasProductosCombo"
+        (recargar)="cargarCategoriasProductosCombo()"></app-select-chosen>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <app-select-chosen class="w-100"title="Proveedores" [multiple]="true" [(ngModel)]="nuevoProducto.Proveedores"
+        name="proveedores" placeholder="Proveedores del producto" [dataSource]="proveedoresCombo"
+        (recargar)="cargarProveedoresCombo()"></app-select-chosen>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <p-inputnumber [(ngModel)]="nuevoProducto.Stock" [useGrouping]="false" class="w-100" id="stock" inputId="stock"
+          name="stock" mode="decimal" [min]="1" [max]="100000000" required />
+        <label for="stock">Stock</label>
+        <!-- @if (stock.invalid && (stock.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Intentos Conexión es
+                    requerido.</p-message>
+                } -->
+      </p-floatlabel>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <p-inputnumber [(ngModel)]="nuevoProducto.CodigoBarra" [useGrouping]="false" class="w-100" id="codigoBarra"
+          inputId="codigoBarra" name="codigoBarra" mode="decimal" [min]="1" [max]="100000000000" />
+        <label for="codigoBarra">Código Barra</label>
+        <!-- @if (codigoBarra.invalid && (codigoBarra.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Intentos Conexión es
+                    requerido.</p-message>
+                } -->
+      </p-floatlabel>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <p-inputnumber class="w-100" [(ngModel)]="nuevoProducto.PrecioCompra" name="precioCompra" id="precioCompra" [showButtons]="true" inputId="stacked"
+          mode="currency" currency="ARG" />
+        <label for="precioCompra">Precio Compra</label>
+      </p-floatlabel>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <p-inputnumber class="w-100" [(ngModel)]="nuevoProducto.PrecioVenta" name="precioVenta" id="precioVenta" [showButtons]="true" inputId="stacked"
+          mode="currency" currency="ARG" />
+        <label for="precioVenta">Precio Venta</label>
+      </p-floatlabel>
+    </div>
+    <div class="flex justify-end gap-2 pt-4">
+      <p-button label="Cancelar" icon="pi pi-times" class="p-button-outlined" (click)="cerrar()"></p-button>
+      <p-button label="Guardar" severity="success" icon="pi pi-check" (click)="onSubmit()"
+        [disabled]="!form.valid"></p-button>
     </div>
   </form>
 </div>

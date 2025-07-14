@@ -7,6 +7,11 @@ import { CommonModule } from '@angular/common';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { EmpresaModel } from '../../models/empresa.model';
 import { EmpresaService } from '../../services/empresa.service';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { FloatLabel } from 'primeng/floatlabel';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'app-nueva-empresa',
@@ -16,7 +21,11 @@ import { EmpresaService } from '../../services/empresa.service';
     RouterModule,
     FontAwesomeModule,
     CustomMaterialModule,
-    FormsModule,
+    FormsModule,   
+    InputTextModule,
+    ToastModule,
+    FloatLabel,
+    TextareaModule
   ],
   templateUrl: './nueva-empresa.component.html',
   styleUrl: './nueva-empresa.component.scss',
@@ -25,7 +34,8 @@ export class NuevaEmpresaComponent {
   nuevaEmpresa: EmpresaModel = new EmpresaModel();
   cargando: boolean;
 
-  private router = inject(Router);
+  private ref = inject(DynamicDialogRef);
+  private config = inject(DynamicDialogConfig);
   private empresasService = inject(EmpresaService);
 
   onSubmit() {
@@ -36,6 +46,7 @@ export class NuevaEmpresaComponent {
         this.limpiarModel();
       },
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => {},
@@ -46,7 +57,7 @@ export class NuevaEmpresaComponent {
     this.nuevaEmpresa = new EmpresaModel();
   }
 
-  volver() {
-    this.router.navigateByUrl('empresas');
+  cerrar() {
+    this.ref.close();
   }
 }

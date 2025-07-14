@@ -8,10 +8,24 @@ import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { ProveedorModel } from '../../models/proveedor.model';
 import { ProveedoresService } from '../../services/proveedores.service';
 import { timer } from 'rxjs';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { FloatLabel } from 'primeng/floatlabel';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'app-editar-proveedor',
-  imports: [PrimeNgModule,CommonModule,RouterModule,FontAwesomeModule,CustomMaterialModule,FormsModule],
+  imports: [PrimeNgModule,
+    CommonModule,
+    RouterModule,
+    FontAwesomeModule,
+    CustomMaterialModule,
+    FormsModule,
+    InputTextModule,
+    ToastModule,
+    FloatLabel,
+    TextareaModule],
   templateUrl: './editar-proveedor.component.html',
   styleUrl: './editar-proveedor.component.scss',
 })
@@ -20,15 +34,13 @@ export class EditarProveedorComponent {
   parametro: string;
   cargando: boolean;
   
-  private activatedRoute = inject(ActivatedRoute);
+  private ref = inject(DynamicDialogRef);
+  private config = inject(DynamicDialogConfig);
   private proveedorService = inject(ProveedoresService);
-  private router = inject(Router);
 
-  constructor(){
-    this.activatedRoute.params.subscribe(params => {
-      this.parametro = params['id'];
-      this.obtenerProveedor();
-    });
+  ngOnInit(){
+    this.parametro = this.config.data;
+    this.obtenerProveedor();
   }
 
   obtenerProveedor() {
@@ -39,6 +51,7 @@ export class EditarProveedorComponent {
         this.proveedorEditar = response;
       },
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => {},
@@ -50,13 +63,11 @@ export class EditarProveedorComponent {
     this.proveedorService.editar(this.proveedorEditar.Id, this.proveedorEditar)
     .subscribe({
       next: ((response: ProveedorModel) => {
-        timer(2000)
-        .subscribe(() => {
-          this.cargando = false;
-          this.obtenerProveedor();
-        })
+        this.cargando = false;
+        this.obtenerProveedor();
       }),
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => {}
@@ -68,11 +79,10 @@ export class EditarProveedorComponent {
     .subscribe({
       next: ((response: boolean) => {
         this.cargando = false;
-        timer(300).subscribe(() => {
-          this.obtenerProveedor();
-        })
+        this.obtenerProveedor();
       }),
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => {}
@@ -84,18 +94,18 @@ export class EditarProveedorComponent {
     .subscribe({
       next: ((response: boolean) => {
         this.cargando = false;
-        timer(300).subscribe(() => {
-          this.obtenerProveedor();
-        })
+        this.obtenerProveedor();
       }),
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => {}
     })
   }
 
-  volver(){
-    this.router.navigateByUrl('proveedores');
+  cerrar() {
+    this.ref.close();
   }
+
 }

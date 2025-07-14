@@ -10,6 +10,10 @@ import { CustomMaterialModule } from '../../../common/material/custom-material.m
 import { FormsModule } from '@angular/forms';
 import { GrillaUtilService } from '../../../common/services/grilla-util.service';
 import { HttpClientModule } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { NuevoUsuarioComponent } from '../nuevo-usuario/nuevo-usuario.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { EditarUsuarioComponent } from '../editar-usuario/editar-usuario.component';
 
 
 @Component({
@@ -30,13 +34,14 @@ export class GrillaUsuariosComponent {
 
   usuarios: Usuario[] = [];
   usuariosFiltro: Usuario[] = [];
-
+  visible: boolean;
   cargando: boolean;
   registrosGrillaActivos: boolean;
 
   private router = inject(Router);
   private usuariosService = inject(UsuariosService);
   private GrillaUtilService = inject(GrillaUtilService);
+  private dialogService = inject(DialogService);
 
   constructor() {
     this.registrosGrillaActivos = true;
@@ -62,14 +67,6 @@ export class GrillaUsuariosComponent {
     });
   }
 
-  crearUsuario() {
-    this.router.navigateByUrl(`usuarios/nuevo`);
-  }
-
-  editarUsuario(id: string) {
-    this.router.navigateByUrl(`usuarios/editar/${id}`);
-  }
-
   cargarGrilla() {
     this.usuarios = this.GrillaUtilService.cargarGrilla(
       this.usuariosFiltro,
@@ -83,5 +80,29 @@ export class GrillaUsuariosComponent {
 
   filtrarUsuarios(table: Table, event: Event) {
     this.GrillaUtilService.filtrarGlobal(table, event);
+  }
+
+
+  crearUsuario() {
+    this.dialogService.open(NuevoUsuarioComponent, {
+      header: 'Crear Usuario',
+      width: '50%',
+      height: 'fit-content',
+      modal: true,
+      data: {
+      },
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
+    });
+  }
+
+  editarUsuario(id: string) {
+    this.dialogService.open(EditarUsuarioComponent, {
+      header: 'Editar Usuario',
+      width: '50%',
+      height: 'fit-content',
+      modal: true,
+      data: id ,
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
+    });
   }
 }

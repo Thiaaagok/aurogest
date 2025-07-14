@@ -1,104 +1,96 @@
-<div class="botonera-flotante">
-    <div class="botonera-contenedor">
-      <button mat-mini-fab color="accent" matTooltip="Volver a la grilla" (click)="volver()">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-  
-      <button mat-mini-fab color="primary" matTooltip="Guardar proveedor editado" [disabled]="!form.valid" (click)="onSubmit()">
-        <i class="fa-solid fa-floppy-disk"></i>
-      </button>
-  
-      @if(proveedorEditar.Activo){
-        <button mat-mini-fab color="primary" class="boton-eliminar" matTooltip="Eliminar proveedor" [disabled]="!form.pristine" (click)="eliminarProveedor()">
-          <i class="fa-solid fa-trash"></i>
-        </button>
-      }@else{
-        <button mat-mini-fab color="primary" matTooltip="Reactivar proveedor" [disabled]="!form.pristine" (click)="reactivarProveedor()">
-          <i class="fa-solid fa-unlock"></i>
-        </button>
-      }
-    </div>
-
-</div>
-  
 <div class="card flex flex-col gap-4">
-    <div class="font-semibold text-xl">Editar Proveedor</div>
-  
-    <form #form="ngForm" novalidate="">
-      <div class="flex flex-col md:flex-row gap-8">
-        <div class="flex flex-col grow basis-0 gap-2">
-          <mat-form-field class="full-width">
-            <mat-label>Descripción</mat-label>
-            <input matInput [(ngModel)]="proveedorEditar.Descripcion" type="text" name="descripcion" autocomplete="off" required>
-            <mat-error>Escriba la descripción del proveedor</mat-error>
-          </mat-form-field>
-        </div>
-  
-        <div class="flex flex-col grow basis-0 gap-2">
-          <mat-form-field class="full-width">
-            <mat-label>CUIT</mat-label>
-            <input matInput [(ngModel)]="proveedorEditar.Cuit" type="text" name="cuit" autocomplete="off" required>
-            <mat-error>Escriba el CUIT</mat-error>
-          </mat-form-field>
-        </div>
-  
-        <div class="flex flex-col grow basis-0 gap-2">
-          <mat-form-field class="full-width">
-            <mat-label>Código</mat-label>
-            <input matInput [(ngModel)]="proveedorEditar.Codigo" type="text" name="codigo" autocomplete="off" required>
-            <mat-error>Escriba un código válido</mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-  
-      <div class="flex flex-col md:flex-row gap-8">
-        <div class="flex flex-col grow basis-0 gap-2">
-          <mat-form-field class="full-width">
-            <mat-label>Teléfono</mat-label>
-            <input matInput [(ngModel)]="proveedorEditar.Telefono" type="text" name="telefono" autocomplete="off">
-          </mat-form-field>
-        </div>
-  
-        <div class="flex flex-col grow basis-0 gap-2">
-          <mat-form-field class="full-width">
-            <mat-label>Mail</mat-label>
-            <input matInput [(ngModel)]="proveedorEditar.Email" type="email" name="mail" autocomplete="off">
-            <mat-error>Escriba un mail válido</mat-error>
-          </mat-form-field>
-        </div>
-  
-        <div class="flex flex-col grow basis-0 gap-2">
-          <mat-form-field class="full-width">
-            <mat-label>Web</mat-label>
-            <input matInput [(ngModel)]="proveedorEditar.Web" type="text" name="web" autocomplete="off">
-          </mat-form-field>
-        </div>
-      </div>
-  
-      <div class="flex flex-col md:flex-row gap-8">
-        <div class="flex flex-col grow basis-0 gap-2">
-          <mat-form-field class="full-width">
-            <mat-label>Dirección</mat-label>
-            <input matInput [(ngModel)]="proveedorEditar.Direccion" type="text" name="direccion" autocomplete="off">
-            <mat-error>Escriba una dirección válida</mat-error>
-          </mat-form-field>
-        </div>
-  
-        <div class="flex flex-col grow basis-0 gap-2">
-          <mat-form-field class="full-width">
-            <mat-label>Código Postal</mat-label>
-            <input matInput [(ngModel)]="proveedorEditar.CodigoPostal" type="text" name="codigopostal" autocomplete="off">
-            <mat-error>Escriba un código postal válido</mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-  
-      <div class="flex flex-col md:flex-row gap-8">
-        <div class="flex flex-col grow basis-0 gap-2">
-          <mat-form-field class="full-width">
-            <textarea matInput [(ngModel)]="proveedorEditar.Observaciones" name="observaciones" placeholder="Observaciones" autocomplete="off" title="Observaciones"></textarea>
-          </mat-form-field>
-        </div>
-      </div>
-    </form>
+  <form #form="ngForm" novalidate class="flex flex-col gap-4">
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <input pInputText type="text" id="empresa" #empresa="ngModel" class="w-100" name="username"
+          [(ngModel)]="proveedorEditar.Codigo" required />
+        <label for="empresa">Empresa</label>
+        <!-- @if (empresa.invalid && (empresa.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Empresa es requerido.</p-message>
+                } -->
+      </p-floatlabel>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <input pInputText type="text" id="descripcion" class="w-100" #descripcion="ngModel" name="descripcion"
+          [(ngModel)]="proveedorEditar.Descripcion" required />
+        <label for="descripcion">Contraseña</label>
+        <!-- @if (descripcion.invalid && (descripcion.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Contraseña es requerido.</p-message>
+                } -->
+      </p-floatlabel>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <input pInputText type="text" id="Cuit" class="w-100" #cuit="ngModel" name="Cuit"
+          [(ngModel)]="proveedorEditar.Cuit" required />
+        <label for="cuit">Cuit</label>
+        <!-- @if (cuit.invalid && (cuit.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Cuit es requerido.</p-message>
+                } -->
+      </p-floatlabel>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <p-inputnumber [(ngModel)]="proveedorEditar.Telefono" [useGrouping]="false" class="w-100" id="telefono"
+          inputId="telefono" name="telefono" mode="decimal" [min]="1" [max]="10000000000000000000" required />
+        <label for="telefono">Telefono</label>
+      </p-floatlabel>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <input pInputText type="text" id="Mail" class="w-100" #mail="ngModel" name="Mail"
+          [(ngModel)]="proveedorEditar.Email" required />
+        <label for="mail">Mail</label>
+        <!-- @if (mail.invalid && (mail.touched || form.submitted)) {
+        <p-message severity="error" size="small" variant="simple">Mail es requerido.</p-message>
+        } -->
+      </p-floatlabel>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <input pInputText type="text" id="web" class="w-100" #web="ngModel" name="web" [(ngModel)]="proveedorEditar.Web"
+          required />
+        <label for="web">Razón Social</label>
+        <!-- @if (web.invalid && (web.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Web es requerido.</p-message>
+                } -->
+      </p-floatlabel>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <input pInputText [(ngModel)]="proveedorEditar.Direccion" class="w-100" #direccion="ngModel" name="direccion"
+          id="direccion" required />
+        <label for="direccion">Dirección</label>
+        <!-- @if (direccion.invalid && (direccion.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Dirección es
+                    requerido.</p-message>
+                } -->
+      </p-floatlabel>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <p-inputnumber [(ngModel)]="proveedorEditar.CodigoPostal" [useGrouping]="false" class="w-100" id="codigoPostal"
+          inputId="codigoPostal" name="codigoPostal" mode="decimal" [min]="1" [max]="100000000" required />
+        <label for="codigoPostal">Código Postal</label>
+      </p-floatlabel>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <textarea rows="5" id="observaciones" cols="30" name="observaciones" class="w-100" pTextarea
+          [(ngModel)]="proveedorEditar.Observaciones"></textarea>
+        <label for="observaciones">Observaciones</label>
+      </p-floatlabel>
+    </div>
+    <div class="flex justify-end gap-2 pt-4">
+      <p-button label="Cancelar" icon="pi pi-times" class="p-button-outlined" (click)="cerrar()"></p-button>
+      @if(proveedorEditar.Activo){
+        <p-button label="Eliminar" severity="danger" matTooltip="Eliminar usuario" icon="pi pi-trash"  (click)="eliminarProveedor()" [disabled]="cargando"></p-button>
+      }@else{
+        <p-button label="Reactivar" severity="info" matTooltip="Reactivar usuario"  icon="pi pi-unlock"  (click)="reactivarProveedor()" [disabled]="cargando"></p-button>
+      }
+      <p-button label="Guardar" severity="success" icon="pi pi-check" (click)="onSubmit()"
+        [disabled]="!form.valid || cargando"></p-button>
+    </div>
+  </form>
 </div>
