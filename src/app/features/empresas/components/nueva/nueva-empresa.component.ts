@@ -44,6 +44,7 @@ export class NuevaEmpresaComponent {
       next: (response: EmpresaModel) => {
         this.cargando = false;
         this.limpiarModel();
+        this.ref.close();
       },
       error: (err) => {
         this.cargando = false;

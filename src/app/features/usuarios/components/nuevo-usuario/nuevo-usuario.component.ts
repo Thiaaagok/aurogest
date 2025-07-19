@@ -55,6 +55,7 @@ export class NuevoUsuarioComponent {
       next: (response: Usuario) => {
         this.cargando = false;
         this.limpiarModel();
+        this.ref.close(); 
       },
       error: (err) => {
         console.log(err);

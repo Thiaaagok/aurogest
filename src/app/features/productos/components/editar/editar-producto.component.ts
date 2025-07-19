@@ -1,9 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ProductoDetalleModel, ProductoModel } from '../../models/producto.model';
 import { ProductoTipoModel } from '../../models/producto-tipo.model';
-import { MarcaModel } from '../../../marcas/models/marca.model';
 import { ProveedorModel } from '../../../proveedores/models/proveedor.model';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ProductosService } from '../../services/producto.service';
 import { SelectChosenComponent } from '../../../common/components/select-chosen/select-chosen.component';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
@@ -12,7 +10,6 @@ import { timer } from 'rxjs';
 import { ProductoCategoriaModel } from '../../models/producto-categoria.model';
 import { ProductoTiposService } from '../../services/producto-tipo.service';
 import { ProductoCategoriasService } from '../../services/producto-categoria.service';
-import { MarcasService } from '../../../marcas/services/marcas.service';
 import { ProveedoresService } from '../../../proveedores/services/proveedores.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,6 +17,8 @@ import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { FloatLabel } from 'primeng/floatlabel';
+import { MarcaModel } from '../../models/marca.model';
+import { MarcasService } from '../../services/marcas.service';
 
 @Component({
   selector: 'app-editar-producto',
@@ -63,7 +62,7 @@ export class EditarProductoComponent {
         timer(2000)
         .subscribe(() => {
           this.cargando = false;
-          this.obtenerProducto();
+          this.ref.close();
         })
       },
       error: (err) => {

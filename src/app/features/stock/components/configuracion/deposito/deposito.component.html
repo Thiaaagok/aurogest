@@ -1,10 +1,10 @@
 <div class="botonera-flotante">
     <div class="botonera-contenedor">
-      <button mat-mini-fab color="accent" matTooltip="Cargar las marcas" (click)="obtenerMarcas()">
+      <button mat-mini-fab color="accent" matTooltip="Cargar los depositos" (click)="obtenerDepositos()">
         <i class="fa-solid fa-arrows-rotate"></i>
       </button>
   
-      <button mat-mini-fab color="primary" matTooltip="Crear una nueva marca" [disabled]="!form.valid" (click)="onSubmit()">
+      <button mat-mini-fab color="primary" matTooltip="Crear un nuevo deposito" [disabled]="!form.valid" (click)="onSubmit()">
         <i class="fa-solid fa-square-plus"></i>
       </button>
   
@@ -16,34 +16,38 @@
       </mat-slide-toggle>
     </div>
 </div>
-<div class="card flex flex-col gap-4">
-    <div class="font-semibold text-xl">Nueva Marca</div>
-    <form #form="ngForm" novalidate="">
-        <div class="flex flex-col md:flex-row gap-8">
+<form #form="ngForm" novalidate="" class="mb-4">
+    <div class="card flex flex-col gap-4">
+        <div class="font-semibold text-xl">Nuevo Deposito</div>
+        <div class="flex flex-wrap gap-4">
             <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Codigo</mat-label>
-                    <input matInput [(ngModel)]="nuevaMarca.Codigo" type="text" name="codigo" autocomplete="off"
-                        title="Descripción" required>
-                    <mat-error>Escriba un codigo para hacer referencia a la marca</mat-error>
-                </mat-form-field>
+                <p-floatlabel variant="in">
+                    <input pInputText type="text" id="codigo" class="w-100" #codigo="ngModel" name="codigo"
+                        [(ngModel)]="nuevoDeposito.Codigo" required />
+                    <label for="codigo">Código</label>
+                    <!-- @if (codigo.invalid && (codigo.touched || form.submitted)) {
+                    <p-message severity="error" size="small" variant="simple">Código es requerido.</p-message>
+                    } -->
+                </p-floatlabel>
             </div>
             <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Descripción</mat-label>
-                    <input matInput [(ngModel)]="nuevaMarca.Descripcion" type="text" name="descripcion" autocomplete="off"
-                    title="Contaseña" required>
-                    <mat-error>Escriba una descripción para hacer referencia a la marca</mat-error>
-                </mat-form-field>
+                <p-floatlabel variant="in">
+                    <input pInputText type="text" id="descripcion" class="w-100" #descripcion="ngModel" name="descripcion"
+                        [(ngModel)]="nuevoDeposito.Descripcion" required />
+                    <label for="descripcion">Descripción</label>
+                    <!-- @if (descripcion.invalid && (descripcion.touched || form.submitted)) {
+                    <p-message severity="error" size="small" variant="simple">Contraseña es requerido.</p-message>
+                    } -->
+                </p-floatlabel>
             </div>
         </div>
-    </form>
-</div>
+    </div>
+</form>
 <div class="card"> 
-    <div class="font-semibold text-xl mb-4">Marcas</div>
+    <div class="font-semibold text-xl mb-4">Depositos</div>
     <p-table
-        #grillaMarcas
-        [value]="marcas"
+        #grillaDepositos
+        [value]="depositos"
         dataKey="Id"
         [rows]="10"
         [loading]="cargando"
@@ -55,12 +59,12 @@
     >
         <ng-template #caption>
             <div class="flex justify-between items-center flex-column sm:flex-row">
-                <button pButton label="Limpiar filtros" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="limpiarFiltrado(grillaMarcas)"></button>
+                <button pButton label="Limpiar filtros" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="limpiarFiltrado(grillaDepositos)"></button>
                 <p-iconfield iconPosition="left" class="ml-auto">
                     <p-inputicon>
                         <i class="pi pi-search"></i>
                     </p-inputicon>
-                    <input #filter class="w-50vw" pInputText type="text" (input)="filtrarMarcas(grillaMarcas, $event)" placeholder="Buscar" />
+                    <input #filter pInputText type="text" (input)="filtrarCategorias(grillaDepositos, $event)" placeholder="Buscar" />
                 </p-iconfield>
             </div>
         </ng-template>
@@ -82,22 +86,22 @@
             </tr>
         </ng-template>
 
-        <ng-template #body let-marca>
-            <tr (click)="editarMarca(marca.Id)" class="cursor-pointer">
-                <td>{{ marca.Codigo }}</td>
-                <td>{{ marca.Descripcion }}</td>
+        <ng-template #body let-deposito>
+            <tr (click)="editar(deposito.Id)" class="cursor-pointer">
+                <td>{{ deposito.Codigo }}</td>
+                <td>{{ deposito.Descripcion }}</td>
             </tr>
         </ng-template>
 
         <ng-template #emptymessage>
             <tr>
-                <td colspan="2">No se encontraron marcas.</td>
+                <td colspan="2">No se encontraron categorias.</td>
             </tr>
         </ng-template>
 
         <ng-template #loadingbody>
             <tr>
-                <td colspan="2">Cargando marcas...</td>
+                <td colspan="2">Cargando categorias...</td>
             </tr>
         </ng-template>
     </p-table>

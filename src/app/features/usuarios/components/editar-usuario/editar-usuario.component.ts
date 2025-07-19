@@ -77,7 +77,7 @@ export class EditarUsuarioComponent {
     .subscribe({
       next: ((response: Usuario) => {
         this.cargando = false;
-        this.obtenerUsuario();
+        this.ref.close();
       }),
       error: (err) => {
         this.cargando = false;

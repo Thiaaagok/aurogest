@@ -1,0 +1,105 @@
+<div class="botonera-flotante">
+    <div class="botonera-contenedor">
+        <button mat-mini-fab color="accent" matTooltip="Cargar los productos" (click)="obtenerProductos()">
+            <i class="fa-solid fa-arrows-rotate"></i>
+        </button>
+    </div>
+</div>
+<div class="card">
+    <div class="font-semibold text-xl mb-4">Stock</div>
+    <p-table #grillaProductos [value]="productos" dataKey="Id" [rows]="10" [loading]="cargando" [rowHover]="true"
+        [showGridlines]="true" [paginator]="true" [globalFilterFields]="['Usuario', 'Mail']" responsiveLayout="scroll">
+        <ng-template #caption>
+            <div class="flex justify-between items-center flex-column sm:flex-row">
+                <p-iconfield iconPosition="left">
+                    <p-inputicon>
+                        <i class="pi pi-search"></i>
+                    </p-inputicon>
+                    <input #filter pInputText class="w-50vw" type="text"
+                        (input)="filtrarProductos(grillaProductos, $event)" placeholder="Buscar" />
+                </p-iconfield>
+            </div>
+            <div class="flex items-center flex-column sm:flex-row mt-3 gap-4">
+                <button pButton label="Limpiar filtros" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+                    (click)="limpiarFiltrado(grillaProductos)"></button>
+
+                <button pButton label="Bajo stock" class="p-button-warning mb-2" icon="pi pi-angle-double-down"
+                    (click)="filtrarBajoStock(grillaProductos)"></button>
+
+                <button pButton label="Sin stock" class="p-button-danger mb-2" icon="pi pi-times-circle"
+                    (click)="filtrarSinStock(grillaProductos)"></button>
+            </div>
+            <div class="flex justify-between items-center flex-column sm:flex-row mt-3 w-40 gap-4">
+                <div class="flex flex-col grow basis-0 gap-2">
+                    <app-select-chosen title="Unidad Medida" [(ngModel)]="unidadMedida" name="Unidad Medida"
+                        placeholder="Unidad Medida" [dataSource]="unidadesMedidaCombo"
+                        (recargar)="cargarUnidadesMedidasCombo()"></app-select-chosen>
+                </div>
+                <div class="flex flex-col grow basis-0 gap-2">
+                    <app-select-chosen title="Deposito" [(ngModel)]="deposito" name="Deposito" placeholder="Deposito"
+                        [dataSource]="depositosCombo" (recargar)="cargarUnidadesMedidasCombo()"></app-select-chosen>
+                </div>
+            </div>
+
+        </ng-template>
+        <ng-template #header>
+            <tr>
+                <th style="min-width: 12rem">
+                    <div class="flex justify-between items-center">
+                        Nombre
+                        <p-columnFilter type="text" field="Nombre" display="menu"
+                            placeholder="Buscar por nombre"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width: 10rem">
+                    <div class="flex justify-between items-center">
+                        Código
+                        <p-columnFilter type="text" field="Codigo" display="menu"
+                            placeholder="Buscar por código"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width: 10rem">
+                    <div class="flex justify-between items-center">
+                        Tipo
+                        <p-columnFilter type="text" field="Tipo.Descripcion" display="menu"
+                            placeholder="Buscar por tipo"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width: 10rem">
+                    <div class="flex justify-between items-center">
+                        Marca
+                        <p-columnFilter type="text" field="Marca.Descripcion" display="menu"
+                            placeholder="Buscar por marca"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width: 10rem">
+                    <div class="flex justify-between items-center">
+                        Categoria
+                        <p-columnFilter type="text" field="Categoria.Descripcion" display="menu"
+                            placeholder="Buscar por categoria"></p-columnFilter>
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+
+        <ng-template #body let-producto>
+            <tr class="cursor-pointer">
+                <td>{{ producto.Nombre }}</td>
+                <td>{{ producto.Codigo }}</td>
+                <td>{{ producto.Tipo?.Descripcion }}</td>
+                <td>{{ producto.Marca?.Descripcion }}</td>
+                <td>{{ producto.Categoria?.Descripcion }}</td>
+            </tr>
+        </ng-template>
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="8">No se encontraron productos.</td>
+            </tr>
+        </ng-template>
+        <ng-template #loadingbody>
+            <tr>
+                <td colspan="8">Cargando productos</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

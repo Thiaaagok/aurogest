@@ -6,7 +6,6 @@ import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
 import { SelectChosenComponent } from '../../../common/components/select-chosen/select-chosen.component';
 import { ProductoTipoModel } from '../../models/producto-tipo.model';
-import { MarcaModel } from '../../../marcas/models/marca.model';
 import { ProveedorModel } from '../../../proveedores/models/proveedor.model';
 import { ProveedoresService } from '../../../proveedores/services/proveedores.service';
 import { ProductoCategoriaModel } from '../../models/producto-categoria.model';
@@ -14,16 +13,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProductoTiposService } from '../../services/producto-tipo.service';
 import { ProductoCategoriasService } from '../../services/producto-categoria.service';
-import { MarcasService } from '../../../marcas/services/marcas.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { FloatLabel } from 'primeng/floatlabel';
 import { TextareaModule } from 'primeng/textarea';
+import { MarcaModel } from '../../models/marca.model';
+import { MarcasService } from '../../services/marcas.service';
 
 @Component({
   selector: 'app-nuevo-producto',
-  imports: [PrimeNgModule, CustomMaterialModule, SelectChosenComponent, ReactiveFormsModule, FormsModule, CommonModule,
+  imports: [
+    PrimeNgModule, 
+    CustomMaterialModule, 
+    SelectChosenComponent, 
+    ReactiveFormsModule,
+    FormsModule,
+    CommonModule,
     InputTextModule,
     ToastModule,
     FloatLabel,
@@ -40,6 +46,7 @@ export class NuevoProductoComponent {
   marcasProductosCombo: MarcaModel[] = [];
   proveedoresCombo: ProveedorModel[] = [];
   categoriasProductosCombo: ProductoCategoriaModel[] = [];
+  MinimoStock: number;
 
   private ref = inject(DynamicDialogRef);
   private config = inject(DynamicDialogConfig);
@@ -66,6 +73,7 @@ export class NuevoProductoComponent {
         next: (response: ProductoModel) => {
           this.cargando = false;
           this.limpiarModel();
+          this.ref.close();
         },
         error: (err) => {
           this.cargando = false;

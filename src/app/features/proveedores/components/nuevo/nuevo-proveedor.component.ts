@@ -43,6 +43,7 @@ export class NuevoProveedorComponent {
       next: (response: ProveedorModel) => {
         this.cargando = false;
         this.limpiarModel();
+        this.ref.close();
       },
       error: (err) => {
         console.log(err);

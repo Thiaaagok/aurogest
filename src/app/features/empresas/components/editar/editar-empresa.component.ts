@@ -65,7 +65,7 @@ export class EditarEmpresaComponent implements OnInit {
     .subscribe({
       next: ((response: EmpresaModel) => {
         this.cargando = false;
-        this.obtenerEmpresa();
+        this.ref.close();
       }),
       error: (err) => {
         this.cargando = false;

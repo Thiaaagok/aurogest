@@ -83,7 +83,7 @@
       </p-floatlabel>
     </div>
     <div class="flex justify-end gap-2 pt-4">
-      <p-button label="Cancelar" icon="pi pi-times" class="p-button-outlined" (click)="cerrar()"></p-button>
+      <p-button label="Cancelar" icon="pi pi-times" class="p-button-outlined" [disabled]="cargando" (click)="cerrar()"></p-button>
       @if(proveedorEditar.Activo){
         <p-button label="Eliminar" severity="danger" matTooltip="Eliminar usuario" icon="pi pi-trash"  (click)="eliminarProveedor()" [disabled]="cargando"></p-button>
       }@else{

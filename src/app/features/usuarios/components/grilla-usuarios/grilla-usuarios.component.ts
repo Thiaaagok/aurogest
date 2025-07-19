@@ -84,7 +84,7 @@ export class GrillaUsuariosComponent {
 
 
   crearUsuario() {
-    this.dialogService.open(NuevoUsuarioComponent, {
+    const dialog = this.dialogService.open(NuevoUsuarioComponent, {
       header: 'Crear Usuario',
       width: '50%',
       height: 'fit-content',
@@ -93,10 +93,15 @@ export class GrillaUsuariosComponent {
       },
       styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
     });
+
+    dialog.onClose
+    .subscribe(() => {
+      this.obtenerUsuarios();
+    })
   }
 
   editarUsuario(id: string) {
-    this.dialogService.open(EditarUsuarioComponent, {
+    const dialog = this.dialogService.open(EditarUsuarioComponent, {
       header: 'Editar Usuario',
       width: '50%',
       height: 'fit-content',
@@ -104,5 +109,10 @@ export class GrillaUsuariosComponent {
       data: id ,
       styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
     });
+
+    dialog.onClose
+    .subscribe(() => {
+      this.obtenerUsuarios();
+    })
   }
 }

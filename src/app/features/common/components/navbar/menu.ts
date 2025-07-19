@@ -49,8 +49,8 @@ export const Modulos: MenuItem[] = [
     icon: 'pi pi-box',
     items: [
       {
-        label: 'Grilla',
-        icon: 'pi pi-list',
+        label: 'Productos',
+        icon: 'pi pi-box',
         route: 'productos'
       },
       {
@@ -69,5 +69,10 @@ export const Modulos: MenuItem[] = [
         route: 'productos-categoria'
       }
     ]
+  },
+  {
+    label: 'Stock',
+    icon: 'pi pi-box',
+    route: 'stock'
   }
 ];

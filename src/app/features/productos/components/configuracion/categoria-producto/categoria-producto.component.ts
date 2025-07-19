@@ -6,6 +6,8 @@ import { ProductoTiposService } from '../../../services/producto-tipo.service';
 import { GrillaUtilService } from '../../../../common/services/grilla-util.service';
 import { Table } from 'primeng/table';
 import { ProductoCategoriasService } from '../../../services/producto-categoria.service';
+import { DialogService } from 'primeng/dynamicdialog';
+import { EditarCategoriaProductoComponent } from './editar-categoria-producto/editar-categoria-producto.component';
 
 @Component({
   selector: 'app-categoria-producto',
@@ -13,7 +15,7 @@ import { ProductoCategoriasService } from '../../../services/producto-categoria.
   templateUrl: './categoria-producto.component.html',
   styleUrl: './categoria-producto.component.scss',
 })
-export class CategoriaProductoComponent { 
+export class CategoriaProductoComponent {
 
   nuevaCategoriaProducto: ProductoCategoriaModel = new ProductoCategoriaModel();
   categorias: ProductoCategoriaModel[] = [];
@@ -24,7 +26,7 @@ export class CategoriaProductoComponent {
 
   private productoCategoriasService = inject(ProductoCategoriasService);
   private GrillaUtilService = inject(GrillaUtilService);
-  
+  private dialogService = inject(DialogService);
 
   constructor() {
     this.registrosGrillaActivos = true;
@@ -47,11 +49,11 @@ export class CategoriaProductoComponent {
           this.cargando = false;
           console.log(err);
         },
-        complete: () => {},
+        complete: () => { },
       });
   }
 
-  onSubmit(){
+  onSubmit() {
     this.cargando = true;
     this.productoCategoriasService.crear(this.nuevaCategoriaProducto)
       .subscribe({
@@ -63,7 +65,7 @@ export class CategoriaProductoComponent {
         error: (err) => {
           console.log(err);
         },
-        complete: () => {},
+        complete: () => { },
       });
   }
 
@@ -83,9 +85,23 @@ export class CategoriaProductoComponent {
     this.GrillaUtilService.filtrarGlobal(table, event);
   }
 
-  editar(id:string){}
+  editar(id: string) {
+    const dialog = this.dialogService.open(EditarCategoriaProductoComponent, {
+      header: 'Editar Categoria',
+      width: '50%',
+      height: 'fit-content',
+      modal: true,
+      data: id,
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
+    });
 
-  limpiarModel(){
+    dialog.onClose
+      .subscribe(() => {
+        this.obtenerCategorias();
+      })
+  }
+  
+  limpiarModel() {
     this.nuevaCategoriaProducto = new ProductoCategoriaModel();
   }
 }

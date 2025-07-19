@@ -42,7 +42,7 @@
     </div>
     <div class="flex flex-col grow basis-0 gap-2">
       <p-floatlabel variant="in">
-        <p-inputnumber [(ngModel)]="nuevoProducto.Stock" [useGrouping]="false" class="w-100" id="stock" inputId="stock"
+        <p-inputnumber [(ngModel)]="MinimoStock" [useGrouping]="false" class="w-100" id="stock" inputId="stock"
           name="stock" mode="decimal" [min]="1" [max]="100000000" required />
         <label for="stock">Stock</label>
         <!-- @if (stock.invalid && (stock.touched || form.submitted)) {

@@ -65,7 +65,7 @@ export class GrillaProveedoresComponent {
   }
 
   crearProveedor() {
-    this.dialogService.open(NuevoProveedorComponent, {
+    const dialog = this.dialogService.open(NuevoProveedorComponent, {
       header: 'Crear Proveedor',
       width: '50%',
       height: 'fit-content',
@@ -74,10 +74,15 @@ export class GrillaProveedoresComponent {
       },
       styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
     });
+
+    dialog.onClose
+    .subscribe(() => {
+      this.obtenerProveedores();
+    })
   }
 
   editarProveedor(id: string) {
-    this.dialogService.open(EditarProveedorComponent, {
+    const dialog = this.dialogService.open(EditarProveedorComponent, {
       header: 'Editar Proveedor',
       width: '50%',
       height: 'fit-content',
@@ -85,5 +90,10 @@ export class GrillaProveedoresComponent {
       data: id ,
       styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
     });
+
+    dialog.onClose
+    .subscribe(() => {
+      this.obtenerProveedores();
+    })
   }
 }

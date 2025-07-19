@@ -64,7 +64,7 @@ export class EditarProveedorComponent {
     .subscribe({
       next: ((response: ProveedorModel) => {
         this.cargando = false;
-        this.obtenerProveedor();
+        this.ref.close();
       }),
       error: (err) => {
         this.cargando = false;

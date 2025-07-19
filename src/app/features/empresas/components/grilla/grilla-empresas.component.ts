@@ -68,7 +68,7 @@ export class GrillaEmpresasComponent {
   }
 
   editarEmpresa(id: string) {
-    this.dialogService.open(EditarEmpresaComponent, {
+    const dialog = this.dialogService.open(EditarEmpresaComponent, {
       header: 'Editar Empresa',
       width: '50%',
       height: 'fit-content',
@@ -76,6 +76,11 @@ export class GrillaEmpresasComponent {
       data: id ,
       styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
     });
+
+    dialog.onClose
+    .subscribe(() => {
+      this.obtenerEmpresas();
+    })
   }
 
   cargarGrilla(){

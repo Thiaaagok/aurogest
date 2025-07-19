@@ -16,29 +16,33 @@
       </mat-slide-toggle>
     </div>
 </div>
-<div class="card flex flex-col gap-4">
-    <div class="font-semibold text-xl">Nueva Categoria</div>
-    <form #form="ngForm" novalidate="">
-        <div class="flex flex-col md:flex-row gap-8">
+<form #form="ngForm" novalidate="" class="mb-4">
+    <div class="card flex flex-col gap-4">
+        <div class="font-semibold text-xl">Nueva Categoria</div>
+        <div class="flex flex-wrap gap-4">
             <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Código</mat-label>
-                    <input matInput [(ngModel)]="nuevaCategoriaProducto.Codigo" type="text" name="codigo" autocomplete="off"
-                        title="Descripción" required>
-                    <mat-error>Escriba un codigo para hacer referencia a la categoria</mat-error>
-                </mat-form-field>
+                <p-floatlabel variant="in">
+                    <input pInputText type="text" id="codigo" class="w-100" #codigo="ngModel" name="codigo"
+                        [(ngModel)]="nuevaCategoriaProducto.Codigo" required />
+                    <label for="codigo">Código</label>
+                    <!-- @if (codigo.invalid && (codigo.touched || form.submitted)) {
+                    <p-message severity="error" size="small" variant="simple">Código es requerido.</p-message>
+                    } -->
+                </p-floatlabel>
             </div>
             <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Descripción</mat-label>
-                    <input matInput [(ngModel)]="nuevaCategoriaProducto.Descripcion" type="text" name="descripcion" autocomplete="off"
-                    title="Contaseña" required>
-                    <mat-error>Escriba una descripción para hacer referencia a la categoria</mat-error>
-                </mat-form-field>
+                <p-floatlabel variant="in">
+                    <input pInputText type="text" id="descripcion" class="w-100" #descripcion="ngModel" name="descripcion"
+                        [(ngModel)]="nuevaCategoriaProducto.Descripcion" required />
+                    <label for="descripcion">Descripción</label>
+                    <!-- @if (descripcion.invalid && (descripcion.touched || form.submitted)) {
+                    <p-message severity="error" size="small" variant="simple">Contraseña es requerido.</p-message>
+                    } -->
+                </p-floatlabel>
             </div>
         </div>
-    </form>
-</div>
+    </div>
+</form>
 <div class="card"> 
     <div class="font-semibold text-xl mb-4">Categorias</div>
     <p-table

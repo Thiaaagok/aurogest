@@ -27,7 +27,7 @@
         [rowHover]="true"
         [showGridlines]="true"
         [paginator]="true"
-        [globalFilterFields]="['Usuario', 'Mail']"
+        [globalFilterFields]="['Nombre', 'Codigo','Tipo','Marca','Categoria']"
         responsiveLayout="scroll"
     >
         <ng-template #caption>
@@ -73,12 +73,6 @@
                   <p-columnFilter type="text" field="Categoria.Descripcion" display="menu" placeholder="Buscar por categoria"></p-columnFilter>
                 </div>
               </th>
-              <th style="min-width: 10rem">
-                <div class="flex justify-between items-center">
-                  Stock
-                  <p-columnFilter type="text" field="Stock" display="menu" placeholder="Buscar por stock"></p-columnFilter>
-                </div>
-              </th>
             </tr>
           </ng-template>
           
@@ -89,7 +83,6 @@
               <td>{{ producto.Tipo?.Descripcion }}</td>
               <td>{{ producto.Marca?.Descripcion }}</td>
               <td>{{ producto.Categoria?.Descripcion }}</td>
-              <td>{{ producto.Stock }}</td>
             </tr>
           </ng-template>
         <ng-template #emptymessage>

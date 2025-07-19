@@ -64,7 +64,7 @@ export class GrillaProductosComponent {
   }
 
   crearProducto() {
-    this.dialogService.open(NuevoProductoComponent, {
+    const dialog = this.dialogService.open(NuevoProductoComponent, {
       header: 'Crear Producto',
       width: '50%',
       height: 'fit-content',
@@ -73,10 +73,15 @@ export class GrillaProductosComponent {
       },
       styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
     });
+
+    dialog.onClose
+    .subscribe(() => {
+      this.obtenerProductos();
+    })
   }
 
   editarProducto(id: string) {
-    this.dialogService.open(EditarProductoComponent, {
+    const dialog = this.dialogService.open(EditarProductoComponent, {
       header: 'Editar Producto',
       width: '50%',
       height: 'fit-content',
@@ -84,6 +89,12 @@ export class GrillaProductosComponent {
       modal: true,
       styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
     });
+
+
+    dialog.onClose
+    .subscribe(() => {
+      this.obtenerProductos();
+    })
   }
 
   cargarGrilla() {

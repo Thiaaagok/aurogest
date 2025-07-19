@@ -5,10 +5,11 @@ import { GrillaProveedoresComponent } from './features/proveedores/components/gr
 import { GrillaProductosComponent } from './features/productos/components/grilla/grilla-productos.component';
 import { HomeComponent } from './features/common/components/home/home.component';
 import { EditarProductoComponent } from './features/productos/components/editar/editar-producto.component';
-import { MarcasComponent } from './features/marcas/components/marcas/marcas.component';
 import { TipoProductoComponent } from './features/productos/components/configuracion/tipo-producto/tipo-producto.component';
 import { CategoriaProductoComponent } from './features/productos/components/configuracion/categoria-producto/categoria-producto.component';
 import { NuevoProductoComponent } from './features/productos/components/nuevo/nuevo-producto.component';
+import { StockComponent } from './features/stock/components/stock/stock.component';
+import { MarcasComponent } from './features/productos/components/configuracion/marcas/marcas.component';
 
 export const routes: Routes = [
     {
@@ -50,5 +51,9 @@ export const routes: Routes = [
     {
         path: 'productos-categoria',
         component: CategoriaProductoComponent
+    },
+    {
+        path: 'stock',
+        component: StockComponent
     }
 ];
