@@ -72,8 +72,8 @@ export class GrillaProductosComponent {
     this.productos = this.GrillaUtilService.cargarGrilla(
       this.productosFiltro,
       this.registrosGrillaActivos
-    );
-  }
+    )
+  }  
 
   limpiarFiltrado(table: Table) {
     this.GrillaUtilService.limpiarFiltrado(table);
