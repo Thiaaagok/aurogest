@@ -10,6 +10,11 @@ import { EmpresaModel } from '../../../empresas/models/empresa.model';
 import { SelectChosenComponent } from '../../../common/components/select-chosen/select-chosen.component';
 import { timer } from 'rxjs';
 import { EmpresaService } from '../../../empresas/services/empresa.service';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { FloatLabel } from 'primeng/floatlabel';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -20,6 +25,10 @@ import { EmpresaService } from '../../../empresas/services/empresa.service';
     CustomMaterialModule,
     FormsModule,
     SelectChosenComponent,
+    InputTextModule,
+    ToastModule,
+    FloatLabel,
+    TextareaModule
   ],
   templateUrl: './editar-usuario.component.html',
   styleUrl: './editar-usuario.component.scss',
@@ -30,20 +39,16 @@ export class EditarUsuarioComponent {
   parametro: string;
   cargando: boolean;
 
-  private activatedRoute = inject(ActivatedRoute);
   private usuarioService = inject(UsuariosService);
-  private router = inject(Router);
   private empresasService = inject(EmpresaService);
+  public ref = inject(DynamicDialogRef);
+  public config = inject(DynamicDialogConfig);
 
-  constructor() {
-    this.activatedRoute.params.subscribe((params) => {
-      this.parametro = params['id'];
-      this.obtenerUsuario();
-    });
-  }
 
   ngOnInit() {
     this.cargarEmpresasDrodpwon();
+    this.parametro = this.config.data;
+    this.obtenerUsuario();
   }
 
   obtenerUsuario() {
@@ -62,8 +67,8 @@ export class EditarUsuarioComponent {
     });
   }
 
-  volver(){
-    this.router.navigateByUrl('usuarios');
+  cerrar() {
+    this.ref.close();
   }
 
   onSubmit(){
@@ -71,6 +76,22 @@ export class EditarUsuarioComponent {
     this.usuarioService.editar(this.usuarioEditar.Id, this.usuarioEditar)
     .subscribe({
       next: ((response: Usuario) => {
+        this.cargando = false;
+        this.ref.close();
+      }),
+      error: (err) => {
+        this.cargando = false;
+        console.log(err);
+      },
+      complete: () => {}
+    })
+  }
+
+  eliminarUsuario(){
+    this.cargando = true;
+    this.usuarioService.eliminar(this.usuarioEditar.Id)
+    .subscribe({
+      next: ((response: boolean) => {
         this.cargando = false;
         this.obtenerUsuario();
       }),
@@ -82,31 +103,13 @@ export class EditarUsuarioComponent {
     })
   }
 
-  eliminarUsuario(){
-    this.usuarioService.eliminar(this.usuarioEditar.Id)
-    .subscribe({
-      next: ((response: boolean) => {
-        this.cargando = false;
-        timer(300).subscribe(() => {
-          this.obtenerUsuario();
-        });
-      }),
-      error: (err) => {
-        this.cargando = false;
-        console.log(err);
-      },
-      complete: () => {}
-    })
-  }
-
   reactivarUsuario(){
+    this.cargando = true;
     this.usuarioService.reactivar(this.usuarioEditar.Id)
     .subscribe({
       next: ((response: boolean) => {
         this.cargando = false;
-        timer(300).subscribe(() => {
-          this.obtenerUsuario();
-        });
+        this.obtenerUsuario();
       }),
       error: (err) => {
         this.cargando = false;

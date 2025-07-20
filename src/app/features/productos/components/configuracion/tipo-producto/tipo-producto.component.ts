@@ -5,6 +5,8 @@ import { GrillaUtilService } from '../../../../common/services/grilla-util.servi
 import { Table } from 'primeng/table';
 import { PrimeNgModule } from '../../../../common/material/primeng.module';
 import { CustomMaterialModule } from '../../../../common/material/custom-material.module';
+import { DialogService } from 'primeng/dynamicdialog';
+import { EditarTipoProductoComponent } from './editar-tipo-producto/editar-tipo-producto.component';
 
 @Component({
   selector: 'app-tipo-producto',
@@ -23,6 +25,7 @@ export class TipoProductoComponent {
 
   private productoTiposService = inject(ProductoTiposService);
   private GrillaUtilService = inject(GrillaUtilService);
+  private dialogService = inject(DialogService);
 
   constructor() {
     this.registrosGrillaActivos = true;
@@ -81,7 +84,21 @@ export class TipoProductoComponent {
     this.GrillaUtilService.filtrarGlobal(table, event);
   }
 
-  editar(id:string){}
+  editar(id: string) {
+    const dialog = this.dialogService.open(EditarTipoProductoComponent, {
+      header: 'Editar Tipo',
+      width: '50%',
+      height: 'fit-content',
+      modal: true,
+      data: id ,
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
+    });
+
+    dialog.onClose
+    .subscribe(() => {
+      this.obtenerTiposProducto();
+    })
+  }
 
   limpiarModel(){
     this.nuevoTipoProducto = new ProductoTipoModel();

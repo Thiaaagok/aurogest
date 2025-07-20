@@ -1,84 +1,79 @@
-<div class="botonera-flotante">
-    <div class="botonera-contenedor">
-      <button mat-mini-fab color="accent" matTooltip="Volver a la grilla" (click)="volver()">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-  
-      <button mat-mini-fab color="primary" matTooltip="Guardar nuevo usuario" [disabled]="!form.valid" (click)="onSubmit()">
-        <i class="fa-solid fa-floppy-disk"></i>
-      </button>
-    </div>
-</div> 
 <div class="card flex flex-col gap-4">
-    <div class="font-semibold text-xl">Nuevo Usuario</div>
-    <form #form="ngForm" novalidate="">
-        <div class="flex flex-col md:flex-row gap-8">
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Usuario</mat-label>
-                    <input matInput [(ngModel)]="nuevoUsuario.Usuario" type="text" name="usuario" autocomplete="off"
-                        title="Descripción" required>
-                    <mat-error>Escriba un nombre de usuario</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Contraseña</mat-label>
-                    <input matInput [(ngModel)]="nuevoUsuario.Contrasenia" type="text" name="contraseña" autocomplete="off"
-                    title="Contaseña" required>
-                    <mat-error>Escriba la contraseña del usuario</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Mail</mat-label>
-                    <input matInput [(ngModel)]="nuevoUsuario.Mail" type="mail" name="mail" autocomplete="off"
-                        title="Mail" required>
-                    <mat-error>Escriba el mail del usuario</mat-error>
-                </mat-form-field>
-            </div>
+    <form #form="ngForm" novalidate class="flex flex-col gap-4">
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <input pInputText type="text" id="usuario" #usuario="ngModel" class="w-100" name="username"
+                    [(ngModel)]="nuevoUsuario.Usuario" required />
+                <label for="usuario">Usuario</label>
+                <!-- @if (usuario.invalid && (usuario.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Usuario es requerido.</p-message>
+                } -->
+            </p-floatlabel>
         </div>
-        
-        <div class="flex flex-col md:flex-row gap-8">
-            <div class="flex flex-col grow basis-0 gap-2">
-                <app-select-chosen class="full-width" title="Empresa"
-                [(ngModel)]="nuevoUsuario.Empresa" name="empresa" placeholder="Empresa del usuario"
-                [dataSource]="empresasDropdown" (recargar)="cargarEmpresasDrodpwon()" mensajeError="Seleccione una empresa">
-              </app-select-chosen>
-            </div>
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Legajo</mat-label>
-                    <input matInput [(ngModel)]="nuevoUsuario.Legajo" type="text" name="legajo" autocomplete="off"
-                        title="Legajo" required>
-                    <mat-error>Escriba el legajo del usuario</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Intentos Conexión</mat-label>
-                    <input matInput [(ngModel)]="nuevoUsuario.intentosConexion" type="number" name="intentosConexion" autocomplete="off"
-                        title="Mail" required>
-                    <mat-error>Escriba el maximo de intentos de conexión</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Expiración Tiempo (en seg)</mat-label>
-                    <input matInput [(ngModel)]="nuevoUsuario.expiracionTiempo" type="number" name="expiracionTiempo" autocomplete="off"
-                        title="Mail" required>
-                    <mat-error>Escriba un tiempo de expiración</mat-error>
-                </mat-form-field>
-            </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <input pInputText type="text" id="contrasenia" class="w-100" #contrasenia="ngModel" name="contrasenia"
+                    [(ngModel)]="nuevoUsuario.Contrasenia" required />
+                <label for="contrasenia">Contraseña</label>
+                <!-- @if (contrasenia.invalid && (contrasenia.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Contraseña es requerido.</p-message>
+                } -->
+            </p-floatlabel>
         </div>
-    
-        <div class="flex flex-col md:flex-row gap-8">
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <textarea matInput [(ngModel)]="nuevoUsuario.Observaciones" name="observaciones"
-                        placeholder="Observaciones" autocomplete="off" title="Observaciones"></textarea>
-                </mat-form-field>
-            </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <input pInputText type="text" id="Mail" class="w-100" #mail="ngModel" name="Mail"
+                    [(ngModel)]="nuevoUsuario.Mail" required />
+                <label for="mail">Mail</label>
+                <!-- @if (mail.invalid && (mail.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Mail es requerido.</p-message>
+                } -->
+            </p-floatlabel>
+        </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <app-select-chosen class="w-full" title="Empresa" [(ngModel)]="nuevoUsuario.Empresa" name="empresa"
+                placeholder="Empresa del usuario" [dataSource]="empresasDropdown" (recargar)="cargarEmpresasDrodpwon()"
+                [mensajeError]="'Seleccione una empresa'"></app-select-chosen>
+        </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <input pInputText type="text" id="legajo" class="w-100" #legajo="ngModel" name="legajo"
+                    [(ngModel)]="nuevoUsuario.Legajo" required />
+                <label for="legajo">Legajo</label>
+                <!-- @if (legajo.invalid && (legajo.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Legajo es requerido.</p-message>
+                } -->
+            </p-floatlabel>
+        </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <p-inputnumber [(ngModel)]="nuevoUsuario.IntentosConexion" [useGrouping]="false" class="w-100" id="intentosConexion" inputId="intentosConexion" name="intentosConexion" mode="decimal" [min]="1" [max]="100000000" required />
+                <label for="intentosConexion">Intentos Conexión</label>
+                <!-- @if (intentosConexion.invalid && (intentosConexion.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Intentos Conexión es
+                    requerido.</p-message>
+                } -->
+            </p-floatlabel>
+        </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <p-inputnumber [(ngModel)]="nuevoUsuario.ExpiracionTiempo" [useGrouping]="false" class="w-100" id="expiracion" inputId="expiracion" name="expiracion" mode="decimal" [min]="1" [max]="100000000" required />
+                <label for="expiracion">Expiración (segundos)</label>
+                <!-- @if (expiracion.invalid && (expiracion.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Legajo es requerido.</p-message>
+                } -->
+            </p-floatlabel>
+        </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <textarea rows="5" id="observaciones" cols="30" name="observaciones" class="w-100" pTextarea
+                    [(ngModel)]="nuevoUsuario.Observaciones"></textarea>
+                <label for="observaciones">Observaciones</label>
+            </p-floatlabel>
+        </div>
+        <div class="flex justify-end gap-2 pt-4">
+            <p-button label="Cancelar" icon="pi pi-times" class="p-button-outlined" (click)="cerrar()"></p-button>
+            <p-button label="Guardar" severity="success" icon="pi pi-check" (click)="onSubmit()" [disabled]="!form.valid"></p-button>
         </div>
     </form>
 </div>

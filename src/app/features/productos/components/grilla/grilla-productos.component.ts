@@ -9,6 +9,9 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
 import { FormsModule } from '@angular/forms';
+import { DialogService } from 'primeng/dynamicdialog';
+import { NuevoProductoComponent } from '../nuevo/nuevo-producto.component';
+import { EditarProductoComponent } from '../editar/editar-producto.component';
 
 @Component({
   selector: 'app-grilla-productos',
@@ -32,8 +35,8 @@ export class GrillaProductosComponent {
   cargando: boolean;
   registrosGrillaActivos: boolean;
 
-  private router = inject(Router);
   private productosService = inject(ProductosService);
+  private dialogService = inject(DialogService);
   private GrillaUtilService = inject(GrillaUtilService);
 
   constructor() {
@@ -61,11 +64,37 @@ export class GrillaProductosComponent {
   }
 
   crearProducto() {
-    this.router.navigateByUrl(`productos/nuevo`);
+    const dialog = this.dialogService.open(NuevoProductoComponent, {
+      header: 'Crear Producto',
+      width: '50%',
+      height: 'fit-content',
+      modal: true,
+      data: {
+      },
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
+    });
+
+    dialog.onClose
+    .subscribe(() => {
+      this.obtenerProductos();
+    })
   }
 
   editarProducto(id: string) {
-    this.router.navigateByUrl(`productos/editar/${id}`);
+    const dialog = this.dialogService.open(EditarProductoComponent, {
+      header: 'Editar Producto',
+      width: '50%',
+      height: 'fit-content',
+      data: id ,
+      modal: true,
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
+    });
+
+
+    dialog.onClose
+    .subscribe(() => {
+      this.obtenerProductos();
+    })
   }
 
   cargarGrilla() {

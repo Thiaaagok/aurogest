@@ -32,64 +32,26 @@ export const Modulos: MenuItem[] = [
   {
     label: 'Usuarios',
     icon: 'pi pi-users',
-    items: [
-      {
-        label: 'Grilla',
-        icon: 'pi pi-list',
-        route: 'usuarios'
-      },
-      {
-        label: 'Nuevo',
-        icon: 'pi pi-plus',
-        route: 'usuarios/nuevo'
-      }
-    ]
+    route: '/usuarios'
   },
   {
     label: 'Empresas',
     icon: 'pi pi-building',
-    items: [
-      {
-        label: 'Grilla',
-        icon: 'pi pi-list',
-        route: 'empresas'
-      },
-      {
-        label: 'Nueva',
-        icon: 'pi pi-plus',
-        route: 'empresas/nueva'
-      }
-    ]
+    route: '/empresas'
   },
   {
     label: 'Proveedores',
     icon: 'pi pi-shop',
-    items: [
-      {
-        label: 'Grilla',
-        icon: 'pi pi-list',
-        route: 'proveedores'
-      },
-      {
-        label: 'Nuevo',
-        icon: 'pi pi-plus',
-        route: 'proveedores/nuevo'
-      }
-    ]
+    route: '/proveedores'
   },
   {
     label: 'Productos',
     icon: 'pi pi-box',
     items: [
       {
-        label: 'Grilla',
-        icon: 'pi pi-list',
+        label: 'Productos',
+        icon: 'pi pi-box',
         route: 'productos'
-      },
-      {
-        label: 'Nuevo',
-        icon: 'pi pi-plus',
-        route: 'productos/nuevo'
       },
       {
         label: 'Marcas',
@@ -107,5 +69,10 @@ export const Modulos: MenuItem[] = [
         route: 'productos-categoria'
       }
     ]
+  },
+  {
+    label: 'Stock',
+    icon: 'pi pi-box',
+    route: 'stock'
   }
 ];

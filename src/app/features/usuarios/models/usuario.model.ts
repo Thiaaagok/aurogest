@@ -7,8 +7,8 @@ export class Usuario {
     Legajo: string;
     Mail: string;
     Empresa: EmpresaModel;
-    intentosConexion: number;
-    expiracionTiempo: number;
+    IntentosConexion: number;
+    ExpiracionTiempo: number;
     Bloqueado: boolean;
     UltimaConexion: Date;
     Observaciones: string;

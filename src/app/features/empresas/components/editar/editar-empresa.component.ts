@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -8,28 +8,40 @@ import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { EmpresaModel } from '../../models/empresa.model';
 import { EmpresaService } from '../../services/empresa.service';
 import { timer } from 'rxjs';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { FloatLabel } from 'primeng/floatlabel';
+import { TextareaModule } from 'primeng/textarea';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-editar-empresa',
-  imports: [PrimeNgModule,CommonModule,RouterModule,FontAwesomeModule,CustomMaterialModule,FormsModule],
+  imports: [PrimeNgModule,
+    CommonModule,
+    RouterModule,
+    FontAwesomeModule,
+    CustomMaterialModule,
+    FormsModule,
+    InputTextModule,
+    ToastModule,
+    FloatLabel,
+    TextareaModule],
   templateUrl: './editar-empresa.component.html',
   styleUrl: './editar-empresa.component.scss',
 })
-export class EditarEmpresaComponent { 
+export class EditarEmpresaComponent implements OnInit { 
 
   empresaEditar: EmpresaModel = new EmpresaModel();
   parametro: string;
   cargando: boolean;
   
-  private activatedRoute = inject(ActivatedRoute);
+  private ref = inject(DynamicDialogRef);
+  private config = inject(DynamicDialogConfig);
   private empresaService = inject(EmpresaService);
-  private router = inject(Router);
 
-  constructor(){
-    this.activatedRoute.params.subscribe(params => {
-      this.parametro = params['id'];
-      this.obtenerEmpresa();
-    });
+  ngOnInit(){
+    this.parametro = this.config.data;
+    this.obtenerEmpresa();
   }
 
   obtenerEmpresa() {
@@ -40,6 +52,7 @@ export class EditarEmpresaComponent {
         this.empresaEditar = response;
       },
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => {},
@@ -52,9 +65,10 @@ export class EditarEmpresaComponent {
     .subscribe({
       next: ((response: EmpresaModel) => {
         this.cargando = false;
-        this.obtenerEmpresa();
+        this.ref.close();
       }),
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => {}
@@ -66,11 +80,10 @@ export class EditarEmpresaComponent {
     .subscribe({
       next: ((response: boolean) => {
         this.cargando = false;
-        timer(300).subscribe(() => {
-          this.obtenerEmpresa();
-        })
+        this.obtenerEmpresa();
       }),
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => {}
@@ -82,18 +95,17 @@ export class EditarEmpresaComponent {
     .subscribe({
       next: ((response: boolean) => {
         this.cargando = false;
-        timer(300).subscribe(() => {
-          this.obtenerEmpresa();
-        })
+        this.obtenerEmpresa();
       }),
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => {}
     })
   }
 
-  volver(){
-    this.router.navigateByUrl('empresas');
+  cerrar() {
+    this.ref.close();
   }
 }

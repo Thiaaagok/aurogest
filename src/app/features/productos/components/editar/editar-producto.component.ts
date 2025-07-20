@@ -1,9 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ProductoDetalleModel, ProductoModel } from '../../models/producto.model';
 import { ProductoTipoModel } from '../../models/producto-tipo.model';
-import { MarcaModel } from '../../../marcas/models/marca.model';
 import { ProveedorModel } from '../../../proveedores/models/proveedor.model';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ProductosService } from '../../services/producto.service';
 import { SelectChosenComponent } from '../../../common/components/select-chosen/select-chosen.component';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
@@ -12,12 +10,22 @@ import { timer } from 'rxjs';
 import { ProductoCategoriaModel } from '../../models/producto-categoria.model';
 import { ProductoTiposService } from '../../services/producto-tipo.service';
 import { ProductoCategoriasService } from '../../services/producto-categoria.service';
-import { MarcasService } from '../../../marcas/services/marcas.service';
 import { ProveedoresService } from '../../../proveedores/services/proveedores.service';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { FloatLabel } from 'primeng/floatlabel';
+import { MarcaModel } from '../../models/marca.model';
+import { MarcasService } from '../../services/marcas.service';
 
 @Component({
   selector: 'app-editar-producto',
-  imports: [PrimeNgModule, CustomMaterialModule, SelectChosenComponent],
+  imports: [PrimeNgModule, CustomMaterialModule, SelectChosenComponent, ReactiveFormsModule, FormsModule, CommonModule,
+    InputTextModule,
+    ToastModule,
+    FloatLabel,],
   templateUrl: './editar-producto.component.html',
   styleUrl: './editar-producto.component.scss',
 })
@@ -25,28 +33,22 @@ export class EditarProductoComponent {
   productoEditar: ProductoModel = new ProductoModel();
   cargando: boolean;
   parametro: string;
-  cantidad: number = 1;
   tiposProductosCombo: ProductoTipoModel[] = [];
   marcasProductosCombo: MarcaModel[] = [];
   proveedoresCombo: ProveedorModel[] = [];
   categoriasProductosCombo: ProductoCategoriaModel[] = [];
 
-  private router = inject(Router);
+  private ref = inject(DynamicDialogRef);
+  private config = inject(DynamicDialogConfig);
   private productosService = inject(ProductosService);
-  private activatedRoute = inject(ActivatedRoute);
   private proveedoresService = inject(ProveedoresService);
   private productoTiposService = inject(ProductoTiposService);
   private productoCategoriasService = inject(ProductoCategoriasService);
   private marcasService = inject(MarcasService)
 
-  constructor() {
-    this.activatedRoute.params.subscribe((params) => {
-      this.parametro = params['id'];
-      this.obtenerProducto();
-    });
-  }
-
   ngOnInit() {
+    this.parametro = this.config.data;
+    this.obtenerProducto();
     this.cargarTiposProductosCombo();
     this.cargarMarcasProductosCombo();
     this.cargarCategoriasProductosCombo();
@@ -60,7 +62,7 @@ export class EditarProductoComponent {
         timer(2000)
         .subscribe(() => {
           this.cargando = false;
-          this.obtenerProducto();
+          this.ref.close();
         })
       },
       error: (err) => {
@@ -117,8 +119,8 @@ export class EditarProductoComponent {
   }
   
 
-  volver() {
-    this.router.navigateByUrl('productos');
+  cerrar() {
+    this.ref.close();
   }
   
   cargarTiposProductosCombo(){
@@ -185,12 +187,4 @@ export class EditarProductoComponent {
     this.productoEditar = new ProductoModel();
   }
 
-  agregarNuevoDetalle(){
-    const nuevoDetalle: ProductoDetalleModel = new ProductoDetalleModel();
-    this.productoEditar.Detalles.push(nuevoDetalle);
-  }
-
-  eliminarDetalle(i:number){
-    this.productoEditar.Detalles.splice(i, 1);
-  }
 }

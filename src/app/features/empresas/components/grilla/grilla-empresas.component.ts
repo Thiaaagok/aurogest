@@ -10,6 +10,9 @@ import { EmpresaModel } from '../../models/empresa.model';
 import { GrillaUtilService } from '../../../common/services/grilla-util.service';
 import { UsuariosService } from '../../../usuarios/services/usuarios.service';
 import { EmpresaService } from '../../services/empresa.service';
+import { DialogService } from 'primeng/dynamicdialog';
+import { NuevaEmpresaComponent } from '../nueva/nueva-empresa.component';
+import { EditarEmpresaComponent } from '../editar/editar-empresa.component';
 
 @Component({
   selector: 'app-grilla-empresas',
@@ -29,6 +32,7 @@ export class GrillaEmpresasComponent {
   private GrillaUtilService = inject(GrillaUtilService);
   private router = inject(Router);
   private empresasService = inject(EmpresaService);
+  private dialogService = inject(DialogService);
 
   ngOnInit(){
     this.registrosGrillaActivos = true;
@@ -51,12 +55,32 @@ export class GrillaEmpresasComponent {
     })
   }
 
-  crearEmpresa(){
-    this.router.navigateByUrl(`empresas/nueva`);
+  crearEmpresa() {
+    this.dialogService.open(NuevaEmpresaComponent, {
+      header: 'Crear Empresa',
+      width: '50%',
+      height: 'fit-content',
+      modal: true,
+      data: {
+      },
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
+    });
   }
 
-  editarEmpresa(id: string){
-    this.router.navigateByUrl(`empresas/editar/${id}`);
+  editarEmpresa(id: string) {
+    const dialog = this.dialogService.open(EditarEmpresaComponent, {
+      header: 'Editar Empresa',
+      width: '50%',
+      height: 'fit-content',
+      modal: true,
+      data: id ,
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
+    });
+
+    dialog.onClose
+    .subscribe(() => {
+      this.obtenerEmpresas();
+    })
   }
 
   cargarGrilla(){

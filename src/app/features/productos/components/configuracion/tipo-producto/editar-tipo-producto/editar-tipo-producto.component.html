@@ -1,0 +1,36 @@
+<div class="card flex flex-col gap-4">
+    <form #form="ngForm" novalidate class="flex flex-col gap-4">
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <input pInputText type="text" id="codigo" class="w-100" #codigo="ngModel" name="codigo"
+                    [(ngModel)]="tipoProductoEditar.Codigo" required />
+                <label for="codigo">Código</label>
+                <!-- @if (codigo.invalid && (codigo.touched || form.submitted)) {
+                    <p-message severity="error" size="small" variant="simple">Código es requerido.</p-message>
+                    } -->
+            </p-floatlabel>
+        </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <input pInputText type="text" id="descripcion" class="w-100" #descripcion="ngModel" name="descripcion"
+                    [(ngModel)]="tipoProductoEditar.Descripcion" required />
+                <label for="descripcion">Descripción</label>
+                <!-- @if (descripcion.invalid && (descripcion.touched || form.submitted)) {
+                    <p-message severity="error" size="small" variant="simple">Contraseña es requerido.</p-message>
+                    } -->
+            </p-floatlabel>
+        </div>
+        <div class="flex justify-end gap-2 pt-4">
+            <p-button label="Cancelar" icon="pi pi-times" class="p-button-outlined" [disabled]="cargando" (click)="cerrar()"></p-button>
+            @if(tipoProductoEditar.Activo){
+            <p-button label="Eliminar" severity="danger" matTooltip="Eliminar usuario" icon="pi pi-trash"
+                (click)="eliminarTipoProducto()" [disabled]="cargando"></p-button>
+            }@else{
+            <p-button label="Reactivar" severity="info" matTooltip="Reactivar usuario" icon="pi pi-unlock"
+                (click)="reactivarTipoProducto()" [disabled]="cargando"></p-button>
+            }
+            <p-button label="Guardar" severity="success" icon="pi pi-check" (click)="onSubmit()"
+                [disabled]="!form.valid || cargando"></p-button>
+        </div>
+    </form>
+</div>

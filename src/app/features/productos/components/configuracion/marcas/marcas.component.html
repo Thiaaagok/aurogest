@@ -1,0 +1,102 @@
+<div class="botonera-flotante">
+    <div class="botonera-contenedor">
+        <button mat-mini-fab color="accent" matTooltip="Cargar las marcas" (click)="obtenerMarcas()">
+            <i class="fa-solid fa-arrows-rotate"></i>
+        </button>
+
+        <button mat-mini-fab color="primary" matTooltip="Crear una nueva marca" [disabled]="!form.valid"
+            (click)="onSubmit()">
+            <i class="fa-solid fa-square-plus"></i>
+        </button>
+
+        <mat-slide-toggle color="primary" [(ngModel)]="registrosGrillaActivos" (ngModelChange)="cargarGrilla()"
+            matTooltip="Mostrar activos/inactivos">
+            <span class="toggle-label">Activos</span>
+        </mat-slide-toggle>
+    </div>
+</div>
+<form #form="ngForm" novalidate="" class="mb-4">
+    <div class="card flex flex-col gap-4">
+        <div class="font-semibold text-xl">Nueva Marca</div>
+        <div class="flex flex-wrap gap-4">
+            <div class="flex flex-col grow basis-0 gap-2">
+                <p-floatlabel variant="in">
+                    <input pInputText type="text" id="codigo" class="w-100" #codigo="ngModel" name="codigo"
+                        [(ngModel)]="nuevaMarca.Codigo" required />
+                    <label for="codigo">Código</label>
+                    <!-- @if (codigo.invalid && (codigo.touched || form.submitted)) {
+                    <p-message severity="error" size="small" variant="simple">Código es requerido.</p-message>
+                    } -->
+                </p-floatlabel>
+            </div>
+            <div class="flex flex-col grow basis-0 gap-2">
+                <p-floatlabel variant="in">
+                    <input pInputText type="text" id="descripcion" class="w-100" #descripcion="ngModel" name="descripcion"
+                        [(ngModel)]="nuevaMarca.Descripcion" required />
+                    <label for="descripcion">Descripción</label>
+                    <!-- @if (descripcion.invalid && (descripcion.touched || form.submitted)) {
+                    <p-message severity="error" size="small" variant="simple">Contraseña es requerido.</p-message>
+                    } -->
+                </p-floatlabel>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="card">
+    <div class="font-semibold text-xl mb-4">Marcas</div>
+    <p-table #grillaMarcas [value]="marcas" dataKey="Id" [rows]="10" [loading]="cargando" [rowHover]="true"
+        [showGridlines]="true" [paginator]="true" [globalFilterFields]="['Codigo', 'Descripcion']"
+        responsiveLayout="scroll">
+        <ng-template #caption>
+            <div class="flex justify-between items-center flex-column sm:flex-row">
+                <button pButton label="Limpiar filtros" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+                    (click)="limpiarFiltrado(grillaMarcas)"></button>
+                <p-iconfield iconPosition="left" class="ml-auto">
+                    <p-inputicon>
+                        <i class="pi pi-search"></i>
+                    </p-inputicon>
+                    <input #filter class="w-50vw" pInputText type="text" (input)="filtrarMarcas(grillaMarcas, $event)"
+                        placeholder="Buscar" />
+                </p-iconfield>
+            </div>
+        </ng-template>
+
+        <ng-template #header>
+            <tr>
+                <th style="min-width: 10rem">
+                    <div class="flex justify-between items-center">
+                        Código
+                        <p-columnFilter type="text" field="Codigo" display="menu"
+                            placeholder="Buscar por código"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width: 14rem">
+                    <div class="flex justify-between items-center">
+                        Descripción
+                        <p-columnFilter type="text" field="Descripcion" display="menu"
+                            placeholder="Buscar por descripción"></p-columnFilter>
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+
+        <ng-template #body let-marca>
+            <tr (click)="editar(marca.Id)" class="cursor-pointer">
+                <td>{{ marca.Codigo }}</td>
+                <td>{{ marca.Descripcion }}</td>
+            </tr>
+        </ng-template>
+
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="2">No se encontraron marcas.</td>
+            </tr>
+        </ng-template>
+
+        <ng-template #loadingbody>
+            <tr>
+                <td colspan="2">Cargando marcas...</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

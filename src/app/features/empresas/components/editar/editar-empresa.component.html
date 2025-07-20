@@ -1,118 +1,85 @@
-<div class="botonera-flotante">
-    <div class="botonera-contenedor">
-      <button mat-mini-fab color="accent" matTooltip="Volver a la grilla" (click)="volver()">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-  
-      <button mat-mini-fab color="primary" matTooltip="Guardar usuario editado" [disabled]="!form.valid" (click)="onSubmit()">
-        <i class="fa-solid fa-floppy-disk"></i>
-      </button>
-
-      @if(empresaEditar.Activo){
-        <button mat-mini-fab color="primary" class="boton-eliminar" matTooltip="Eliminar usuario" [disabled]="!form.pristine" (click)="eliminarEmpresa()">
-            <i class="fa-solid fa-trash"></i>
-        </button>
-      }@else{
-        <button mat-mini-fab color="primary" matTooltip="Reactivar usuario" [disabled]="!form.pristine" (click)="reactivarEmpresa()">
-            <i class="fa-solid fa-unlock"></i>
-        </button>
-      }
-    </div>
-</div> 
 <div class="card flex flex-col gap-4">
-    <div class="font-semibold text-xl">Editar Empresa</div>
-
-    <form #form="ngForm" novalidate="">
-        <div class="flex flex-col md:flex-row gap-8">
-            
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Código</mat-label>
-                    <input matInput [(ngModel)]="empresaEditar.Codigo" type="text" name="codgio" autocomplete="off"
-                        required>
-                    <mat-error>Escriba el código de la empresa</mat-error>
-                </mat-form-field>
-            </div>
-
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Descripción</mat-label>
-                    <input matInput [(ngModel)]="empresaEditar.Descripcion" type="text" name="nombre" autocomplete="off"
-                        required>
-                    <mat-error>Escriba el nombre de la empresa</mat-error>
-                </mat-form-field>
-            </div>
-    
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>CUIT</mat-label>
-                    <input matInput [(ngModel)]="empresaEditar.Cuit" type="text" name="cuit" autocomplete="off" required>
-                    <mat-error>Escriba el CUIT</mat-error>
-                </mat-form-field>
-            </div>
-    
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Razón Social</mat-label>
-                    <input matInput [(ngModel)]="empresaEditar.RazonSocial" type="text" name="razonSocial" autocomplete="off"
-                        required>
-                    <mat-error>Escriba la razón social</mat-error>
-                </mat-form-field>
-            </div>
+    <form #form="ngForm" novalidate class="flex flex-col gap-4">
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <input pInputText type="text" id="empresa" #empresa="ngModel" class="w-100" name="username"
+                    [(ngModel)]="empresaEditar.Codigo" required />
+                <label for="empresa">Empresa</label>
+                <!-- @if (empresa.invalid && (empresa.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Empresa es requerido.</p-message>
+                } -->
+            </p-floatlabel>
         </div>
-    
-        <div class="flex flex-col md:flex-row gap-8">
-    
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Teléfono</mat-label>
-                    <input matInput [(ngModel)]="empresaEditar.Telefono" type="text" name="telefono" autocomplete="off">
-                </mat-form-field>
-            </div>
-    
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Mail</mat-label>
-                    <input matInput [(ngModel)]="empresaEditar.Email" type="email" name="mail" autocomplete="off">
-                    <mat-error>Escriba un mail válido</mat-error>
-                </mat-form-field>
-            </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <input pInputText type="text" id="descripcion" class="w-100" #descripcion="ngModel" name="descripcion"
+                    [(ngModel)]="empresaEditar.Descripcion" required />
+                <label for="descripcion">Contraseña</label>
+                <!-- @if (descripcion.invalid && (descripcion.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Contraseña es requerido.</p-message>
+                } -->
+            </p-floatlabel>
         </div>
-    
-        <div class="flex flex-col md:flex-row gap-8">
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Dirección</mat-label>
-                    <input matInput [(ngModel)]="empresaEditar.Direccion" type="text" name="direccion" autocomplete="off">
-                    <mat-error>Escriba una dirección válida</mat-error>
-                </mat-form-field>
-            </div>
-    
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Localidad</mat-label>
-                    <input matInput [(ngModel)]="empresaEditar.Localidad" type="text" name="localidad" autocomplete="off">
-                    <mat-error>Escriba una localidad válida</mat-error>
-                </mat-form-field>
-            </div>
-    
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <mat-label>Código Postal</mat-label>
-                    <input matInput [(ngModel)]="empresaEditar.CodigoPostal" type="text" name="codigopostal" autocomplete="off">
-                    <mat-error>Escriba un código portal válido</mat-error>
-                </mat-form-field>
-            </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <input pInputText type="text" id="Cuit" class="w-100" #cuit="ngModel" name="Cuit"
+                    [(ngModel)]="empresaEditar.Cuit" required />
+                <label for="cuit">Cuit</label>
+                <!-- @if (cuit.invalid && (cuit.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Cuit es requerido.</p-message>
+                } -->
+            </p-floatlabel>
         </div>
-    
-    
-        <div class="flex flex-col md:flex-row gap-8">
-            <div class="flex flex-col grow basis-0 gap-2">
-                <mat-form-field class="full-width">
-                    <textarea matInput [(ngModel)]="empresaEditar.Observaciones" name="observaciones"
-                        placeholder="Observaciones" autocomplete="off" title="Observaciones"></textarea>
-                </mat-form-field>
-            </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <input pInputText type="text" id="razonSocial" class="w-100" #razonSocial="ngModel" name="razonSocial"
+                    [(ngModel)]="empresaEditar.RazonSocial" required />
+                <label for="razonSocial">Razón Social</label>
+                <!-- @if (razonSocial.invalid && (razonSocial.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Razón Social es requerido.</p-message>
+                } -->
+            </p-floatlabel>
+        </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <input pInputText [(ngModel)]="empresaEditar.Direccion" class="w-100" #direccion="ngModel" name="direccion" id="direccion" required />
+                <label for="direccion">Dirección</label>
+                <!-- @if (direccion.invalid && (direccion.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Dirección es
+                    requerido.</p-message>
+                } -->
+            </p-floatlabel>
+        </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <input pInputText [(ngModel)]="empresaEditar.Localidad" class="w-100" #localidad="ngModel" name="localidad" id="localidad" required />
+                <label for="localidad">Localidad</label>
+                <!-- @if (expiracion.invalid && (expiracion.touched || form.submitted)) {
+                <p-message severity="error" size="small" variant="simple">Legajo es requerido.</p-message>
+                } -->
+            </p-floatlabel>
+        </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <p-inputnumber [(ngModel)]="empresaEditar.CodigoPostal" [useGrouping]="false" class="w-100" id="codigoPostal" inputId="codigoPostal" name="codigoPostal" mode="decimal" [min]="1" [max]="100000000" required />
+                <label for="codigoPostal">Código Postal</label>
+            </p-floatlabel>
+        </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <textarea rows="5" id="observaciones" cols="30" name="observaciones" class="w-100" pTextarea
+                    [(ngModel)]="empresaEditar.Observaciones"></textarea>
+                <label for="observaciones">Observaciones</label>
+            </p-floatlabel>
+        </div>
+        <div class="flex justify-end gap-2 pt-4">
+            <p-button label="Cancelar" icon="pi pi-times" class="p-button-outlined" (click)="cerrar()" [disabled]="cargando"></p-button>
+            @if(empresaEditar.Activo){
+                <p-button label="Eliminar" severity="danger" matTooltip="Eliminar usuario" icon="pi pi-trash"  (click)="eliminarEmpresa()" [disabled]="cargando"></p-button>
+            }@else{
+                <p-button label="Reactivar" severity="info" matTooltip="Reactivar usuario"  icon="pi pi-unlock"  (click)="reactivarEmpresa()" [disabled]="cargando"></p-button>
+            }
+            <p-button label="Guardar" severity="success" icon="pi pi-check" (click)="onSubmit()" [disabled]="!form.valid || cargando"></p-button>
         </div>
     </form>
 </div>
