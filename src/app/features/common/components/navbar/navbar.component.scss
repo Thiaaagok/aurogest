@@ -1,11 +1,63 @@
+.mat-drawer-inner-container {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
 .example-container {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+mat-sidenav-container.example-sidenav-container {
+  height: calc(100vh - 56px);
+  /* altura total menos la topbar fija */
+  margin-top: 56px;
+  /* espacio para la topbar fija */
+}
+
+.sidenav {
+  /* Sacar position: fixed y width fit-content para que tome el ancho por defecto */
+  /* podés definir un ancho fijo si querés, ej: */
+  width: 250px;
+  /* NO usar position: fixed */
+}
+
+/* Si querés el contenido con padding para que no quede pegado al tope */
+mat-sidenav-content {
+  padding: 1rem;
+  background-color: #fff;
+  min-height: calc(100vh - 56px);
+}
+
+/* Fondo para el contenido principal */
+mat-sidenav-content {
+  background-color: #ffffff;
+  /* o el color que desees */
+  padding: 1rem;
+  min-height: calc(100vh - 4rem);
+  /* 4rem es la altura de tu topbar */
+}
+
+/* Ajuste para layout completo */
+.example-container,
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidenav container ocupa toda la pantalla debajo del topbar */
+mat-sidenav-container {
+  height: calc(100vh - 4rem);
+  /* 4rem = altura topbar */
+  margin-top: 4rem;
+}
+
+::ng-deep .mat-drawer-backdrop.mat-drawer-shown {
+  display: none !important;
 }
 
 .example-is-mobile .example-toolbar {
@@ -23,6 +75,7 @@
 
 .example-sidenav-container {
   flex: 1;
+  background-color: white;
 }
 
 .example-is-mobile .example-sidenav-container {
@@ -32,34 +85,47 @@
 }
 
 a {
-  display: flex;                          /* Aligns items in a flexible box layout */
-  align-items: center;                   /* Centers items vertically within the flex container */
-  position: relative;                    /* Positions the element relative to its normal position */
-  outline: none;                         /* Removes the default outline */
+  display: flex;
+  /* Aligns items in a flexible box layout */
+  align-items: center;
+  /* Centers items vertically within the flex container */
+  position: relative;
+  /* Positions the element relative to its normal position */
+  outline: none;
+  /* Removes the default outline */
   text-decoration: none;
-  color: var(--text-color);             /* Sets the text color using a CSS variable */
-  cursor: pointer;                       /* Changes the cursor to a pointer on hover */
-  padding: 0.5rem 1rem;                 /* Adds padding around the text */
-  border-radius: 8px;                   /* Rounds the corners of the element */
-  transition: background-color var(--transition-duration),  /* Smooth transition for background color */
-              box-shadow var(--transition-duration);      /* Smooth transition for box shadow */
+  color: var(--text-color);
+  /* Sets the text color using a CSS variable */
+  cursor: pointer;
+  /* Changes the cursor to a pointer on hover */
+  padding: 0.5rem 1rem;
+  /* Adds padding around the text */
+  border-radius: 8px;
+  /* Rounds the corners of the element */
+  transition: background-color var(--transition-duration),
+    /* Smooth transition for background color */
+    box-shadow var(--transition-duration);
+  /* Smooth transition for box shadow */
 }
 
 
-.descripcion{
+.descripcion {
   font-family: 'Roboto', sans-serif;
   color: black;
 }
 
-.sidenav{
+.sidenav {
   position: fixed;
   width: fit-content;
   top: 3.2rem;
+  background-color: white;
+  border-radius: 15px;
+  margin-left: 15px;
 }
 
 .flex {
   display: flex;
-  align-items: center; 
+  align-items: center;
 }
 
 .cursor-pointer {
@@ -67,11 +133,11 @@ a {
 }
 
 .ml-2 {
-  margin-left: 0.5rem; 
+  margin-left: 0.5rem;
 }
 
 .descripcion {
-  flex: 1; 
+  flex: 1;
   margin-top: 8px;
   margin-bottom: 8px;
 }
@@ -80,44 +146,45 @@ a {
   flex: 1 1 auto;
 }
 
-.color-black{
+.color-black {
   color: black;
 }
 
 :host::ng-deep {
   .p-panelmenu-panel {
-    background: none; 
-    border-width: none; 
-    border-style: none; 
-    border-color: none ;
+    background: none;
+    border-width: none;
+    border-style: none;
+    border-color: none;
   }
-  .p-panelmenu{
+
+  .p-panelmenu {
     gap: 0;
   }
 
-  .mat-drawer-inner-container{
+  .mat-drawer-inner-container {
     border-radius: 10px;
   }
 
-  .mat-drawer-transition .mat-drawer-content{
+  .mat-drawer-transition .mat-drawer-content {
     border-radius: 10px;
   }
 
-  .p-panelmenu-panel{
+  .p-panelmenu-panel {
     margin-left: 10px;
   }
 
 }
 
-.contenido-container-toolbar{
-  padding: 5.6rem 2rem 0;
+.contenido-container-toolbar {
+  padding: 3rem 2rem 0;
 }
 
-.contenido-container{
+.contenido-container {
   padding: 1rem 0.5rem 0;
 }
 
-.toolbar-container{
+.toolbar-container {
   position: fixed;
   height: 4rem;
   z-index: 997;
@@ -126,8 +193,160 @@ a {
   width: 100%;
 }
 
-.sidenav-container{
+.sidenav-container {
   position: fixed;
   top: 3rem;
   left: 1rem;
+}
+
+.layout-topbar {
+  position: fixed;
+  height: 4rem;
+  z-index: 997;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: 0 2rem;
+  background-color: var(--surface-card);
+  transition: left var(--layout-section-transition-duration);
+  display: flex;
+  align-items: center;
+
+  .layout-topbar-logo-container {
+    width: 20rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .layout-topbar-logo {
+    display: inline-flex;
+    align-items: center;
+    font-size: 1.5rem;
+    border-radius: var(--content-border-radius);
+    color: var(--text-color);
+    font-weight: 500;
+    gap: 0.5rem;
+
+    svg {
+      width: 3rem;
+    }
+
+  }
+
+  .layout-topbar-action {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color-secondary);
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--text-color);
+    transition: background-color var(--element-transition-duration);
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--surface-hover);
+    }
+
+    i {
+      font-size: 1.25rem;
+    }
+
+    span {
+      font-size: 1rem;
+      display: none;
+    }
+
+    &.layout-topbar-action-highlight {
+      background-color: var(--primary-color);
+      color: var(--primary-contrast-color);
+    }
+  }
+
+  .layout-menu-button {
+    margin-right: 0.5rem;
+  }
+
+  .layout-topbar-menu-button {
+    display: none;
+  }
+
+  .layout-topbar-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .layout-topbar-menu-content {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .layout-config-menu {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 991px) {
+  .layout-topbar {
+    padding: 0 2rem;
+
+    .layout-topbar-logo-container {
+      width: auto;
+    }
+
+    .layout-menu-button {
+      margin-left: 0;
+      margin-right: 0.5rem;
+    }
+
+    .layout-topbar-menu-button {
+      display: inline-flex;
+    }
+
+    .layout-topbar-menu {
+      position: absolute;
+      background-color: var(--surface-overlay);
+      transform-origin: top;
+      box-shadow:
+        0px 3px 5px rgba(0, 0, 0, 0.02),
+        0px 0px 2px rgba(0, 0, 0, 0.05),
+        0px 1px 4px rgba(0, 0, 0, 0.08);
+      border-radius: var(--content-border-radius);
+      padding: 1rem;
+      right: 2rem;
+      top: 4rem;
+      min-width: 15rem;
+      border: 1px solid var(--surface-border);
+
+      .layout-topbar-menu-content {
+        gap: 0.5rem;
+      }
+
+      .layout-topbar-action {
+        display: flex;
+        width: 100%;
+        height: auto;
+        justify-content: flex-start;
+        border-radius: var(--content-border-radius);
+        padding: 0.5rem 1rem;
+
+        i {
+          font-size: 1rem;
+          margin-right: 0.5rem;
+        }
+
+        span {
+          font-weight: medium;
+          display: block;
+        }
+      }
+    }
+
+    .layout-topbar-menu-content {
+      flex-direction: column;
+    }
+  }
 }

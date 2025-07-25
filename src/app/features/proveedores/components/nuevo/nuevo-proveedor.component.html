@@ -2,9 +2,9 @@
   <form #form="ngForm" novalidate class="flex flex-col gap-4">
     <div class="flex flex-col grow basis-0 gap-2">
       <p-floatlabel variant="in">
-        <input pInputText type="text" id="empresa" #empresa="ngModel" class="w-100" name="username"
+        <input pInputText type="text" id="empresa" #empresa="ngModel" class="w-100" name="codigo"
           [(ngModel)]="nuevoProveedor.Codigo" required />
-        <label for="empresa">Empresa</label>
+        <label for="empresa">Código</label>
         <!-- @if (empresa.invalid && (empresa.touched || form.submitted)) {
                 <p-message severity="error" size="small" variant="simple">Empresa es requerido.</p-message>
                 } -->
@@ -14,7 +14,7 @@
       <p-floatlabel variant="in">
         <input pInputText type="text" id="descripcion" class="w-100" #descripcion="ngModel" name="descripcion"
           [(ngModel)]="nuevoProveedor.Descripcion" required />
-        <label for="descripcion">Contraseña</label>
+        <label for="descripcion">Descripción</label>
         <!-- @if (descripcion.invalid && (descripcion.touched || form.submitted)) {
                 <p-message severity="error" size="small" variant="simple">Contraseña es requerido.</p-message>
                 } -->
@@ -51,7 +51,7 @@
       <p-floatlabel variant="in">
         <input pInputText type="text" id="web" class="w-100" #web="ngModel" name="web" [(ngModel)]="nuevoProveedor.Web"
           required />
-        <label for="web">Razón Social</label>
+        <label for="web">Web</label>
         <!-- @if (web.invalid && (web.touched || form.submitted)) {
                 <p-message severity="error" size="small" variant="simple">Web es requerido.</p-message>
                 } -->

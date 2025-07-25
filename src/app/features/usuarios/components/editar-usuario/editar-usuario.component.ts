@@ -46,7 +46,6 @@ export class EditarUsuarioComponent {
 
 
   ngOnInit() {
-    this.cargarEmpresasDrodpwon();
     this.parametro = this.config.data;
     this.obtenerUsuario();
   }
@@ -119,18 +118,4 @@ export class EditarUsuarioComponent {
     })
   }
 
-  cargarEmpresasDrodpwon() {
-    this.empresasService.obtenerTodos()
-    .subscribe({
-      next: ((response: EmpresaModel[]) => {
-        this.cargando = false;
-        this.empresasDropdown = response;
-      }),
-      error: (err) => {
-        this.cargando = false;
-        console.error(err);
-      },
-      complete: () => {}
-    })
-  }
 }

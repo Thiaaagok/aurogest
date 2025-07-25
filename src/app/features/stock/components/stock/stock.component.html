@@ -82,6 +82,7 @@
             </tr>
         </ng-template>
 
+        @if(!cargando){
         <ng-template #body let-producto>
             <tr class="cursor-pointer">
                 <td>{{ producto.Nombre }}</td>
@@ -91,6 +92,7 @@
                 <td>{{ producto.Categoria?.Descripcion }}</td>
             </tr>
         </ng-template>
+        }
         <ng-template #emptymessage>
             <tr>
                 <td colspan="8">No se encontraron productos.</td>

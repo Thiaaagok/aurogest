@@ -29,7 +29,7 @@ import { MarcasService } from '../../services/marcas.service';
   templateUrl: './editar-producto.component.html',
   styleUrl: './editar-producto.component.scss',
 })
-export class EditarProductoComponent { 
+export class EditarProductoComponent {
   productoEditar: ProductoModel = new ProductoModel();
   cargando: boolean;
   parametro: string;
@@ -57,18 +57,18 @@ export class EditarProductoComponent {
 
   onSubmit() {
     this.cargando = true;
-    this.productosService.editar(this.productoEditar.Id,this.productoEditar).subscribe({
+    this.productosService.editar(this.productoEditar.Id, this.productoEditar).subscribe({
       next: (response: ProductoModel) => {
         timer(2000)
-        .subscribe(() => {
-          this.cargando = false;
-          this.ref.close();
-        })
+          .subscribe(() => {
+            this.cargando = false;
+            this.ref.close();
+          })
       },
       error: (err) => {
         console.log(err);
       },
-      complete: () => {},
+      complete: () => { },
     });
   }
 
@@ -82,109 +82,117 @@ export class EditarProductoComponent {
       error: (err) => {
         console.log(err);
       },
-      complete: () => {},
+      complete: () => { },
     });
   }
 
-  eliminarProducto(){
+  eliminarProducto() {
     this.productosService.eliminar(this.productoEditar.Id)
-    .subscribe({
-      next: ((response: boolean) => {
-        this.cargando = false;
-        timer(300).subscribe(() => {
-          this.obtenerProducto();
-        });
-      }),
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {}
-    })
+      .subscribe({
+        next: ((response: boolean) => {
+          this.cargando = false;
+          timer(300).subscribe(() => {
+            this.obtenerProducto();
+          });
+        }),
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => { }
+      })
   }
 
-  reactivarProducto(){
+  reactivarProducto() {
     this.productosService.reactivar(this.productoEditar.Id)
-    .subscribe({
-      next: ((response: boolean) => {
-        this.cargando = false;
-        timer(300).subscribe(() => {
-          this.obtenerProducto();
-        });
-      }),
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {}
-    })
+      .subscribe({
+        next: ((response: boolean) => {
+          this.cargando = false;
+          timer(300).subscribe(() => {
+            this.obtenerProducto();
+          });
+        }),
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => { }
+      })
   }
-  
+
 
   cerrar() {
     this.ref.close();
   }
-  
-  cargarTiposProductosCombo(){
+
+  cargarTiposProductosCombo() {
     this.productoTiposService.obtenerTodos()
-    .subscribe({
-      next: (response: ProductoTipoModel[]) => {
-        this.cargando = false;
-        this.tiposProductosCombo = response;
-      },
-      error: (err) => {
-        this.cargando = false;
-        console.log(err);
-      },
-      complete: () => {},
-    });
+      .subscribe({
+        next: (response: ProductoTipoModel[]) => {
+          this.cargando = false;
+          this.tiposProductosCombo = response;
+        },
+        error: (err) => {
+          this.cargando = false;
+          console.log(err);
+        },
+        complete: () => { },
+      });
   }
 
-  cargarMarcasProductosCombo(){
+  cargarMarcasProductosCombo() {
     this.marcasService.obtenerTodos()
-    .subscribe({
-      next: (response: MarcaModel[]) => {
-        this.cargando = false;
-        this.marcasProductosCombo = response;
-      },
-      error: (err) => {
-        this.cargando = false;
-        console.log(err);
-      },
-      complete: () => {},
-    });
+      .subscribe({
+        next: (response: MarcaModel[]) => {
+          this.cargando = false;
+          this.marcasProductosCombo = response;
+        },
+        error: (err) => {
+          this.cargando = false;
+          console.log(err);
+        },
+        complete: () => { },
+      });
   }
 
-  cargarCategoriasProductosCombo(){
+  cargarCategoriasProductosCombo() {
     this.productoCategoriasService.obtenerTodos()
-    .subscribe({
-      next: (response: ProductoCategoriaModel[]) => {
-        this.cargando = false;
-        this.categoriasProductosCombo = response;
-      },
-      error: (err) => {
-        this.cargando = false;
-        console.log(err);
-      },
-      complete: () => {},
-    });
+      .subscribe({
+        next: (response: ProductoCategoriaModel[]) => {
+          this.cargando = false;
+          this.categoriasProductosCombo = response;
+        },
+        error: (err) => {
+          this.cargando = false;
+          console.log(err);
+        },
+        complete: () => { },
+      });
   }
 
-  cargarProveedoresCombo(){
+  cargarProveedoresCombo() {
     this.proveedoresService.obtenerTodos()
-    .subscribe({
-      next: (response: ProveedorModel[]) => {
-        this.cargando = false;
-        this.proveedoresCombo = response;
-      },
-      error: (err) => {
-        this.cargando = false;
-        console.log(err);
-      },
-      complete: () => {},
-    });
+      .subscribe({
+        next: (response: ProveedorModel[]) => {
+          this.cargando = false;
+          this.proveedoresCombo = response;
+        },
+        error: (err) => {
+          this.cargando = false;
+          console.log(err);
+        },
+        complete: () => { },
+      });
   }
 
-  limpiarModel(){
+  limpiarModel() {
     this.productoEditar = new ProductoModel();
+  }
+
+  columnasFormulario: number = 1; // Este valor puede venir de config
+
+  get gridStyles() {
+    return {
+      'grid-template-columns': `repeat(${this.columnasFormulario}, 1fr)`
+    };
   }
 
 }

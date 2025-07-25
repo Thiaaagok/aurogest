@@ -43,10 +43,8 @@ export class NuevoUsuarioComponent {
   private ref = inject(DynamicDialogRef);
   private config = inject(DynamicDialogConfig);
   private usuariosService = inject(UsuariosService);
-  private empresasService = inject(EmpresaService);
 
   ngOnInit() {
-    this.cargarEmpresasDrodpwon();
   }
 
   onSubmit() {
@@ -66,20 +64,6 @@ export class NuevoUsuarioComponent {
 
   cerrar() {
     this.ref.close();
-  }
-
-  cargarEmpresasDrodpwon() {
-    this.empresasService.obtenerTodos()
-    .subscribe({
-      next: ((response: EmpresaModel[]) => {
-        this.cargando = false;
-        this.empresasDropdown = response;
-      }),
-      error: (err) => {
-        console.error(err);
-      },
-      complete: () => {}
-    })
   }
 
   limpiarModel(){

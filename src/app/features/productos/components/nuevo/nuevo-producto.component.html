@@ -2,9 +2,9 @@
   <form #form="ngForm" novalidate class="flex flex-col gap-4">
     <div class="flex flex-col grow basis-0 gap-2">
       <p-floatlabel variant="in">
-        <input pInputText type="text" id="empresa" #empresa="ngModel" class="w-100" name="username"
+        <input pInputText type="text" id="codigo" #empresa="ngModel" class="w-100" name="codigo"
           [(ngModel)]="nuevoProducto.Codigo" required />
-        <label for="empresa">Empresa</label>
+        <label for="codigo">Código</label>
         <!-- @if (empresa.invalid && (empresa.touched || form.submitted)) {
                 <p-message severity="error" size="small" variant="simple">Empresa es requerido.</p-message>
                 } -->
@@ -14,7 +14,7 @@
       <p-floatlabel variant="in">
         <input pInputText type="text" id="nombre" class="w-100" #nombre="ngModel" name="nombre"
           [(ngModel)]="nuevoProducto.Nombre" required />
-        <label for="nombre">Contraseña</label>
+        <label for="nombre">Nombre</label>
         <!-- @if (nombre.invalid && (nombre.touched || form.submitted)) {
                 <p-message severity="error" size="small" variant="simple">Contraseña es requerido.</p-message>
                 } -->

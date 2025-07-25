@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild, ViewEncapsulation  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -18,6 +18,7 @@ import { EditarProveedorComponent } from '../editar/editar-proveedor.component';
   imports: [PrimeNgModule,CommonModule,RouterModule,FontAwesomeModule,CustomMaterialModule,FormsModule],
   templateUrl: './grilla-proveedores.component.html',
   styleUrl: './grilla-proveedores.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class GrillaProveedoresComponent { 
   @ViewChild('filter')filter!: ElementRef;

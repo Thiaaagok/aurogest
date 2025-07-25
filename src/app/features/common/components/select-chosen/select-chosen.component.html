@@ -1,23 +1,18 @@
 <div [ngClass]="classList">
-    <div class="p-field w-100" >
+    <div class="p-field w-100">
 
-        <!-- MODO MULTIPLE -->
-        <p-multiSelect *ngIf="multiple" class="w-100" [options]="dataSource" optionLabel="Descripcion" [(ngModel)]="value"
-            name="value" [filter]="true" [disabled]="disabled" [placeholder]="placeholder" (onChange)="onChange()"
-            [required]="required">
-        </p-multiSelect>
+        <p-multiSelect *ngIf="multiple" class="w-100" [options]="dataSource" optionLabel="Descripcion"
+            [(ngModel)]="value" name="value" [filter]="true" [disabled]="disabled" [placeholder]="placeholder"
+            (onChange)="onChange()" [required]="required"></p-multiSelect>
 
         <!-- MODO ÚNICO -->
-        <p-floatlabel *ngIf="!multiple" class="w-100 md:w-56" variant="in">
+        <p-floatlabel *ngIf="!multiple" class="w-100 md:w-56 relative" variant="in">
             <p-select [(ngModel)]="value" inputId="in_label" [options]="dataSource" optionLabel="Descripcion"
                 class="w-100" variant="filled" name="value" [filter]="true" [disabled]="disabled"
-                (onChange)="onChange()" [required]="required" (onChange)="onValueChange($event.value)"/>
-            <label for="in_label">{{placeholder}}</label>
+                (onChange)="onChange()" (onChange)="onValueChange($event.value)"></p-select>
+            <label for="in_label">{{ placeholder }}</label>
         </p-floatlabel>
-
         <!-- Mensaje de error -->
         <p-message *ngIf="mensajeError && value === null" severity="error" text="{{ mensajeError }}"></p-message>
-        <button pButton type="button" icon="pi pi-refresh" class="p-button-text p-ml-2" (click)="recargarCombo()"
-        [disabled]="disabled" title="Recargar opciones"></button>
     </div>
 </div>

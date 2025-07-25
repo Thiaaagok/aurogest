@@ -31,11 +31,6 @@
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
-            <app-select-chosen class="w-full" title="Empresa" [(ngModel)]="nuevoUsuario.Empresa" name="empresa"
-                placeholder="Empresa del usuario" [dataSource]="empresasDropdown" (recargar)="cargarEmpresasDrodpwon()"
-                [mensajeError]="'Seleccione una empresa'"></app-select-chosen>
-        </div>
-        <div class="flex flex-col grow basis-0 gap-2">
             <p-floatlabel variant="in">
                 <input pInputText type="text" id="legajo" class="w-100" #legajo="ngModel" name="legajo"
                     [(ngModel)]="nuevoUsuario.Legajo" required />
