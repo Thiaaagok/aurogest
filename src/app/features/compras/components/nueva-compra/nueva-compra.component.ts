@@ -36,7 +36,7 @@ import { ProductosService } from '../../../productos/services/producto.service';
 export class NuevaCompraComponent {
   nuevaCompra: CompraModel = new CompraModel();
   nuevoItem: CompraItemModel = new CompraItemModel();
-  ProductoSeleccionado: ProductoModel = new ProductoModel();
+  productoSeleccionado: ProductoModel = new ProductoModel();
 
   productosCombo: ProductoComboModel[] = [];
   proveedoresCombo: ProveedorModel[] = [];
@@ -103,9 +103,9 @@ export class NuevaCompraComponent {
   }
 
   crearNuevoItem() {
-    if (this.ProductoSeleccionado) {
+    if (this.productoSeleccionado) {
       const productoBase = new ProductoModel();
-      Object.assign(productoBase, this.ProductoSeleccionado);
+      Object.assign(productoBase, this.productoSeleccionado);
       this.nuevoItem.Producto = productoBase;
     }
 

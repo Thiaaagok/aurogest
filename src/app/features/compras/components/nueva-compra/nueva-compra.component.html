@@ -16,7 +16,7 @@
             <form #form="ngForm">
                 <div class="flex flex-wrap items-center gap-2">
                     <div class="flex flex-col w-20 gap-0">
-                        <app-select-chosen title="Producto" [(ngModel)]="|ProductoSeleccionado" name="producto"
+                        <app-select-chosen title="Producto" [(ngModel)]="productoSeleccionado" name="producto"
                             placeholder="Producto" [dataSource]="productosCombo" [required]="true"
                             (recargar)="cargarProductosCombo()">
                         </app-select-chosen>
