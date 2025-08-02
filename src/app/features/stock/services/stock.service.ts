@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Config } from '../../common/config/config';
 import { Observable } from 'rxjs';
-import { ProductoStock } from '../../productos/models/producto.model';
+import { ProductoStock } from '../models/producto-stock.model';
 
 @Injectable({ providedIn: 'root' })
 export class StockService {

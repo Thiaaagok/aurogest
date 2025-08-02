@@ -8,7 +8,7 @@
 <div class="card">
     <div class="font-semibold text-xl mb-4">Stock</div>
     <p-table #grillaProductos [value]="productos" dataKey="Id" [rows]="10" [loading]="cargando" [rowHover]="true"
-        [showGridlines]="true" [paginator]="true" [globalFilterFields]="['Usuario', 'Mail']" responsiveLayout="scroll">
+        [showGridlines]="true" [paginator]="true" [globalFilterFields]="['Producto', 'StockActual','StockMinimo','StockMaximo','StockReservado','UltimaActualizacion']" responsiveLayout="scroll">
         <ng-template #caption>
             <div class="flex justify-between items-center flex-column sm:flex-row">
                 <p-iconfield iconPosition="left">
@@ -29,78 +29,66 @@
                 <button pButton label="Sin stock" class="p-button-danger mb-2" icon="pi pi-times-circle"
                     (click)="filtrarSinStock(grillaProductos)"></button>
             </div>
-            <div class="flex justify-between items-center flex-column sm:flex-row mt-3 w-40 gap-4">
-                <div class="flex flex-col grow basis-0 gap-2">
-                    <app-select-chosen title="Unidad Medida" [(ngModel)]="unidadMedida" name="Unidad Medida"
-                        placeholder="Unidad Medida" [dataSource]="unidadesMedidaCombo"
-                        (recargar)="cargarUnidadesMedidasCombo()"></app-select-chosen>
-                </div>
-                <div class="flex flex-col grow basis-0 gap-2">
-                    <app-select-chosen title="Deposito" [(ngModel)]="deposito" name="Deposito" placeholder="Deposito"
-                        [dataSource]="depositosCombo" (recargar)="cargarUnidadesMedidasCombo()"></app-select-chosen>
-                </div>
-            </div>
-
         </ng-template>
         <ng-template #header>
             <tr>
                 <th style="min-width: 12rem">
                     <div class="flex justify-between items-center">
-                        Nombre
-                        <p-columnFilter type="text" field="Nombre" display="menu"
+                        Producto
+                        <p-columnFilter type="text" field="Producto.Nombre" display="menu"
                             placeholder="Buscar por nombre"></p-columnFilter>
                     </div>
                 </th>
                 <th style="min-width: 10rem">
                     <div class="flex justify-between items-center">
-                        Código
-                        <p-columnFilter type="text" field="Codigo" display="menu"
-                            placeholder="Buscar por código"></p-columnFilter>
+                        Stock Actual
                     </div>
                 </th>
                 <th style="min-width: 10rem">
                     <div class="flex justify-between items-center">
-                        Tipo
-                        <p-columnFilter type="text" field="Tipo.Descripcion" display="menu"
-                            placeholder="Buscar por tipo"></p-columnFilter>
+                        Stock Minimo
                     </div>
                 </th>
                 <th style="min-width: 10rem">
                     <div class="flex justify-between items-center">
-                        Marca
-                        <p-columnFilter type="text" field="Marca.Descripcion" display="menu"
-                            placeholder="Buscar por marca"></p-columnFilter>
+                        Stock Maximo
                     </div>
                 </th>
                 <th style="min-width: 10rem">
                     <div class="flex justify-between items-center">
-                        Categoria
-                        <p-columnFilter type="text" field="Categoria.Descripcion" display="menu"
-                            placeholder="Buscar por categoria"></p-columnFilter>
+                        Stock Reservado
+                    </div>
+                </th>
+                <th style="min-width: 10rem">
+                    <div class="flex justify-between items-center">
+                        Ultima Actualización
+                        <p-columnFilter type="date" field="UltimaActualizacion" display="menu"
+                            placeholder="Buscar por ultima actualización"></p-columnFilter>
                     </div>
                 </th>
             </tr>
         </ng-template>
 
         @if(!cargando){
-        <ng-template #body let-producto>
+        <ng-template #body let-productoStock>
             <tr class="cursor-pointer">
-                <td>{{ producto.Nombre }}</td>
-                <td>{{ producto.Codigo }}</td>
-                <td>{{ producto.Tipo?.Descripcion }}</td>
-                <td>{{ producto.Marca?.Descripcion }}</td>
-                <td>{{ producto.Categoria?.Descripcion }}</td>
+                <td>{{ productoStock.Producto.Nombre }}</td>
+                <td>{{ productoStock.StockActual }}</td>
+                <td>{{ productoStock.StockMinimo }}</td>
+                <td>{{ productoStock.StockMaximo }}</td>
+                <td>{{ productoStock.StockReservado }}</td>
+                <td>{{ productoStock.UltimaActualizacion | date: 'dd/MM/yyyy' }}</td>
             </tr>
         </ng-template>
         }
         <ng-template #emptymessage>
             <tr>
-                <td colspan="8">No se encontraron productos.</td>
+                <td colspan="8">No se encontro stock.</td>
             </tr>
         </ng-template>
         <ng-template #loadingbody>
             <tr>
-                <td colspan="8">Cargando productos</td>
+                <td colspan="8">Cargando stock</td>
             </tr>
         </ng-template>
     </p-table>

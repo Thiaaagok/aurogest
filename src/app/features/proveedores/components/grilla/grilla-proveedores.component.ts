@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, ViewChild, ViewEncapsulation  } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -12,16 +12,15 @@ import { Table } from 'primeng/table';
 import { DialogService } from 'primeng/dynamicdialog';
 import { NuevoProveedorComponent } from '../nuevo/nuevo-proveedor.component';
 import { EditarProveedorComponent } from '../editar/editar-proveedor.component';
-
 @Component({
   selector: 'app-grilla-proveedores',
-  imports: [PrimeNgModule,CommonModule,RouterModule,FontAwesomeModule,CustomMaterialModule,FormsModule],
+  imports: [PrimeNgModule, CommonModule, RouterModule, FontAwesomeModule, CustomMaterialModule, FormsModule],
   templateUrl: './grilla-proveedores.component.html',
   styleUrl: './grilla-proveedores.component.scss',
   encapsulation: ViewEncapsulation.None
 })
-export class GrillaProveedoresComponent { 
-  @ViewChild('filter')filter!: ElementRef;
+export class GrillaProveedoresComponent {
+  @ViewChild('filter') filter!: ElementRef;
 
   proveedores: ProveedorModel[] = [];
   proveedoresFiltro: ProveedorModel[] = [];
@@ -32,36 +31,36 @@ export class GrillaProveedoresComponent {
   private proveedoresService = inject(ProveedoresService);
   private dialogService = inject(DialogService);
 
-  ngOnInit(){
+  ngOnInit() {
     this.registrosGrillaActivos = true;
     this.obtenerProveedores();
   }
 
-  obtenerProveedores(){
+  obtenerProveedores() {
     this.cargando = true;
     this.proveedoresService.obtenerTodos()
-    .subscribe({
-      next: ((response: ProveedorModel[]) => {
-        this.cargando = false;
-        this.proveedoresFiltro = response;
-        this.cargarGrilla();
-      }),
-      error: (err) => {
-        console.error(err);
-      },
-      complete: () => {}
-    })
+      .subscribe({
+        next: ((response: ProveedorModel[]) => {
+          this.cargando = false;
+          this.proveedoresFiltro = response;
+          this.cargarGrilla();
+        }),
+        error: (err) => {
+          console.error(err);
+        },
+        complete: () => { }
+      })
   }
 
-  cargarGrilla(){
+  cargarGrilla() {
     this.proveedores = this.GrillaUtilService.cargarGrilla(this.proveedoresFiltro, this.registrosGrillaActivos);
   }
 
-  filtrarProveedores(table: Table, event: Event){
+  filtrarProveedores(table: Table, event: Event) {
     this.GrillaUtilService.filtrarGlobal(table, event);
   }
 
-  limpiarFiltrado(table: Table){
+  limpiarFiltrado(table: Table) {
     this.GrillaUtilService.limpiarFiltrado(table);
   }
 
@@ -77,9 +76,9 @@ export class GrillaProveedoresComponent {
     });
 
     dialog.onClose
-    .subscribe(() => {
-      this.obtenerProveedores();
-    })
+      .subscribe(() => {
+        this.obtenerProveedores();
+      })
   }
 
   editarProveedor(id: string) {
@@ -88,13 +87,13 @@ export class GrillaProveedoresComponent {
       width: '50%',
       height: 'fit-content',
       modal: true,
-      data: id ,
+      data: id,
       styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
     });
 
     dialog.onClose
-    .subscribe(() => {
-      this.obtenerProveedores();
-    })
+      .subscribe(() => {
+        this.obtenerProveedores();
+      })
   }
 }

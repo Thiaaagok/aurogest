@@ -13,5 +13,6 @@ export class HomeComponent {
 
   constructor(){
     this.utilitiesService.setTituloPagina('Home');
+    this.utilitiesService.setearLogin(false);
   }
 }

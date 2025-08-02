@@ -11,10 +11,21 @@
   backdrop-filter: blur(4px);
   transition: all 0.3s ease-in-out;
 
-  @media (min-width: 576px) { width: 30%; }
-  @media (min-width: 768px) { width: 25%; }
-  @media (min-width: 992px) { width: 19%; }
-  @media (min-width: 1200px) { width: 19%; }
+  @media (min-width: 576px) {
+    width: 39%;
+  }
+
+  @media (min-width: 768px) {
+    width: 31%;
+  }
+
+  @media (min-width: 992px) {
+    width: 26%;
+  }
+
+  @media (min-width: 1200px) {
+    width: 21%;
+  }
 }
 
 .botonera-contenedor {
@@ -30,11 +41,29 @@
   color: white;
 }
 
-::ng-deep button.mat-mini-fab{
+::ng-deep button.mat-mini-fab {
   width: fit-content;
 }
 
 ::ng-deep button.mat-mdc-mini-fab.mat-mdc-button-base {
   width: 35px !important;
   height: 35px !important;
+}
+
+::ng-deep .mdc-switch__track {
+  height: 30px;
+}
+
+.toggle-label {
+  margin-left: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.w-50vw {
+  width: 50vw;
+}
+
+.w-20{
+  width: 20vw;
 }

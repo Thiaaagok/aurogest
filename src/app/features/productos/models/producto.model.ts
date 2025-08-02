@@ -1,6 +1,5 @@
-import { ClaseBase } from "../../common/models/clase-base.model";
-import { EmpresaModel } from "../../empresas/models/empresa.model";
 import { ProveedorModel } from "../../proveedores/models/proveedor.model";
+import { ProductoStock } from "../../stock/models/producto-stock.model";
 import { MarcaModel } from "./marca.model";
 import { ProductoCategoriaModel } from "./producto-categoria.model";
 import { ProductoTipoModel } from "./producto-tipo.model";
@@ -14,12 +13,11 @@ export class ProductoModel {
     Categoria?: ProductoCategoriaModel;
     Marca?: MarcaModel;
     Proveedores?: ProveedorModel[];
-    PrecioCompra: number;
-    PrecioVenta: number;
+    Precio: number;
     FechaCreacion: Date;
     FechaActualizacion: Date;
     PermitirVenta: boolean;
-    Empresa: EmpresaModel;
+    Stock: ProductoStock;
     Activo: boolean;
 
     constructor(){
@@ -27,26 +25,11 @@ export class ProductoModel {
     }
 } 
 
+export class ProductoComboModel extends ProductoModel {
+    Descripcion: string;
+}
 
 export class ProductoDetalleModel {
     Titulo: string;
     Descripcion: string;
-}
-
-export class ProductoStock{
-    Id: string;
-    Producto: ProductoModel;
-    Deposito: DepositoModel;
-    StockActual: number;
-    StockMinimo: number;
-    StockMaximo?: number;
-    UnidadMedida?: string;
-    UltimaActualizacion?: Date;
-    Activo?: boolean;
-    Observaciones?: string;
-    StockReservado?: number;
-}
-
-export class DepositoModel extends ClaseBase {
-
 }

@@ -11,23 +11,7 @@ export const Modulos: MenuItem[] = [
   {
     label: 'Inicio',
     icon: 'pi pi-home',
-    route: '/inicio',
-  },
-  {
-    label: 'Ventas',
-    icon: 'pi pi-shopping-cart',
-    items: [
-      {
-        label: 'Venta',
-        icon: 'pi pi-cart-arrow-down',
-        route: 'ventas/nueva'
-      },
-      {
-        label: 'Ventas',
-        icon: 'pi pi-list',
-        route: 'ventas/grilla'
-      }
-    ]
+    route: '/home',
   },
   {
     label: 'Usuarios',
@@ -74,5 +58,21 @@ export const Modulos: MenuItem[] = [
     label: 'Stock',
     icon: 'pi pi-box',
     route: 'stock'
-  }
+  },
+  {
+    label: 'Compras',
+    icon: 'pi pi-shopping-cart',
+    items: [
+      {
+        label: 'Nueva',
+        icon: 'pi pi-cart-plus',
+        route: 'compras/nueva'
+      }
+    ]
+  },
+  {
+    label: 'Ventas',
+    icon: 'pi pi-dollar',
+    route: 'ventas'
+  },
 ];

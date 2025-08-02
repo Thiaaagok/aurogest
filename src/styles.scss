@@ -87,3 +87,12 @@ input.ng-invalid.ng-touched {
   --tw-shadow-colored: 0px 10px 10px -8px var(--tw-shadow-color), 0px 2px 2px -1.5px var(--tw-shadow-color), 0px 1px 1px -.5px var(--tw-shadow-color), 0px 0px 0px 1px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+
+.floating-button {
+  position: fixed;
+  z-index: 999;
+  cursor: grab;
+}
+.floating-button:active {
+  cursor: grabbing;
+}

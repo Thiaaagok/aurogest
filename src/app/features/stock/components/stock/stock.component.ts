@@ -5,11 +5,11 @@ import { CommonModule } from '@angular/common';
 import { DialogService } from 'primeng/dynamicdialog';
 import { GrillaUtilService } from '../../../common/services/grilla-util.service';
 import { Table } from 'primeng/table';
-import { DepositoModel, ProductoStock } from '../../../productos/models/producto.model';
 import { StockService } from '../../services/stock.service';
 import { UnidadMedidaModel } from '../../../productos/models/unidad-medida.model';
 import { SelectChosenComponent } from '../../../common/components/select-chosen/select-chosen.component';
 import { DatePickerModule } from 'primeng/datepicker';
+import { ProductoStock } from '../../models/producto-stock.model';
 
 @Component({
   selector: 'app-stock',
@@ -23,10 +23,6 @@ export class StockComponent {
   @ViewChild('filter') filter!: ElementRef;
   productos: ProductoStock[] = [];
   productosFiltro: ProductoStock[] = [];
-  unidadMedida: string;
-  unidadesMedidaCombo: UnidadMedidaModel[] = [];
-  depositosCombo: DepositoModel[] = [];
-  deposito: DepositoModel;
 
   cargando: boolean;
   registrosGrillaActivos: boolean;
@@ -66,10 +62,6 @@ export class StockComponent {
     );
   }
 
-  cargarUnidadesMedidasCombo() {
-
-  }
-
   limpiarFiltrado(table: Table) {
     this.GrillaUtilService.limpiarFiltrado(table);
   }
@@ -87,5 +79,7 @@ export class StockComponent {
   filtrarSinStock(table: Table) {
     table.filter((producto: ProductoStock) => producto.StockActual === 0, 'Cantidad', 'custom');
   }
+
+  cargarDepositoCombo(){}
 
 }

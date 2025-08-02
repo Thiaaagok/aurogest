@@ -20,25 +20,27 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { TextareaModule } from 'primeng/textarea';
 import { MarcaModel } from '../../models/marca.model';
 import { MarcasService } from '../../services/marcas.service';
+import JsBarcode from 'jsbarcode';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-nuevo-producto',
   imports: [
-    PrimeNgModule, 
-    CustomMaterialModule, 
-    SelectChosenComponent, 
+    PrimeNgModule,
+    CustomMaterialModule,
+    SelectChosenComponent,
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
     InputTextModule,
     ToastModule,
     FloatLabel,
-    TextareaModule
+    TextareaModule,
   ],
   templateUrl: './nuevo-producto.component.html',
   styleUrl: './nuevo-producto.component.scss',
 })
-export class NuevoProductoComponent { 
+export class NuevoProductoComponent {
 
   nuevoProducto: ProductoModel = new ProductoModel();
   cargando: boolean;
@@ -49,14 +51,13 @@ export class NuevoProductoComponent {
   MinimoStock: number;
 
   private ref = inject(DynamicDialogRef);
-  private config = inject(DynamicDialogConfig);
   private productosService = inject(ProductosService);
   private proveedoresService = inject(ProveedoresService);
   private productoTiposService = inject(ProductoTiposService);
   private productoCategoriasService = inject(ProductoCategoriasService);
   private marcasService = inject(MarcasService)
 
-  constructor(){
+  constructor() {
   }
 
   ngOnInit() {
@@ -64,6 +65,7 @@ export class NuevoProductoComponent {
     this.cargarMarcasProductosCombo();
     this.cargarCategoriasProductosCombo();
     this.cargarProveedoresCombo();
+    this.nuevoProducto.CodigoBarra = uuidv4().replace(/-/g, '');
   }
 
   onSubmit() {
@@ -79,7 +81,7 @@ export class NuevoProductoComponent {
           this.cargando = false;
           console.log(err);
         },
-        complete: () => {},
+        complete: () => { },
       });
   }
 
@@ -87,60 +89,61 @@ export class NuevoProductoComponent {
     this.ref.close();
   }
 
-  cargarTiposProductosCombo(){
+  cargarTiposProductosCombo() {
     this.productoTiposService.obtenerTodos()
-    .subscribe({
-      next: (response: ProductoTipoModel[]) => {
-        this.tiposProductosCombo = response;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {},
-    });
+      .subscribe({
+        next: (response: ProductoTipoModel[]) => {
+          this.tiposProductosCombo = response;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => { },
+      });
   }
 
-  cargarMarcasProductosCombo(){
+  cargarMarcasProductosCombo() {
     this.marcasService.obtenerTodos()
-    .subscribe({
-      next: (response: MarcaModel[]) => {
-        this.marcasProductosCombo = response;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {},
-    });
+      .subscribe({
+        next: (response: MarcaModel[]) => {
+          this.marcasProductosCombo = response;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => { },
+      });
   }
 
-  cargarCategoriasProductosCombo(){
+  cargarCategoriasProductosCombo() {
     this.productoCategoriasService.obtenerTodos()
-    .subscribe({
-      next: (response: ProductoCategoriaModel[]) => {
-        this.categoriasProductosCombo = response;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {},
-    });
+      .subscribe({
+        next: (response: ProductoCategoriaModel[]) => {
+          this.categoriasProductosCombo = response;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => { },
+      });
   }
 
-  cargarProveedoresCombo(){
+  cargarProveedoresCombo() {
     this.proveedoresService.obtenerTodos()
-    .subscribe({
-      next: (response: ProveedorModel[]) => {
-        this.proveedoresCombo = response;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {},
-    });
+      .subscribe({
+        next: (response: ProveedorModel[]) => {
+          this.proveedoresCombo = response;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => { },
+      });
   }
 
-  limpiarModel(){
+  limpiarModel() {
     this.nuevoProducto = new ProductoModel();
+    this.nuevoProducto.CodigoBarra = uuidv4().replace(/-/g, '');
   }
-  
+
 }

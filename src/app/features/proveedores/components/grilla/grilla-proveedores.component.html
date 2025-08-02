@@ -1,4 +1,10 @@
-<div class="botonera-flotante">
+<div class="botonera-flotante" cdkDrag >
+
+  <div class="drag-handle" cdkDragHandle title="Mover">
+    <i class="pi pi-arrows-alt"></i> <!-- O FontAwesome o el que uses -->
+  </div>
+
+
   <div class="botonera-contenedor">
     <button mat-mini-fab color="accent" matTooltip="Cargar las proveedores" (click)="obtenerProveedores()">
       <i class="fa-solid fa-arrows-rotate"></i>
@@ -14,6 +20,7 @@
     </mat-slide-toggle>
   </div>
 </div>
+
 <div class="card">
   <div class="font-semibold text-xl mb-4">Proveedores</div>
   <p-table #grillaProveedores [value]="proveedores" dataKey="Id" [rows]="10" [loading]="cargando" [rowHover]="true"
