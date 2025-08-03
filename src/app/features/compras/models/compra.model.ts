@@ -16,7 +16,7 @@ export class CompraModel {
 export class CompraItemModel {
   Id: string;
   Proveedor?: ProveedorModel;
-  Compra: CompraItemModel;
+  CompraId: string;
   Producto: ProductoModel;
   Cantidad: number;
   PrecioUnitario: number;
@@ -24,5 +24,7 @@ export class CompraItemModel {
 
   constructor(){
     this.Id = uuid();
+    this.Producto = new ProductoModel();
+    this.Proveedor = new ProveedorModel();
   }
 }

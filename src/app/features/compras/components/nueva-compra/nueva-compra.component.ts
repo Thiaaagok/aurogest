@@ -36,7 +36,7 @@ import { ProductosService } from '../../../productos/services/producto.service';
 export class NuevaCompraComponent {
   nuevaCompra: CompraModel = new CompraModel();
   nuevoItem: CompraItemModel = new CompraItemModel();
-  productoSeleccionado: ProductoModel = new ProductoModel();
+  productoSeleccionado: ProductoModel;
 
   productosCombo: ProductoComboModel[] = [];
   proveedoresCombo: ProveedorModel[] = [];
@@ -75,12 +75,7 @@ export class NuevaCompraComponent {
     this.productosService.obtenerTodos()
       .subscribe({
         next: (response: ProductoModel[]) => {
-          this.productosCombo = response.map(prod => {
-            const prodCombo = new ProductoComboModel();
-            Object.assign(prodCombo, prod);
-            prodCombo.Descripcion = prod.Nombre;
-            return prodCombo;
-          });
+          
         },
         error: (err) => {
           console.log(err);
@@ -106,10 +101,12 @@ export class NuevaCompraComponent {
     if (this.productoSeleccionado) {
       const productoBase = new ProductoModel();
       Object.assign(productoBase, this.productoSeleccionado);
+      console.log(productoBase);
       this.nuevoItem.Producto = productoBase;
     }
 
     this.nuevaCompra.Items.push(this.nuevoItem);
+    console.log(this.nuevoItem);
     this.nuevoItem = new CompraItemModel();
   }
 

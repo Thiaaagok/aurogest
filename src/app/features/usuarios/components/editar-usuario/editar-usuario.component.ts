@@ -24,7 +24,6 @@ import { TextareaModule } from 'primeng/textarea';
     RouterModule,
     CustomMaterialModule,
     FormsModule,
-    SelectChosenComponent,
     InputTextModule,
     ToastModule,
     FloatLabel,

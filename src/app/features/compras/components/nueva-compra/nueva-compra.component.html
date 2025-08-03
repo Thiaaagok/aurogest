@@ -30,7 +30,8 @@
                     <div class="flex flex-col gap-0">
                         <p-floatlabel variant="in">
                             <p-inputnumber [(ngModel)]="nuevoItem.PrecioUnitario" name="precioVenta"
-                                inputId="precioVenta" [showButtons]="true" mode="currency" [required]="true" currency="ARG" />
+                                inputId="precioVenta" [showButtons]="true" mode="currency" [required]="true"
+                                currency="ARG" />
                             <label for="precioVenta">Precio Unitario</label>
                         </p-floatlabel>
                     </div>
@@ -44,8 +45,8 @@
                 </div>
             </form>
             <div class="flex flex-wrap items-center gap-2">
-                <p-button label="Nuevo item" [disabled]="!form.valid" class="mt-2"
-                    icon="pi pi-plus-circle" (click)="crearNuevoItem()"/>
+                <p-button label="Nuevo item" [disabled]=" !nuevoItem.PrecioUnitario || nuevoItem.PrecioUnitario <= 0 ||
+                    !nuevoItem.Cantidad ||nuevoItem.Cantidad <= 0" class="mt-2" icon="pi pi-plus-circle" (click)="crearNuevoItem()" />
             </div>
         </ng-template>
 
@@ -87,7 +88,7 @@
         <ng-template #body let-compraItem>
             <tr (click)="editarItem(compraItem.Id)" class="cursor-pointer">
                 <td>{{ compraItem.Producto?.Nombre }}</td>
-                <td>{{ compraItem.Proveedor?.Nombre }}</td>
+                <td>{{ compraItem.Proveedor?.Descripcion }}</td>
                 <td>{{ compraItem.Cantidad }}</td>
                 <td>{{ compraItem.PrecioUnitario | currency:'ARS':'symbol' }}</td>
                 <td>{{ compraItem.Subtotal | currency:'ARS':'symbol' }}</td>

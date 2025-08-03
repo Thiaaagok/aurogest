@@ -6,14 +6,12 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { GrillaUtilService } from '../../../common/services/grilla-util.service';
 import { Table } from 'primeng/table';
 import { StockService } from '../../services/stock.service';
-import { UnidadMedidaModel } from '../../../productos/models/unidad-medida.model';
-import { SelectChosenComponent } from '../../../common/components/select-chosen/select-chosen.component';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ProductoStock } from '../../models/producto-stock.model';
 
 @Component({
   selector: 'app-stock',
-  imports: [PrimeNgModule, CustomMaterialModule, CommonModule, SelectChosenComponent, DatePickerModule
+  imports: [PrimeNgModule, CustomMaterialModule, CommonModule, DatePickerModule
   ],
   templateUrl: './stock.component.html',
   styleUrl: './stock.component.scss',
