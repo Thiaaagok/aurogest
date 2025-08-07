@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, NgZone, Renderer2, ViewChild } from '@angular/core';
 import { ProductoDetalleModel, ProductoModel } from '../../models/producto.model';
 import { Router } from '@angular/router';
 import { ProductosService } from '../../services/producto.service';
@@ -22,6 +22,8 @@ import { MarcaModel } from '../../models/marca.model';
 import { MarcasService } from '../../services/marcas.service';
 import JsBarcode from 'jsbarcode';
 import { v4 as uuidv4 } from 'uuid';
+import { StockService } from '../../../stock/services/stock.service';
+import { ProductoStock } from '../../../stock/models/producto-stock.model';
 
 @Component({
   selector: 'app-nuevo-producto',
@@ -56,26 +58,78 @@ export class NuevoProductoComponent {
   private productoTiposService = inject(ProductoTiposService);
   private productoCategoriasService = inject(ProductoCategoriasService);
   private marcasService = inject(MarcasService)
-
+  private stockService = inject(StockService);
+  private ngZone = inject(NgZone);
+  private renderer = inject(Renderer2);
   constructor() {
   }
+
+  escaneando = false;
+  bufferEscaneo = '';
+  ultimoTiempo = 0;
+  listenerFn: () => void;
 
   ngOnInit() {
     this.cargarTiposProductosCombo();
     this.cargarMarcasProductosCombo();
     this.cargarCategoriasProductosCombo();
     this.cargarProveedoresCombo();
-    this.nuevoProducto.CodigoBarra = uuidv4().replace(/-/g, '');
+    this.listenerFn = this.renderer.listen('window', 'keydown', (e: KeyboardEvent) => {
+      if (this.modoCodigoBarra !== 'existente') return;
+      const tagName = (e.target as HTMLElement).tagName;
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(tagName) && (e.target as HTMLElement).id !== 'codigoBarra') {
+        return;
+      }
+
+      const tiempoActual = Date.now();
+      if (tiempoActual - this.ultimoTiempo > 50) {
+        this.bufferEscaneo = '';
+      }
+      this.ultimoTiempo = tiempoActual;
+
+      if (e.key === 'Enter') {
+        if (this.bufferEscaneo.length > 0) {
+          this.ngZone.run(() => {
+            this.nuevoProducto.CodigoBarra = this.bufferEscaneo;
+          });
+          this.bufferEscaneo = '';
+        }
+      } else if (/^[0-9a-zA-Z]+$/.test(e.key)) {
+        this.bufferEscaneo += e.key;
+      }
+    });
   }
+
+  ngOnDestroy() {
+    if (this.listenerFn) {
+      this.listenerFn();
+    }
+  }
+
 
   onSubmit() {
     this.cargando = true;
     this.productosService.crear(this.nuevoProducto)
       .subscribe({
         next: (response: ProductoModel) => {
-          this.cargando = false;
-          this.limpiarModel();
-          this.ref.close();
+          const productoStock: ProductoStock = new ProductoStock();
+          productoStock.Producto = response;
+          productoStock.StockMinimo = this.MinimoStock;
+          productoStock.StockActual = 0;
+          productoStock.StockReservado = 0;
+          this.stockService.crear(productoStock)
+            .subscribe({
+              next: (response: ProductoStock) => {
+                this.cargando = false;
+                this.limpiarModel();
+                this.ref.close();
+              },
+              error: (err) => {
+                this.cargando = false;
+                console.log(err);
+              },
+              complete: () => { },
+            });
         },
         error: (err) => {
           this.cargando = false;
@@ -143,7 +197,31 @@ export class NuevoProductoComponent {
 
   limpiarModel() {
     this.nuevoProducto = new ProductoModel();
-    this.nuevoProducto.CodigoBarra = uuidv4().replace(/-/g, '');
+  }
+
+  opcionesCodigoBarra = [
+    { label: 'Escanear existente', value: 'existente' },
+    { label: 'Generar propio', value: 'propio' }
+  ];
+
+  modoCodigoBarra = 'existente';
+
+  opcionCambio(opcion: string) {
+    this.nuevoProducto.CodigoBarra = '';
+  }
+
+  onModoCodigoBarraChange(modo: string) {
+    if (modo === 'propio') {
+      this.generarCodigoBarra();
+    } else if (modo === 'existente') {
+      this.nuevoProducto.CodigoBarra = '';
+    }
+  }
+  generarCodigoBarra() {
+    this.nuevoProducto.CodigoBarra = Math.floor(Math.random() * 1e13).toString().padStart(13, '0');
+  }
+  procesarCodigoEscaneado() {
+    console.log("Código escaneado:", this.nuevoProducto.CodigoBarra);
   }
 
 }

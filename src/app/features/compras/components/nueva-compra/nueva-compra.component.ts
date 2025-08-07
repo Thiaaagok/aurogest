@@ -11,7 +11,7 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { TextareaModule } from 'primeng/textarea';
 import { ComprasService } from '../../services/compras.service';
 import { CompraItemModel, CompraModel } from '../../models/compra.model';
-import { ProductoComboModel, ProductoModel } from '../../../productos/models/producto.model';
+import { ProductoModel } from '../../../productos/models/producto.model';
 import { ProveedorModel } from '../../../proveedores/models/proveedor.model';
 import { SelectChosenComponent } from '../../../common/components/select-chosen/select-chosen.component';
 import { ProveedoresService } from '../../../proveedores/services/proveedores.service';
@@ -38,7 +38,7 @@ export class NuevaCompraComponent {
   nuevoItem: CompraItemModel = new CompraItemModel();
   productoSeleccionado: ProductoModel;
 
-  productosCombo: ProductoComboModel[] = [];
+  productosCombo: ProductoModel[] = [];
   proveedoresCombo: ProveedorModel[] = [];
 
   cargando: boolean;
@@ -49,7 +49,6 @@ export class NuevaCompraComponent {
 
   ngOnInit() {
     this.cargarProductosCombo();
-    this.cargarProveedoresCombo();
   }
 
   editarItem(id: string) {
@@ -75,20 +74,9 @@ export class NuevaCompraComponent {
     this.productosService.obtenerTodos()
       .subscribe({
         next: (response: ProductoModel[]) => {
-          
-        },
-        error: (err) => {
-          console.log(err);
-        },
-        complete: () => { },
-      });
-  }
-
-  cargarProveedoresCombo() {
-    this.proveedoresService.obtenerTodos()
-      .subscribe({
-        next: (response: ProveedorModel[]) => {
-          this.proveedoresCombo = response;
+          this.productosCombo = response;
+          this.productosCombo.forEach(prod => prod.Descripcion = prod.Nombre);
+          console.log(this.productosCombo)
         },
         error: (err) => {
           console.log(err);
@@ -98,15 +86,8 @@ export class NuevaCompraComponent {
   }
 
   crearNuevoItem() {
-    if (this.productoSeleccionado) {
-      const productoBase = new ProductoModel();
-      Object.assign(productoBase, this.productoSeleccionado);
-      console.log(productoBase);
-      this.nuevoItem.Producto = productoBase;
-    }
-
+    this.nuevoItem.Subtotal = this.nuevoItem.Producto.PrecioCompra * this.nuevoItem.Cantidad;
     this.nuevaCompra.Items.push(this.nuevoItem);
-    console.log(this.nuevoItem);
     this.nuevoItem = new CompraItemModel();
   }
 
@@ -114,4 +95,9 @@ export class NuevaCompraComponent {
     this.nuevaCompra = new CompraModel();
   }
 
+  productoSeleccionadoEvent(producto: ProductoModel) {
+    if (producto) {
+      this.proveedoresCombo = producto.Proveedores;
+    }
+  }
 }

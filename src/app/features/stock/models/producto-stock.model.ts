@@ -6,7 +6,6 @@ export class ProductoStock{
     Producto: ProductoModel;
     StockActual: number;
     StockMinimo: number;
-    StockMaximo?: number;
     UltimaActualizacion?: Date;
     Activo?: boolean;
     Observaciones?: string;

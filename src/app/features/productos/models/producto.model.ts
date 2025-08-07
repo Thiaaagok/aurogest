@@ -9,11 +9,13 @@ export class ProductoModel {
     Codigo: string;
     CodigoBarra: string;
     Nombre: string;
+    Descripcion: string;
     Tipo?: ProductoTipoModel;
     Categoria?: ProductoCategoriaModel;
     Marca?: MarcaModel;
-    Proveedores?: ProveedorModel[];
-    Precio: number;
+    Proveedores: ProveedorModel[];
+    PrecioCompra: number;
+    PrecioVenta: number;
     FechaCreacion: Date;
     FechaActualizacion: Date;
     PermitirVenta: boolean;
@@ -24,10 +26,6 @@ export class ProductoModel {
         this.Proveedores = [];
     }
 } 
-
-export class ProductoComboModel extends ProductoModel {
-    Descripcion: string;
-}
 
 export class ProductoDetalleModel {
     Titulo: string;

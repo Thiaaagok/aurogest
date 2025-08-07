@@ -8,7 +8,9 @@
 <div class="card">
     <div class="font-semibold text-xl mb-4">Stock</div>
     <p-table #grillaProductos [value]="productos" dataKey="Id" [rows]="10" [loading]="cargando" [rowHover]="true"
-        [showGridlines]="true" [paginator]="true" [globalFilterFields]="['Producto', 'StockActual','StockMinimo','StockMaximo','StockReservado','UltimaActualizacion']" responsiveLayout="scroll">
+        [showGridlines]="true" [paginator]="true"
+        [globalFilterFields]="['Producto', 'StockActual','StockMinimo','StockReservado','UltimaActualizacion']"
+        responsiveLayout="scroll">
         <ng-template #caption>
             <div class="flex justify-between items-center flex-column sm:flex-row">
                 <p-iconfield iconPosition="left">
@@ -24,10 +26,10 @@
                     (click)="limpiarFiltrado(grillaProductos)"></button>
 
                 <button pButton label="Bajo stock" class="p-button-warning mb-2" icon="pi pi-angle-double-down"
-                    (click)="filtrarBajoStock(grillaProductos)"></button>
+                    (click)="filtrarBajoStock()"></button>
 
                 <button pButton label="Sin stock" class="p-button-danger mb-2" icon="pi pi-times-circle"
-                    (click)="filtrarSinStock(grillaProductos)"></button>
+                    (click)="filtrarSinStock()"></button>
             </div>
         </ng-template>
         <ng-template #header>
@@ -51,11 +53,6 @@
                 </th>
                 <th style="min-width: 10rem">
                     <div class="flex justify-between items-center">
-                        Stock Maximo
-                    </div>
-                </th>
-                <th style="min-width: 10rem">
-                    <div class="flex justify-between items-center">
                         Stock Reservado
                     </div>
                 </th>
@@ -75,7 +72,6 @@
                 <td>{{ productoStock.Producto.Nombre }}</td>
                 <td>{{ productoStock.StockActual }}</td>
                 <td>{{ productoStock.StockMinimo }}</td>
-                <td>{{ productoStock.StockMaximo }}</td>
                 <td>{{ productoStock.StockReservado }}</td>
                 <td>{{ productoStock.UltimaActualizacion | date: 'dd/MM/yyyy' }}</td>
             </tr>

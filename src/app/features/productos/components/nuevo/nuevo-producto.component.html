@@ -34,25 +34,43 @@
         name="proveedores" placeholder="Proveedores del producto" [dataSource]="proveedoresCombo"
         (recargar)="cargarProveedoresCombo()"></app-select-chosen>
     </div>
+    <!-- Selección del tipo de código de barra -->
     <div class="flex flex-col grow basis-0 gap-2">
-      <p-floatlabel variant="in">
-        <p-inputnumber [(ngModel)]="MinimoStock" [useGrouping]="false" class="w-100" id="stock" inputId="stock"
-          name="stock" mode="decimal" [min]="0" [max]="100000000" required />
-        <label for="stock">Stock</label>
-      </p-floatlabel>
+      <p-selectbutton [options]="opcionesCodigoBarra" (ngModelChange)="opcionCambio($event)" [(ngModel)]="modoCodigoBarra" name="modoCodigoBarra">
+      </p-selectbutton>
     </div>
-    <div class="flex flex-col grow basis-0 gap-2">
+
+    <!-- Campo para escanear código de barra -->
+    <div class="flex flex-col grow basis-0 gap-2" *ngIf="modoCodigoBarra === 'existente'">
       <p-floatlabel variant="in">
         <input pInputText type="text" id="codigoBarra" #codigoBarra="ngModel" class="w-100" name="codigoBarra"
-          [(ngModel)]="nuevoProducto.CodigoBarra" required />
-        <label for="codigoBarra">Código Barra</label>
+          [(ngModel)]="nuevoProducto.CodigoBarra" readonly
+          (keyup.enter)="procesarCodigoEscaneado()" />
+        <label for="codigoBarra">Código Barra Existente</label>
+      </p-floatlabel>
+    </div>
+
+    <!-- Campo para código de barra generado automáticamente -->
+    <div class="flex flex-col grow basis-0 gap-2" *ngIf="modoCodigoBarra === 'propio'">
+      <p-floatlabel variant="in">
+        <input pInputText type="text" id="codigoBarraGenerado" class="w-100" name="codigoBarraGenerado"
+          [(ngModel)]="nuevoProducto.CodigoBarra" readonly />
+        <label for="codigoBarraGenerado">Código Barra Generado</label>
+      </p-floatlabel>
+      <p-button label="Generar" icon="pi pi-refresh" (click)="generarCodigoBarra()"></p-button>
+    </div>
+    <div class="flex flex-col grow basis-0 gap-2">
+      <p-floatlabel variant="in">
+        <p-inputnumber id="barcode" class="w-100" [(ngModel)]="nuevoProducto.PrecioCompra" name="precioCompra"
+          id="precioCompra" [showButtons]="true" inputId="stacked" mode="currency" currency="ARG" />
+        <label for="precioCompra">Precio Compra</label>
       </p-floatlabel>
     </div>
     <div class="flex flex-col grow basis-0 gap-2">
       <p-floatlabel variant="in">
-        <p-inputnumber id="barcode" class="w-100" [(ngModel)]="nuevoProducto.Precio" name="precioVenta" id="precioVenta"
-          [showButtons]="true" inputId="stacked" mode="currency" currency="ARG" />
-        <label for="precioVenta">Precio</label>
+        <p-inputnumber id="barcode" class="w-100" [(ngModel)]="nuevoProducto.PrecioCompra" name="precioVenta"
+          id="precioVenta" [showButtons]="true" inputId="stacked" mode="currency" currency="ARG" />
+        <label for="precioVenta">Precio Venta</label>
       </p-floatlabel>
     </div>
     <div class="flex justify-end gap-2 pt-4">

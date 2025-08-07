@@ -3,7 +3,8 @@ import {
   Output,
   EventEmitter,
   forwardRef,
-  HostBinding, } from '@angular/core';
+  HostBinding,
+} from '@angular/core';
 import { Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormsModule, ControlValueAccessor } from '@angular/forms';
 import { CustomMaterialModule } from '../../material/custom-material.module';
@@ -24,11 +25,11 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   multi: true
 };
 @Component({
-    selector: 'app-select-chosen',
-    templateUrl: './select-chosen.component.html',
-    styleUrls: ['./select-chosen.component.scss'],
-    providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR,],
-    imports: [CustomMaterialModule, CommonModule,
+  selector: 'app-select-chosen',
+  templateUrl: './select-chosen.component.html',
+  styleUrls: ['./select-chosen.component.scss'],
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR,],
+  imports: [CustomMaterialModule, CommonModule,
     FormsModule,
     DropdownModule,
     MultiSelectModule,
@@ -49,31 +50,19 @@ export class SelectChosenComponent implements ControlValueAccessor {
   @Output() recargar = new EventEmitter<void>();
 
   value: any;
-
-  onChange() {
-    this.elementoSeleccionado.emit(this.value);
-  }
-
-  recargarCombo() {
-    this.recargar.emit();
-  }
-
-  compareObjects(o1: any, o2: any): boolean {
-    return o1?.Id === o2?.Id;
-  }
-
-  onTouched = () => {};
+  onChangeFn: (value: any) => void = () => { };
+  onTouchedFn: () => void = () => { };
 
   writeValue(obj: any): void {
     this.value = obj;
   }
 
   registerOnChange(fn: any): void {
-    this.onChange = fn;
+    this.onChangeFn = fn;
   }
 
   registerOnTouched(fn: any): void {
-    this.onTouched = fn;
+    this.onTouchedFn = fn;
   }
 
   setDisabledState?(isDisabled: boolean): void {
@@ -82,7 +71,15 @@ export class SelectChosenComponent implements ControlValueAccessor {
 
   onValueChange(value: any): void {
     this.value = value;
-    this.onChange();
+    this.onChangeFn(value);
     this.elementoSeleccionado.emit(value);
+  }
+
+  recargarCombo() {
+    this.recargar.emit();
+  }
+
+  compareObjects(o1: any, o2: any): boolean {
+    return o1?.Id === o2?.Id;
   }
 }

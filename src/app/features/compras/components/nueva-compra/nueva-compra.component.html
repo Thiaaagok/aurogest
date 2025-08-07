@@ -16,24 +16,15 @@
             <form #form="ngForm">
                 <div class="flex flex-wrap items-center gap-2">
                     <div class="flex flex-col w-20 gap-0">
-                        <app-select-chosen title="Producto" [(ngModel)]="productoSeleccionado" name="producto"
-                            placeholder="Producto" [dataSource]="productosCombo" [required]="true"
+                        <app-select-chosen title="Producto" [(ngModel)]="nuevoItem.Producto" name="producto"
+                            placeholder="Producto" [dataSource]="productosCombo"(ngModelChange)="productoSeleccionadoEvent($event)" [required]="true"
                             (recargar)="cargarProductosCombo()">
                         </app-select-chosen>
                     </div>
                     <div class="flex flex-col w-20 gap-0">
                         <app-select-chosen title="Proveedor" [(ngModel)]="nuevoItem.Proveedor" name="proveedor"
-                            placeholder="Proveedor" [dataSource]="proveedoresCombo"
-                            (recargar)="cargarProveedoresCombo()">
+                            placeholder="Proveedor" [dataSource]="proveedoresCombo">
                         </app-select-chosen>
-                    </div>
-                    <div class="flex flex-col gap-0">
-                        <p-floatlabel variant="in">
-                            <p-inputnumber [(ngModel)]="nuevoItem.PrecioUnitario" name="precioVenta"
-                                inputId="precioVenta" [showButtons]="true" mode="currency" [required]="true"
-                                currency="ARG" />
-                            <label for="precioVenta">Precio Unitario</label>
-                        </p-floatlabel>
                     </div>
                     <div class="flex flex-col gap-0">
                         <p-floatlabel variant="in">
@@ -45,8 +36,7 @@
                 </div>
             </form>
             <div class="flex flex-wrap items-center gap-2">
-                <p-button label="Nuevo item" [disabled]=" !nuevoItem.PrecioUnitario || nuevoItem.PrecioUnitario <= 0 ||
-                    !nuevoItem.Cantidad ||nuevoItem.Cantidad <= 0" class="mt-2" icon="pi pi-plus-circle" (click)="crearNuevoItem()" />
+                <p-button label="Nuevo item" [disabled]=" !nuevoItem.Cantidad ||nuevoItem.Cantidad <= 0" class="mt-2" icon="pi pi-plus-circle" (click)="crearNuevoItem()" />
             </div>
         </ng-template>
 
@@ -67,19 +57,17 @@
                 <th>
                     <div class="flex justify-between items-center">
                         Cantidad
-                        <p-columnFilter type="numeric" field="Cantidad" display="menu"></p-columnFilter>
                     </div>
                 </th>
                 <th>
                     <div class="flex justify-between items-center">
                         Precio Unitario
-                        <p-columnFilter type="numeric" field="PrecioUnitario" display="menu"></p-columnFilter>
                     </div>
                 </th>
                 <th>
                     <div class="flex justify-between items-center">
                         Subtotal
-                        <p-columnFilter type="numeric" field="Subtotal" display="menu"></p-columnFilter>
+                        
                     </div>
                 </th>
             </tr>

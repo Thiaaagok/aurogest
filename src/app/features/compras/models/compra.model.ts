@@ -19,7 +19,6 @@ export class CompraItemModel {
   CompraId: string;
   Producto: ProductoModel;
   Cantidad: number;
-  PrecioUnitario: number;
   Subtotal: number;
 
   constructor(){
