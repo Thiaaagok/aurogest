@@ -35,5 +35,9 @@ export class StockService {
     return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
   }
 
+  obtenerProductoStockPorCodigoBarra(codigoBarra: string) {
+    return this.http.get<ProductoStock>(`${this.apiUrl}codigo-barra/${codigoBarra}`);
+  }
+
 
 }

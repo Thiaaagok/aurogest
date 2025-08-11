@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, NgZone, Renderer2 } from '@angular/core';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -16,6 +16,8 @@ import { ProveedorModel } from '../../../proveedores/models/proveedor.model';
 import { SelectChosenComponent } from '../../../common/components/select-chosen/select-chosen.component';
 import { ProveedoresService } from '../../../proveedores/services/proveedores.service';
 import { ProductosService } from '../../../productos/services/producto.service';
+import { StockService } from '../../../stock/services/stock.service';
+import { ProductoStock } from '../../../stock/models/producto-stock.model';
 
 @Component({
   selector: 'app-nueva-compra',
@@ -41,14 +43,56 @@ export class NuevaCompraComponent {
   productosCombo: ProductoModel[] = [];
   proveedoresCombo: ProveedorModel[] = [];
 
+  codigoBarra: string;
   cargando: boolean;
 
   private comprasService = inject(ComprasService);
-  private proveedoresService = inject(ProveedoresService);
   private productosService = inject(ProductosService);
+  private productoStockService = inject(StockService);
+  private ngZone = inject(NgZone);
+  private renderer = inject(Renderer2);
+
+  escaneando = false;
+  bufferEscaneo = '';
+  ultimoTiempo = 0;
+  listenerFn: () => void;
 
   ngOnInit() {
     this.cargarProductosCombo();
+    this.listenerFn = this.renderer.listen('window', 'keydown', (e: KeyboardEvent) => {
+      const tagName = (e.target as HTMLElement).tagName;
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(tagName) && (e.target as HTMLElement).id !== 'codigoBarra') {
+        return;
+      }
+
+      // Si el lector manda ENTER al final del escaneo
+      if (e.key === 'Enter') {
+        if (this.bufferEscaneo.length > 0) {
+          console.log('Se escaneó:', this.bufferEscaneo);
+          this.ngZone.run(() => {
+            this.codigoBarra = this.bufferEscaneo;
+            console.log(this.codigoBarra);
+            this.productoStockService.obtenerProductoStockPorCodigoBarra(this.codigoBarra).subscribe({
+              next: (response: ProductoStock) => {
+                console.log('se encontro');
+                console.log(response);
+              },
+              error: (err) => {
+                this.cargando = false;
+                console.log(err);
+              },
+              complete: () => { },
+            });
+          });
+          this.bufferEscaneo = '';
+        }
+      } else {
+        // Solo agregamos teclas de un carácter (evitamos Shift, Ctrl, etc.)
+        if (e.key.length === 1) {
+          this.bufferEscaneo += e.key;
+        }
+      }
+    });
   }
 
   editarItem(id: string) {
@@ -76,7 +120,6 @@ export class NuevaCompraComponent {
         next: (response: ProductoModel[]) => {
           this.productosCombo = response;
           this.productosCombo.forEach(prod => prod.Descripcion = prod.Nombre);
-          console.log(this.productosCombo)
         },
         error: (err) => {
           console.log(err);

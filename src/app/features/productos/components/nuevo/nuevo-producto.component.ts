@@ -114,7 +114,7 @@ export class NuevoProductoComponent {
         next: (response: ProductoModel) => {
           const productoStock: ProductoStock = new ProductoStock();
           productoStock.Producto = response;
-          productoStock.StockMinimo = this.MinimoStock;
+          productoStock.StockMinimo = 0;
           productoStock.StockActual = 0;
           productoStock.StockReservado = 0;
           this.stockService.crear(productoStock)
