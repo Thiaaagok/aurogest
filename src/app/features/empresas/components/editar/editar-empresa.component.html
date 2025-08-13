@@ -2,9 +2,9 @@
     <form #form="ngForm" novalidate class="flex flex-col gap-4">
         <div class="flex flex-col grow basis-0 gap-2">
             <p-floatlabel variant="in">
-                <input pInputText type="text" id="empresa" #empresa="ngModel" class="w-100" name="username"
+                <input pInputText type="text" id="codigo" #codigo="ngModel" class="w-100" name="codigo"
                     [(ngModel)]="empresaEditar.Codigo" required />
-                <label for="empresa">Empresa</label>
+                <label for="codigo">Código</label>
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
@@ -30,37 +30,45 @@
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
             <p-floatlabel variant="in">
-                <input pInputText [(ngModel)]="empresaEditar.Direccion" class="w-100" #direccion="ngModel" name="direccion" id="direccion" required />
+                <input pInputText [(ngModel)]="empresaEditar.Direccion" class="w-100" #direccion="ngModel"
+                    name="direccion" id="direccion" required />
                 <label for="direccion">Dirección</label>
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
             <p-floatlabel variant="in">
-                <input pInputText [(ngModel)]="empresaEditar.Localidad" class="w-100" #localidad="ngModel" name="localidad" id="localidad" required />
+                <input pInputText [(ngModel)]="empresaEditar.Localidad" class="w-100" #localidad="ngModel"
+                    name="localidad" id="localidad" required />
                 <label for="localidad">Localidad</label>
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
             <p-floatlabel variant="in">
-                <p-inputnumber [(ngModel)]="empresaEditar.CodigoPostal" [useGrouping]="false" class="w-100" id="codigoPostal" inputId="codigoPostal" name="codigoPostal" mode="decimal" [min]="1" [max]="100000000" required />
+                <p-inputnumber [(ngModel)]="empresaEditar.CodigoPostal" [useGrouping]="false" class="w-100"
+                    id="codigoPostal" inputId="codigoPostal" name="codigoPostal" mode="decimal" [min]="1"
+                    [max]="100000000" required />
                 <label for="codigoPostal">Código Postal</label>
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
             <p-floatlabel variant="in">
-                <textarea rows="5" id="observaciones" cols="30" name="observaciones" class="w-100" pTextarea
-                    [(ngModel)]="empresaEditar.Observaciones"></textarea>
+                <textarea rows="5" id="observaciones" #observaciones="ngModel" cols="30" name="observaciones"
+                    class="w-100" pTextarea [(ngModel)]="empresaEditar.Observaciones"></textarea>
                 <label for="observaciones">Observaciones</label>
             </p-floatlabel>
         </div>
         <div class="flex justify-end gap-2 pt-4">
-            <p-button label="Cancelar" icon="pi pi-times" class="p-button-outlined" (click)="cerrar()" [disabled]="cargando"></p-button>
+            <p-button label="Cancelar" icon="pi pi-times" class="p-button-outlined" matTooltip="Cancelar"
+                (click)="cerrar()" [disabled]="cargando"></p-button>
             @if(empresaEditar.Activo){
-                <p-button label="Eliminar" severity="danger" matTooltip="Eliminar usuario" icon="pi pi-trash"  (click)="eliminarEmpresa()" [disabled]="cargando"></p-button>
+            <p-button label="Eliminar" severity="danger" matTooltip="Eliminar empresa" icon="pi pi-trash"
+                (click)="eliminarEmpresa()" [disabled]="cargando"></p-button>
             }@else{
-                <p-button label="Reactivar" severity="info" matTooltip="Reactivar usuario"  icon="pi pi-unlock"  (click)="reactivarEmpresa()" [disabled]="cargando"></p-button>
+            <p-button label="Reactivar" severity="info" matTooltip="Reactivar empresa" icon="pi pi-unlock"
+                (click)="reactivarEmpresa()" [disabled]="cargando"></p-button>
             }
-            <p-button label="Guardar" severity="success" icon="pi pi-check" (click)="onSubmit()" [disabled]="!form.valid || cargando"></p-button>
+            <p-button label="Guardar" severity="success" icon="pi pi-check" matTooltip="Guardar empresa"
+                (click)="onSubmit()" [disabled]="!form.valid || cargando"></p-button>
         </div>
     </form>
 </div>

@@ -62,6 +62,7 @@ export class TipoProductoComponent {
           this.obtenerTiposProducto();
         },
         error: (err) => {
+          this.cargando = false;
           console.log(err);
         },
         complete: () => {},

@@ -17,16 +17,13 @@
 </div>
 <form #form="ngForm" novalidate="" class="mb-4">
     <div class="card flex flex-col gap-4">
-        <div class="font-semibold text-xl">Nueva Categoria</div>
+        <div class="font-semibold text-xl">Nueva Categoría</div>
         <div class="flex flex-wrap gap-4">
             <div class="flex flex-col grow basis-0 gap-2">
                 <p-floatlabel variant="in">
                     <input pInputText type="text" id="codigo" class="w-100" #codigo="ngModel" name="codigo"
                         [(ngModel)]="nuevaCategoriaProducto.Codigo" required />
                     <label for="codigo">Código</label>
-                    <!-- @if (codigo.invalid && (codigo.touched || form.submitted)) {
-                    <p-message severity="error" size="small" variant="simple">Código es requerido.</p-message>
-                    } -->
                 </p-floatlabel>
             </div>
             <div class="flex flex-col grow basis-0 gap-2">
@@ -34,28 +31,25 @@
                     <input pInputText type="text" id="descripcion" class="w-100" #descripcion="ngModel"
                         name="descripcion" [(ngModel)]="nuevaCategoriaProducto.Descripcion" required />
                     <label for="descripcion">Descripción</label>
-                    <!-- @if (descripcion.invalid && (descripcion.touched || form.submitted)) {
-                    <p-message severity="error" size="small" variant="simple">Contraseña es requerido.</p-message>
-                    } -->
                 </p-floatlabel>
             </div>
         </div>
     </div>
 </form>
 <div class="card">
-    <div class="font-semibold text-xl mb-4">Categorias</div>
-    <p-table #grillaTiposProductos [value]="categorias" dataKey="Id" [rows]="10" [loading]="cargando" [rowHover]="true"
+    <div class="font-semibold text-xl mb-4">Categorías</div>
+    <p-table #grillaCategorias [value]="categorias" dataKey="Id" [rows]="10" [loading]="cargando" [rowHover]="true"
         [showGridlines]="true" [paginator]="true" [globalFilterFields]="['Codigo', 'Descripcion']"
         responsiveLayout="scroll">
         <ng-template #caption>
             <div class="flex justify-between items-center flex-column sm:flex-row">
                 <button pButton label="Limpiar filtros" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-                    (click)="limpiarFiltrado(grillaTiposProductos)"></button>
+                    (click)="limpiarFiltrado(grillaCategorias)"></button>
                 <p-iconfield iconPosition="left" class="ml-auto">
                     <p-inputicon>
                         <i class="pi pi-search"></i>
                     </p-inputicon>
-                    <input #filter pInputText type="text" (input)="filtrarCategorias(grillaTiposProductos, $event)"
+                    <input #filter pInputText type="text" (input)="filtrarCategorias(grillaCategorias, $event)"
                         placeholder="Buscar" />
                 </p-iconfield>
             </div>
@@ -81,23 +75,23 @@
         </ng-template>
 
         @if(!cargando){
-        <ng-template #body let-tipoProducto>
-            <tr (click)="editar(tipoProducto.Id)" class="cursor-pointer">
-                <td>{{ tipoProducto.Codigo }}</td>
-                <td>{{ tipoProducto.Descripcion }}</td>
+        <ng-template #body let-categoria>
+            <tr (click)="editar(categoria.Id)" class="cursor-pointer">
+                <td>{{ categoria.Codigo }}</td>
+                <td>{{ categoria.Descripcion }}</td>
             </tr>
         </ng-template>
         }
 
         <ng-template #emptymessage>
             <tr>
-                <td colspan="2">No se encontraron categorias.</td>
+                <td colspan="2">No se encontraron categorías.</td>
             </tr>
         </ng-template>
 
         <ng-template #loadingbody>
             <tr>
-                <td colspan="2">Cargando categorias...</td>
+                <td colspan="2">Cargando categorías...</td>
             </tr>
         </ng-template>
     </p-table>

@@ -11,6 +11,4 @@ export class EmpresaModel {
     Cuit?: string;
     Telefono?: string;
     Email?: string;
-    LandingPageUrl?: string;
-    LogoUrl?: string;
 }

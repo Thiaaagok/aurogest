@@ -9,8 +9,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
 import { FormsModule } from '@angular/forms';
 import { GrillaUtilService } from '../../../common/services/grilla-util.service';
-import { HttpClientModule } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
 import { NuevoUsuarioComponent } from '../nuevo-usuario/nuevo-usuario.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { EditarUsuarioComponent } from '../editar-usuario/editar-usuario.component';
@@ -38,7 +36,6 @@ export class GrillaUsuariosComponent {
   cargando: boolean;
   registrosGrillaActivos: boolean;
 
-  private router = inject(Router);
   private usuariosService = inject(UsuariosService);
   private GrillaUtilService = inject(GrillaUtilService);
   private dialogService = inject(DialogService);

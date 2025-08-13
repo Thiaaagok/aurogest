@@ -46,6 +46,7 @@ export class GrillaProveedoresComponent {
           this.cargarGrilla();
         }),
         error: (err) => {
+          this.cargando = false;
           console.error(err);
         },
         complete: () => { }

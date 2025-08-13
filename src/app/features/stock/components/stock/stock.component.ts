@@ -67,7 +67,7 @@ export class StockComponent {
     this.GrillaUtilService.limpiarFiltrado(table);
   }
 
-  filtrarProductos(table: Table, event: Event) {
+  filtrarStock(table: Table, event: Event) {
     this.GrillaUtilService.filtrarGlobal(table, event);
   }
 

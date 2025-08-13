@@ -30,7 +30,6 @@ export class GrillaEmpresasComponent {
   cargando: boolean;
 
   private GrillaUtilService = inject(GrillaUtilService);
-  private router = inject(Router);
   private empresasService = inject(EmpresaService);
   private dialogService = inject(DialogService);
 
@@ -49,6 +48,7 @@ export class GrillaEmpresasComponent {
         this.cargarGrilla();
       }),
       error: (err) => {
+        this.cargando = false;
         console.error(err);
       },
       complete: () => {}

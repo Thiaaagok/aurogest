@@ -2,12 +2,9 @@
     <form #form="ngForm" novalidate class="flex flex-col gap-4">
         <div class="flex flex-col grow basis-0 gap-2">
             <p-floatlabel variant="in">
-                <input pInputText type="text" id="usuario" #usuario="ngModel" class="w-100" name="username"
+                <input pInputText type="text" id="usuario" #usuario="ngModel" class="w-100" name="usuario"
                     [(ngModel)]="usuarioEditar.Usuario" required />
                 <label for="usuario">Usuario</label>
-                <!-- @if (usuario.invalid && (usuario.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Usuario es requerido.</p-message>
-                } -->
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
@@ -15,9 +12,6 @@
                 <input pInputText type="text" id="Mail" class="w-100" #mail="ngModel" name="Mail"
                     [(ngModel)]="usuarioEditar.Mail" required />
                 <label for="mail">Mail</label>
-                <!-- @if (mail.invalid && (mail.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Mail es requerido.</p-message>
-                } -->
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
@@ -25,28 +19,18 @@
                 <input pInputText type="text" id="legajo" class="w-100" #legajo="ngModel" name="legajo"
                     [(ngModel)]="usuarioEditar.Legajo" required />
                 <label for="legajo">Legajo</label>
-                <!-- @if (legajo.invalid && (legajo.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Legajo es requerido.</p-message>
-                } -->
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
             <p-floatlabel variant="in">
                 <p-inputnumber [(ngModel)]="usuarioEditar.IntentosConexion" type="number" class="w-100" [useGrouping]="false" id="intentosConexion" inputId="intentosConexion" name="intentosConexion" mode="decimal" [min]="1" [max]="100000000" required />
                 <label for="intentosConexion">Intentos Conexión</label>
-                <!-- @if (intentosConexion.invalid && (intentosConexion.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Intentos Conexión es
-                    requerido.</p-message>
-                } -->
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
             <p-floatlabel variant="in">
                 <p-inputnumber [(ngModel)]="usuarioEditar.ExpiracionTiempo" type="number" class="w-100" [useGrouping]="false" id="expiracion" inputId="expiracion" name="expiracion" mode="decimal" [min]="1" [max]="100000000" required />
                 <label for="expiracion">Expiración (segundos)</label>
-                <!-- @if (expiracion.invalid && (expiracion.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Legajo es requerido.</p-message>
-                } -->
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
@@ -57,13 +41,13 @@
             </p-floatlabel>
         </div>
         <div class="flex justify-end gap-2 pt-4">
-            <p-button label="Cancelar" matTooltip="Cerrar editar usuario" icon="pi pi-times" class="p-button-outlined" (click)="cerrar()" [disabled]="cargando"></p-button>
+            <p-button label="Cancelar" matTooltip="Cerrar editar proveedor" icon="pi pi-times" class="p-button-outlined" (click)="cerrar()" [disabled]="cargando"></p-button>
             @if(usuarioEditar.Activo){
-                <p-button label="Eliminar" severity="danger" matTooltip="Eliminar usuario" icon="pi pi-trash"  (click)="eliminarUsuario()" [disabled]="cargando"></p-button>
+                <p-button label="Eliminar" severity="danger" matTooltip="Eliminar proveedor" icon="pi pi-trash"  (click)="eliminarUsuario()" [disabled]="cargando"></p-button>
             }@else{
-                <p-button label="Reactivar" severity="info" matTooltip="Reactivar usuario"  icon="pi pi-unlock"  (click)="reactivarUsuario()" [disabled]="cargando"></p-button>
+                <p-button label="Reactivar" severity="info" matTooltip="Reactivar proveedor"  icon="pi pi-unlock"  (click)="reactivarUsuario()" [disabled]="cargando"></p-button>
             }
-            <p-button label="Guardar" severity="success" matTooltip="Guardar usuario" icon="pi pi-check" (click)="onSubmit()" [disabled]="!form.valid || cargando"></p-button>
+            <p-button label="Guardar" severity="success" matTooltip="Guardar proveedor" icon="pi pi-check" (click)="onSubmit()" [disabled]="!form.valid || cargando"></p-button>
         </div>
     </form>
 </div>

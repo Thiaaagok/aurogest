@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ProductoDetalleModel, ProductoModel } from '../../models/producto.model';
+import { ProductoModel } from '../../models/producto.model';
 import { ProductoTipoModel } from '../../models/producto-tipo.model';
 import { ProveedorModel } from '../../../proveedores/models/proveedor.model';
 import { ProductosService } from '../../services/producto.service';
@@ -59,13 +59,11 @@ export class EditarProductoComponent {
     this.cargando = true;
     this.productosService.editar(this.productoEditar.Id, this.productoEditar).subscribe({
       next: (response: ProductoModel) => {
-        timer(2000)
-          .subscribe(() => {
-            this.cargando = false;
-            this.ref.close();
-          })
+        this.cargando = false;
+        this.ref.close();
       },
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => { },
@@ -80,6 +78,7 @@ export class EditarProductoComponent {
         this.productoEditar = response;
       },
       error: (err) => {
+        this.cargando = false;
         console.log(err);
       },
       complete: () => { },
@@ -91,11 +90,10 @@ export class EditarProductoComponent {
       .subscribe({
         next: ((response: boolean) => {
           this.cargando = false;
-          timer(300).subscribe(() => {
-            this.obtenerProducto();
-          });
+          this.obtenerProducto();
         }),
         error: (err) => {
+          this.cargando = false;
           console.log(err);
         },
         complete: () => { }
@@ -107,11 +105,10 @@ export class EditarProductoComponent {
       .subscribe({
         next: ((response: boolean) => {
           this.cargando = false;
-          timer(300).subscribe(() => {
-            this.obtenerProducto();
-          });
+          this.obtenerProducto();
         }),
         error: (err) => {
+          this.cargando = false;
           console.log(err);
         },
         complete: () => { }

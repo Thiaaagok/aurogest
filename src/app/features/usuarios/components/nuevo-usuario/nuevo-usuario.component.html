@@ -2,12 +2,9 @@
     <form #form="ngForm" novalidate class="flex flex-col gap-4">
         <div class="flex flex-col grow basis-0 gap-2">
             <p-floatlabel variant="in">
-                <input pInputText type="text" id="usuario" #usuario="ngModel" class="w-100" name="username"
+                <input pInputText type="text" id="usuario" #usuario="ngModel" class="w-100" name="usuario"
                     [(ngModel)]="nuevoUsuario.Usuario" required />
                 <label for="usuario">Usuario</label>
-                <!-- @if (usuario.invalid && (usuario.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Usuario es requerido.</p-message>
-                } -->
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
@@ -15,9 +12,6 @@
                 <input pInputText type="text" id="contrasenia" class="w-100" #contrasenia="ngModel" name="contrasenia"
                     [(ngModel)]="nuevoUsuario.Contrasenia" required />
                 <label for="contrasenia">Contraseña</label>
-                <!-- @if (contrasenia.invalid && (contrasenia.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Contraseña es requerido.</p-message>
-                } -->
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
@@ -25,9 +19,6 @@
                 <input pInputText type="text" id="Mail" class="w-100" #mail="ngModel" name="Mail"
                     [(ngModel)]="nuevoUsuario.Mail" required />
                 <label for="mail">Mail</label>
-                <!-- @if (mail.invalid && (mail.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Mail es requerido.</p-message>
-                } -->
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
@@ -35,28 +26,18 @@
                 <input pInputText type="text" id="legajo" class="w-100" #legajo="ngModel" name="legajo"
                     [(ngModel)]="nuevoUsuario.Legajo" required />
                 <label for="legajo">Legajo</label>
-                <!-- @if (legajo.invalid && (legajo.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Legajo es requerido.</p-message>
-                } -->
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
             <p-floatlabel variant="in">
                 <p-inputnumber [(ngModel)]="nuevoUsuario.IntentosConexion" [useGrouping]="false" class="w-100" id="intentosConexion" inputId="intentosConexion" name="intentosConexion" mode="decimal" [min]="1" [max]="100000000" required />
                 <label for="intentosConexion">Intentos Conexión</label>
-                <!-- @if (intentosConexion.invalid && (intentosConexion.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Intentos Conexión es
-                    requerido.</p-message>
-                } -->
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
             <p-floatlabel variant="in">
                 <p-inputnumber [(ngModel)]="nuevoUsuario.ExpiracionTiempo" [useGrouping]="false" class="w-100" id="expiracion" inputId="expiracion" name="expiracion" mode="decimal" [min]="1" [max]="100000000" required />
                 <label for="expiracion">Expiración (segundos)</label>
-                <!-- @if (expiracion.invalid && (expiracion.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Legajo es requerido.</p-message>
-                } -->
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">

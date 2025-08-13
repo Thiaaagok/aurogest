@@ -68,6 +68,7 @@ export class MarcasComponent {
           this.obtenerMarcas();
         },
         error: (err) => {
+          this.cargando = false;
           console.log(err);
         },
         complete: () => { },

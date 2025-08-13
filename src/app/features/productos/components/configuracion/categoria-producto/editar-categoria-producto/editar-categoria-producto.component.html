@@ -5,9 +5,6 @@
                 <input pInputText type="text" id="codigo" class="w-100" #codigo="ngModel" name="codigo"
                     [(ngModel)]="categoriaProductoEditar.Codigo" required />
                 <label for="codigo">Código</label>
-                <!-- @if (codigo.invalid && (codigo.touched || form.submitted)) {
-                    <p-message severity="error" size="small" variant="simple">Código es requerido.</p-message>
-                    } -->
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
@@ -15,18 +12,15 @@
                 <input pInputText type="text" id="descripcion" class="w-100" #descripcion="ngModel" name="descripcion"
                     [(ngModel)]="categoriaProductoEditar.Descripcion" required />
                 <label for="descripcion">Descripción</label>
-                <!-- @if (descripcion.invalid && (descripcion.touched || form.submitted)) {
-                    <p-message severity="error" size="small" variant="simple">Contraseña es requerido.</p-message>
-                    } -->
             </p-floatlabel>
         </div>
         <div class="flex justify-end gap-2 pt-4">
             <p-button label="Cancelar" icon="pi pi-times" class="p-button-outlined" [disabled]="cargando" (click)="cerrar()"></p-button>
             @if(categoriaProductoEditar.Activo){
-            <p-button label="Eliminar" severity="danger" matTooltip="Eliminar usuario" icon="pi pi-trash"
+            <p-button label="Eliminar" severity="danger" matTooltip="Eliminar categoría" icon="pi pi-trash"
                 (click)="eliminarCategoriaProducto()" [disabled]="cargando"></p-button>
             }@else{
-            <p-button label="Reactivar" severity="info" matTooltip="Reactivar usuario" icon="pi pi-unlock"
+            <p-button label="Reactivar" severity="info" matTooltip="Reactivar categoría" icon="pi pi-unlock"
                 (click)="reactivarCategoriaProducto()" [disabled]="cargando"></p-button>
             }
             <p-button label="Guardar" severity="success" icon="pi pi-check" (click)="onSubmit()"

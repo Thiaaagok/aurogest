@@ -2,12 +2,9 @@
   <form #form="ngForm" novalidate class="flex flex-col gap-4">
     <div class="flex flex-col grow basis-0 gap-2">
       <p-floatlabel variant="in">
-        <input pInputText type="text" id="empresa" #empresa="ngModel" class="w-100" name="codigo"
+        <input pInputText type="text" id="codigo" #codigo="ngModel" class="w-100" name="codigo"
           [(ngModel)]="nuevoProveedor.Codigo" required />
-        <label for="empresa">Código</label>
-        <!-- @if (empresa.invalid && (empresa.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Empresa es requerido.</p-message>
-                } -->
+        <label for="codigo">Código</label>
       </p-floatlabel>
     </div>
     <div class="flex flex-col grow basis-0 gap-2">
@@ -15,9 +12,6 @@
         <input pInputText type="text" id="descripcion" class="w-100" #descripcion="ngModel" name="descripcion"
           [(ngModel)]="nuevoProveedor.Descripcion" required />
         <label for="descripcion">Descripción</label>
-        <!-- @if (descripcion.invalid && (descripcion.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Contraseña es requerido.</p-message>
-                } -->
       </p-floatlabel>
     </div>
     <div class="flex flex-col grow basis-0 gap-2">
@@ -25,16 +19,13 @@
         <input pInputText type="text" id="Cuit" class="w-100" #cuit="ngModel" name="Cuit"
           [(ngModel)]="nuevoProveedor.Cuit" required />
         <label for="cuit">Cuit</label>
-        <!-- @if (cuit.invalid && (cuit.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Cuit es requerido.</p-message>
-                } -->
       </p-floatlabel>
     </div>
     <div class="flex flex-col grow basis-0 gap-2">
       <p-floatlabel variant="in">
         <p-inputnumber [(ngModel)]="nuevoProveedor.Telefono" [useGrouping]="false" class="w-100" id="telefono"
           inputId="telefono" name="telefono" mode="decimal" [min]="1" [max]="10000000000000000000" required />
-        <label for="telefono">Telefono</label>
+        <label for="telefono">Teléfono</label>
       </p-floatlabel>
     </div>
     <div class="flex flex-col grow basis-0 gap-2">
@@ -42,19 +33,6 @@
         <input pInputText type="text" id="Mail" class="w-100" #mail="ngModel" name="Mail"
           [(ngModel)]="nuevoProveedor.Email" required />
         <label for="mail">Mail</label>
-        <!-- @if (mail.invalid && (mail.touched || form.submitted)) {
-        <p-message severity="error" size="small" variant="simple">Mail es requerido.</p-message>
-        } -->
-      </p-floatlabel>
-    </div>
-    <div class="flex flex-col grow basis-0 gap-2">
-      <p-floatlabel variant="in">
-        <input pInputText type="text" id="web" class="w-100" #web="ngModel" name="web" [(ngModel)]="nuevoProveedor.Web"
-          required />
-        <label for="web">Web</label>
-        <!-- @if (web.invalid && (web.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Web es requerido.</p-message>
-                } -->
       </p-floatlabel>
     </div>
     <div class="flex flex-col grow basis-0 gap-2">
@@ -62,10 +40,6 @@
         <input pInputText [(ngModel)]="nuevoProveedor.Direccion" class="w-100" #direccion="ngModel" name="direccion"
           id="direccion" required />
         <label for="direccion">Dirección</label>
-        <!-- @if (direccion.invalid && (direccion.touched || form.submitted)) {
-                <p-message severity="error" size="small" variant="simple">Dirección es
-                    requerido.</p-message>
-                } -->
       </p-floatlabel>
     </div>
     <div class="flex flex-col grow basis-0 gap-2">

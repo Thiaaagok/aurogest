@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { PrimeNgModule } from '../../../../common/material/primeng.module';
 import { CustomMaterialModule } from '../../../../common/material/custom-material.module';
 import { ProductoCategoriaModel } from '../../../models/producto-categoria.model';
-import { ProductoTiposService } from '../../../services/producto-tipo.service';
 import { GrillaUtilService } from '../../../../common/services/grilla-util.service';
 import { Table } from 'primeng/table';
 import { ProductoCategoriasService } from '../../../services/producto-categoria.service';

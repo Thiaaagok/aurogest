@@ -1,13 +1,13 @@
 <div class="botonera-flotante">
     <div class="botonera-contenedor">
-        <button mat-mini-fab color="accent" matTooltip="Cargar los productos" (click)="obtenerProductos()">
+        <button mat-mini-fab color="accent" matTooltip="Cargar el stock" (click)="obtenerProductos()">
             <i class="fa-solid fa-arrows-rotate"></i>
         </button>
     </div>
 </div>
 <div class="card">
     <div class="font-semibold text-xl mb-4">Stock</div>
-    <p-table #grillaProductos [value]="productos" dataKey="Id" [rows]="10" [loading]="cargando" [rowHover]="true"
+    <p-table #grillaStock [value]="productos" dataKey="Id" [rows]="10" [loading]="cargando" [rowHover]="true"
         [showGridlines]="true" [paginator]="true"
         [globalFilterFields]="['Producto', 'StockActual','StockMinimo','StockReservado','UltimaActualizacion']"
         responsiveLayout="scroll">
@@ -18,12 +18,12 @@
                         <i class="pi pi-search"></i>
                     </p-inputicon>
                     <input #filter pInputText class="w-50vw" type="text"
-                        (input)="filtrarProductos(grillaProductos, $event)" placeholder="Buscar" />
+                        (input)="filtrarStock(grillaStock, $event)" placeholder="Buscar" />
                 </p-iconfield>
             </div>
             <div class="flex items-center flex-column sm:flex-row mt-3 gap-4">
                 <button pButton label="Limpiar filtros" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-                    (click)="limpiarFiltrado(grillaProductos)"></button>
+                    (click)="limpiarFiltrado(grillaStock)"></button>
 
                 <button pButton label="Bajo stock" class="p-button-warning mb-2" icon="pi pi-angle-double-down"
                     (click)="filtrarBajoStock()"></button>
@@ -84,7 +84,7 @@
         </ng-template>
         <ng-template #loadingbody>
             <tr>
-                <td colspan="8">Cargando stock</td>
+                <td colspan="8">Cargando stock...</td>
             </tr>
         </ng-template>
     </p-table>

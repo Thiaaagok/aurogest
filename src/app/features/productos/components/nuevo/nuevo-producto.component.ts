@@ -106,6 +106,31 @@ export class NuevoProductoComponent {
     }
   }
 
+  opcionesCodigoBarra = [
+    { label: 'Escanear existente', value: 'existente' },
+    { label: 'Generar propio', value: 'propio' }
+  ];
+
+  modoCodigoBarra = 'existente';
+
+  opcionCambio(opcion: string) {
+    this.nuevoProducto.CodigoBarra = '';
+  }
+
+  onModoCodigoBarraChange(modo: string) {
+    if (modo === 'propio') {
+      this.generarCodigoBarra();
+    } else if (modo === 'existente') {
+      this.nuevoProducto.CodigoBarra = '';
+    }
+  }
+  generarCodigoBarra() {
+    this.nuevoProducto.CodigoBarra = Math.floor(Math.random() * 1e13).toString().padStart(13, '0');
+  }
+  procesarCodigoEscaneado() {
+    console.log("Código escaneado:", this.nuevoProducto.CodigoBarra);
+  }
+
 
   onSubmit() {
     this.cargando = true;
@@ -197,31 +222,6 @@ export class NuevoProductoComponent {
 
   limpiarModel() {
     this.nuevoProducto = new ProductoModel();
-  }
-
-  opcionesCodigoBarra = [
-    { label: 'Escanear existente', value: 'existente' },
-    { label: 'Generar propio', value: 'propio' }
-  ];
-
-  modoCodigoBarra = 'existente';
-
-  opcionCambio(opcion: string) {
-    this.nuevoProducto.CodigoBarra = '';
-  }
-
-  onModoCodigoBarraChange(modo: string) {
-    if (modo === 'propio') {
-      this.generarCodigoBarra();
-    } else if (modo === 'existente') {
-      this.nuevoProducto.CodigoBarra = '';
-    }
-  }
-  generarCodigoBarra() {
-    this.nuevoProducto.CodigoBarra = Math.floor(Math.random() * 1e13).toString().padStart(13, '0');
-  }
-  procesarCodigoEscaneado() {
-    console.log("Código escaneado:", this.nuevoProducto.CodigoBarra);
   }
 
 }
