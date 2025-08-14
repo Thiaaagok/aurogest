@@ -14,21 +14,6 @@ export const Modulos: MenuItem[] = [
     route: '/home',
   },
   {
-    label: 'Usuarios',
-    icon: 'pi pi-users',
-    route: '/usuarios'
-  },
-  {
-    label: 'Empresas',
-    icon: 'pi pi-building',
-    route: '/empresas'
-  },
-  {
-    label: 'Proveedores',
-    icon: 'pi pi-shop',
-    route: '/proveedores'
-  },
-  {
     label: 'Productos',
     icon: 'pi pi-box',
     items: [
@@ -67,12 +52,49 @@ export const Modulos: MenuItem[] = [
         label: 'Nueva',
         icon: 'pi pi-cart-plus',
         route: 'compras/nueva'
+      },
+      {
+        label: 'Historico',
+        icon: 'pi pi-align-justify',
+        route: 'compras/grilla'
       }
     ]
   },
   {
     label: 'Ventas',
     icon: 'pi pi-dollar',
-    route: 'ventas'
+    items: [
+      {
+        label: 'Nueva',
+        icon: 'pi pi-cart-plus',
+        route: 'ventas/nueva'
+      },
+      {
+        label: 'Historico',
+        icon: 'pi pi-align-justify',
+        route: 'ventas/grilla'
+      }
+    ]
   },
+  {
+    label: 'Usuarios',
+    icon: 'pi pi-users',
+    route: '/usuarios'
+  },
+  {
+    label: 'Proveedores',
+    icon: 'pi pi-shop',
+    route: '/proveedores'
+  },
+  {
+    label: 'Facturación',
+    icon: 'pi pi-file-o',
+    route: '/facturacion'
+  },
+  {
+    label: 'Reportes',
+    icon: 'pi pi-chart-bar',
+    items: [
+    ]
+  }
 ];
