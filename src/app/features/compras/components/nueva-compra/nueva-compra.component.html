@@ -17,7 +17,7 @@
                 <div class="flex flex-wrap items-center gap-2">
                     <div class="flex flex-col w-20 gap-0">
                         <app-select-chosen title="Producto" [(ngModel)]="nuevoItem.Producto" name="producto"
-                            placeholder="Producto" [dataSource]="productosCombo"(ngModelChange)="productoSeleccionadoEvent($event)" [required]="true"
+                            placeholder="Producto" [dataSource]="productosCombo" (ngModelChange)="productoSeleccionadoEvent($event)" [required]="true"
                             (recargar)="cargarProductosCombo()">
                         </app-select-chosen>
                     </div>
@@ -36,7 +36,8 @@
                 </div>
             </form>
             <div class="flex flex-wrap items-center gap-2">
-                <p-button label="Nuevo item" [disabled]=" !nuevoItem.Cantidad ||nuevoItem.Cantidad <= 0" class="mt-2" icon="pi pi-plus-circle" (click)="crearNuevoItem()" />
+                <p-button label="Nuevo item" [disabled]=" !nuevoItem.Cantidad ||nuevoItem.Cantidad <= 0" class="mt-2"
+                    icon="pi pi-plus-circle" (click)="crearNuevoItem()" />
             </div>
         </ng-template>
 
@@ -67,7 +68,7 @@
                 <th>
                     <div class="flex justify-between items-center">
                         Subtotal
-                        
+
                     </div>
                 </th>
             </tr>
@@ -78,7 +79,7 @@
                 <td>{{ compraItem.Producto?.Nombre }}</td>
                 <td>{{ compraItem.Proveedor?.Descripcion }}</td>
                 <td>{{ compraItem.Cantidad }}</td>
-                <td>{{ compraItem.PrecioUnitario | currency:'ARS':'symbol' }}</td>
+                <td>{{ compraItem.Producto.PrecioCompra | currency:'ARS':'symbol' }}</td>
                 <td>{{ compraItem.Subtotal | currency:'ARS':'symbol' }}</td>
             </tr>
         </ng-template>

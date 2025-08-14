@@ -80,6 +80,10 @@ export class SelectChosenComponent implements ControlValueAccessor {
   }
 
   compareObjects(o1: any, o2: any): boolean {
-    return o1?.Id === o2?.Id;
+    return o1 && o2 ? o1.Id === o2.Id : o1 === o2;
+  }
+
+  actualizarValor(value: any) {
+    this.writeValue(value);
   }
 }

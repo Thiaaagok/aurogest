@@ -3,14 +3,14 @@
 
         <p-multiSelect *ngIf="multiple" class="w-100" [options]="dataSource" optionLabel="Descripcion"
             [(ngModel)]="value" name="value" [filter]="true" [disabled]="disabled" [placeholder]="placeholder"
-            (onChange)="onValueChange($event.value)" [required]="required">
+            (onChange)="onValueChange($event.value)" [showClear]="true"  [required]="required">
         </p-multiSelect>
 
         <!-- MODO ÚNICO -->
         <p-floatlabel *ngIf="!multiple" class="w-100 md:w-56 relative" variant="in">
-            <p-select [(ngModel)]="value" inputId="in_label" [options]="dataSource" optionLabel="Descripcion"
+            <p-select #value="ngModel" [(ngModel)]="value" inputId="in_label" [options]="dataSource" optionLabel="Descripcion" 
                 class="w-100" variant="filled" name="value" [filter]="true" [disabled]="disabled"
-                (onChange)="onValueChange($event.value)">
+                (onChange)="onValueChange($event.value)" [showClear]="true">
             </p-select>
             <label for="in_label">{{ placeholder }}</label>
         </p-floatlabel>

@@ -1,4 +1,4 @@
-import { Component, inject, NgZone, Renderer2 } from '@angular/core';
+import { Component, inject, NgZone, Renderer2, ViewChild } from '@angular/core';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -14,11 +14,8 @@ import { CompraItemModel, CompraModel } from '../../models/compra.model';
 import { ProductoModel } from '../../../productos/models/producto.model';
 import { ProveedorModel } from '../../../proveedores/models/proveedor.model';
 import { SelectChosenComponent } from '../../../common/components/select-chosen/select-chosen.component';
-import { ProveedoresService } from '../../../proveedores/services/proveedores.service';
 import { ProductosService } from '../../../productos/services/producto.service';
-import { StockService } from '../../../stock/services/stock.service';
-import { ProductoStock } from '../../../stock/models/producto-stock.model';
-
+import { QrScannerService } from '../../../common/services/qrScanner.service';
 @Component({
   selector: 'app-nueva-compra',
   imports: [PrimeNgModule,
@@ -36,6 +33,9 @@ import { ProductoStock } from '../../../stock/models/producto-stock.model';
   styleUrl: './nueva-compra.component.scss',
 })
 export class NuevaCompraComponent {
+
+  @ViewChild(SelectChosenComponent) select: SelectChosenComponent;
+
   nuevaCompra: CompraModel = new CompraModel();
   nuevoItem: CompraItemModel = new CompraItemModel();
   productoSeleccionado: ProductoModel;
@@ -48,51 +48,33 @@ export class NuevaCompraComponent {
 
   private comprasService = inject(ComprasService);
   private productosService = inject(ProductosService);
-  private productoStockService = inject(StockService);
-  private ngZone = inject(NgZone);
-  private renderer = inject(Renderer2);
-
-  escaneando = false;
-  bufferEscaneo = '';
-  ultimoTiempo = 0;
-  listenerFn: () => void;
+  private qrService = inject(QrScannerService);
 
   ngOnInit() {
     this.cargarProductosCombo();
-    this.listenerFn = this.renderer.listen('window', 'keydown', (e: KeyboardEvent) => {
-      const tagName = (e.target as HTMLElement).tagName;
-      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(tagName) && (e.target as HTMLElement).id !== 'codigoBarra') {
-        return;
-      }
-
-      // Si el lector manda ENTER al final del escaneo
-      if (e.key === 'Enter') {
-        if (this.bufferEscaneo.length > 0) {
-          console.log('Se escaneó:', this.bufferEscaneo);
-          this.ngZone.run(() => {
-            this.codigoBarra = this.bufferEscaneo;
-            console.log(this.codigoBarra);
-            this.productoStockService.obtenerProductoStockPorCodigoBarra(this.codigoBarra).subscribe({
-              next: (response: ProductoStock) => {
-                console.log('se encontro');
-                console.log(response);
-              },
-              error: (err) => {
-                this.cargando = false;
-                console.log(err);
-              },
-              complete: () => { },
-            });
-          });
-          this.bufferEscaneo = '';
-        }
-      } else {
-        // Solo agregamos teclas de un carácter (evitamos Shift, Ctrl, etc.)
-        if (e.key.length === 1) {
-          this.bufferEscaneo += e.key;
-        }
-      }
+    this.qrService.qrScanned.subscribe((qr: string) => {
+      this.codigoBarra = qr;
+      console.log('QR escaneado:', qr);
+      this.obtenerProductoEscaneado();
     });
+  }
+
+  obtenerProductoEscaneado() {
+    this.productosService.obtenerProductoPorCodigoBarra(this.codigoBarra)
+      .subscribe({
+        next: (response: ProductoModel) => {
+          const producto = this.productosCombo.find(p => p.Id === response.Id);
+          if (producto) {
+            console.log(producto)
+            this.nuevoItem.Producto = producto;
+            this.proveedoresCombo = producto.Proveedores;
+          } 
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => { },
+      })
   }
 
   editarItem(id: string) {
