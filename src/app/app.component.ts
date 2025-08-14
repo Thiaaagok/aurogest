@@ -10,5 +10,5 @@ import { PRIME_NG_CONFIG } from 'primeng/config';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'argysoft';
+  title = 'aurogest';
 }
