@@ -7,7 +7,7 @@
 </div>
 <div class="card">
     <div class="font-semibold text-xl mb-4">Nueva Compra</div>
-    <p-table #grillaCompras [value]="nuevaCompra.Items" dataKey="Id" [rows]="10" [loading]="cargando" [rowHover]="true"
+    <p-table #grillaCompras [value]="nuevaCompra.Items" dataKey="Id" [rows]="10" [rowHover]="true"
         [showGridlines]="true" [paginator]="true"
         [globalFilterFields]="['Producto.Nombre', 'Proveedor.Nombre', 'Cantidad', 'PrecioUnitario', 'Subtotal']"
         responsiveLayout="scroll">
@@ -16,28 +16,45 @@
             <form #form="ngForm">
                 <div class="flex flex-wrap items-center gap-2">
                     <div class="flex flex-col w-20 gap-0">
-                        <app-select-chosen title="Producto" [(ngModel)]="nuevoItem.Producto" name="producto"
-                            placeholder="Producto" [dataSource]="productosCombo" (ngModelChange)="productoSeleccionadoEvent($event)" [required]="true"
-                            (recargar)="cargarProductosCombo()">
-                        </app-select-chosen>
+                        <p-floatlabel class="w-100 md:w-56 relative" variant="in">
+                            <p-select [(ngModel)]="productoSeleccionado" inputId="in_label" [options]="productosCombo"
+                                optionLabel="Descripcion" class="w-100" variant="filled" name="producto" [filter]="true"
+                                (onChange)="productoSeleccionadoEvent($event.value)" [showClear]="true"
+                                (onClear)="limpiarProductoSeleccionado()" optionValue="Id">
+                            </p-select>
+                            <label for="in_label">Producto</label>
+                        </p-floatlabel>
                     </div>
                     <div class="flex flex-col w-20 gap-0">
-                        <app-select-chosen title="Proveedor" [(ngModel)]="nuevoItem.Proveedor" name="proveedor"
-                            placeholder="Proveedor" [dataSource]="proveedoresCombo">
-                        </app-select-chosen>
+                        <p-floatlabel class="w-100 md:w-56 relative" variant="in">
+                            <p-select [(ngModel)]="nuevoItem.Proveedor" inputId="in_label" [options]="proveedoresCombo"
+                                optionLabel="Descripcion" class="w-100" variant="filled" name="proveedor"
+                                [filter]="true" [showClear]="true">
+                            </p-select>
+                            <label for="in_label">Proveedor</label>
+                        </p-floatlabel>
                     </div>
                     <div class="flex flex-col gap-0">
                         <p-floatlabel variant="in">
                             <p-inputnumber [(ngModel)]="nuevoItem.Cantidad" name="cantidad" inputId="cantidad"
-                                [showButtons]="true" mode="decimal" [required]="true" [min]="1" />
+                                [showButtons]="true" mode="decimal" (ngModelChange)="cantidadCambio($event)"
+                                [required]="true" [min]="1" />
                             <label for="cantidad">Cantidad</label>
+                        </p-floatlabel>
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <p-floatlabel variant="in">
+                            <p-inputnumber [(ngModel)]="nuevoItem.Subtotal" name="subtotal" inputId="subtotal"
+                                [showButtons]="true" mode="decimal" readonly [min]="0" />
+                            <label for="subtotal">Subtotal</label>
                         </p-floatlabel>
                     </div>
                 </div>
             </form>
             <div class="flex flex-wrap items-center gap-2">
-                <p-button label="Nuevo item" [disabled]=" !nuevoItem.Cantidad ||nuevoItem.Cantidad <= 0" class="mt-2"
-                    icon="pi pi-plus-circle" (click)="crearNuevoItem()" />
+                <p-button label="Nuevo item"
+                    [disabled]=" !nuevoItem.Producto || !nuevoItem.Proveedor || !nuevoItem.Cantidad ||nuevoItem.Cantidad <= 0"
+                    class="mt-2" icon="pi pi-plus-circle" (click)="crearNuevoItem()" />
             </div>
         </ng-template>
 
@@ -68,7 +85,11 @@
                 <th>
                     <div class="flex justify-between items-center">
                         Subtotal
-
+                    </div>
+                </th>
+                <th>
+                    <div class="flex justify-between items-center">
+                        Acciones
                     </div>
                 </th>
             </tr>
@@ -78,21 +99,34 @@
             <tr (click)="editarItem(compraItem.Id)" class="cursor-pointer">
                 <td>{{ compraItem.Producto?.Nombre }}</td>
                 <td>{{ compraItem.Proveedor?.Descripcion }}</td>
-                <td>{{ compraItem.Cantidad }}</td>
+                <td>
+                    <button mat-icon-button color="primary" style="cursor: pointer;" matTooltip="Disminuir cantidad"
+                        (click)="disminuirCantidad($event, compraItem)">
+                        <i class="pi pi-minus" style="font-size: 1.2rem"></i>
+                    </button>
+
+                    <input type="number" [(ngModel)]="compraItem.Cantidad"
+                        (ngModelChange)="cambiarCantidad($event, compraItem)" class="cantidad-input" min="0">
+
+                    <button mat-icon-button color="primary" style="cursor: pointer;" matTooltip="Aumentar cantidad"
+                        (click)="aumentarCantidad($event, compraItem)">
+                        <i class="pi pi-plus" style="font-size: 1.2rem"></i>
+                    </button>
+                </td>
                 <td>{{ compraItem.Producto.PrecioCompra | currency:'ARS':'symbol' }}</td>
-                <td>{{ compraItem.Subtotal | currency:'ARS':'symbol' }}</td>
+                <td style="width: 25%;">{{ compraItem.Subtotal | currency:'ARS':'symbol' }}</td>
+                <td>
+                    <button mat-icon-button color="primary" style="cursor: pointer;" matTooltip="Eliminar item"
+                        (click)="eliminarItem(compraItem)">
+                        <i class="pi pi-trash" style="font-size: 1.5rem"></i>
+                    </button>
+                </td>
             </tr>
         </ng-template>
 
         <ng-template #emptymessage>
             <tr>
-                <td colspan="5">No se encontraron ítems de compra.</td>
-            </tr>
-        </ng-template>
-
-        <ng-template #loadingbody>
-            <tr>
-                <td colspan="5">Cargando ítems de compra...</td>
+                <td colspan="6">No se cargaron ítems de compra.</td>
             </tr>
         </ng-template>
     </p-table>

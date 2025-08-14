@@ -67,3 +67,18 @@
 .w-20 {
   width: 20vw;
 }
+
+.cantidad-input {
+  width: 50px;
+  text-align: center;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1rem;
+}
+
+.cantidad-input::-webkit-outer-spin-button,
+.cantidad-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

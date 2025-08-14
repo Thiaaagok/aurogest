@@ -23,7 +23,6 @@ export class CompraItemModel {
 
   constructor(){
     this.Id = uuid();
-    this.Producto = new ProductoModel();
-    this.Proveedor = new ProveedorModel();
+    this.Cantidad = 1;
   }
 }
