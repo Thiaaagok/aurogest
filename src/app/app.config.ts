@@ -6,9 +6,13 @@ import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { DialogService } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
+import { AlertasService } from './features/common/services/alertas.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    MessageService,
+    AlertasService,
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
