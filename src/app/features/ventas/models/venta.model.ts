@@ -1,6 +1,6 @@
 import { ProductoStock } from "../../stock/models/producto-stock.model";
 
-export class Venta {
+export class VentaModel {
     Id: string;
     Fecha: Date;
     Total: number;
@@ -9,7 +9,7 @@ export class Venta {
 
 export class VentaItem {
     Id: string;
-    Venta: Venta;
+    Venta: VentaModel;
     ProductoStock: ProductoStock;
     Cantidad: number;
     PrecioUnitario: number;

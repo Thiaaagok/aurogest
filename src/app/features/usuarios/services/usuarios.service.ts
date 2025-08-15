@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Usuario } from '../models/usuario.model';
+import { UsuarioModel } from '../models/usuario.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Config } from '../../common/config/config';
@@ -13,20 +13,20 @@ export class UsuariosService {
 
   constructor(private http: HttpClient) {}
 
-  obtenerTodos(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(`${this.apiUrl}`);
+  obtenerTodos(): Observable<UsuarioModel[]> {
+    return this.http.get<UsuarioModel[]>(`${this.apiUrl}`);
   }
 
-  obtenerPorId(id: string): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.apiUrl}/${id}`);
+  obtenerPorId(id: string): Observable<UsuarioModel> {
+    return this.http.get<UsuarioModel>(`${this.apiUrl}/${id}`);
   }
 
-  crear(usuario: Partial<Usuario>): Observable<Usuario> {
-    return this.http.post<Usuario>(this.apiUrl, usuario);
+  crear(usuario: Partial<UsuarioModel>): Observable<UsuarioModel> {
+    return this.http.post<UsuarioModel>(this.apiUrl, usuario);
   }
 
-  editar(id: string, usuario: Partial<Usuario>): Observable<Usuario> {
-    return this.http.put<Usuario>(`${this.apiUrl}/${id}`, usuario);
+  editar(id: string, usuario: Partial<UsuarioModel>): Observable<UsuarioModel> {
+    return this.http.put<UsuarioModel>(`${this.apiUrl}/${id}`, usuario);
   }
 
   reactivar(id: string): Observable<boolean> {

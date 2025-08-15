@@ -1,8 +1,8 @@
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-import { Usuario } from '../../models/usuario.model';
+import { RouterModule } from '@angular/router';
+import { UsuarioModel } from '../../models/usuario.model';
 import { Table } from 'primeng/table';
 import { UsuariosService } from '../../services/usuarios.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -30,8 +30,8 @@ import { EditarUsuarioComponent } from '../editar-usuario/editar-usuario.compone
 export class GrillaUsuariosComponent {
   @ViewChild('filter') filter!: ElementRef;
 
-  usuarios: Usuario[] = [];
-  usuariosFiltro: Usuario[] = [];
+  usuarios: UsuarioModel[] = [];
+  usuariosFiltro: UsuarioModel[] = [];
   visible: boolean;
   cargando: boolean;
   registrosGrillaActivos: boolean;
@@ -51,7 +51,7 @@ export class GrillaUsuariosComponent {
   obtenerUsuarios() {
     this.cargando = true;
     this.usuariosService.obtenerTodos().subscribe({
-      next: (response: Usuario[]) => {
+      next: (response: UsuarioModel[]) => {
         this.cargando = false;
         this.usuariosFiltro = response;
         this.cargarGrilla();

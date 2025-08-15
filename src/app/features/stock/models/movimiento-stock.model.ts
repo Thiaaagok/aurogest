@@ -1,11 +1,9 @@
-import { Compra } from "../../compras/models/compra.model";
-import { ProductoModel } from "../../productos/models/producto.model";
-import { ProveedorModel } from "../../proveedores/models/proveedor.model";
-import { Usuario } from "../../usuarios/models/usuario.model";
-import { Venta } from "../../ventas/models/venta.model";
+import { CompraModel } from "../../compras/models/compra.model";
+import { UsuarioModel } from "../../usuarios/models/usuario.model";
+import { VentaModel } from "../../ventas/models/venta.model";
 import { ProductoStock } from "./producto-stock.model";
 
-export class MovimientoStock {
+export class MovimientoStockModel {
   Id: string;
   IdFactura: string;
   ProductoStock: ProductoStock;
@@ -13,15 +11,15 @@ export class MovimientoStock {
   Cantidad: number;
   Fecha: Date;
   Observacion?: string;
-  Venta?: Venta;
-  Compra?: Compra;
-  AjusteManual?: AjusteStock;
+  Venta?: VentaModel;
+  Compra?: CompraModel;
+  AjusteManual?: AjusteStockModel;
 
 }
 
-class AjusteStock {
+class AjusteStockModel {
   Id: number;
-  Usuario: Usuario;
+  Usuario: UsuarioModel;
   Motivo: string;
   Fecha: Date;
 }

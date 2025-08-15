@@ -1,6 +1,6 @@
 import { EmpresaModel } from "../../empresas/models/empresa.model";
 
-export class Usuario {
+export class UsuarioModel {
     Id: string;
     Usuario: string;
     Contrasenia: string;

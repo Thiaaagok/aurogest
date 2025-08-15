@@ -7,7 +7,7 @@ import { CustomMaterialModule } from '../../../common/material/custom-material.m
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import {DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { FloatLabel } from 'primeng/floatlabel';
@@ -25,16 +25,15 @@ import { TextareaModule } from 'primeng/textarea';
     InputTextModule,
     ToastModule,
     FloatLabel,
-    TextareaModule],
+    TextareaModule,],
   templateUrl: './nuevo-proveedor.component.html',
   styleUrl: './nuevo-proveedor.component.scss',
 })
-export class NuevoProveedorComponent { 
+export class NuevoProveedorComponent {
   nuevoProveedor: ProveedorModel = new ProveedorModel();
   cargando: boolean;
 
   private ref = inject(DynamicDialogRef);
-  private config = inject(DynamicDialogConfig);
   private proveedorService = inject(ProveedoresService);
 
   onSubmit() {
@@ -43,16 +42,16 @@ export class NuevoProveedorComponent {
       next: (response: ProveedorModel) => {
         this.cargando = false;
         this.limpiarModel();
-        this.ref.close();
+        this.ref.close(true);
       },
       error: (err) => {
         console.log(err);
       },
-      complete: () => {},
+      complete: () => { },
     });
   }
 
-  limpiarModel(){
+  limpiarModel() {
     this.nuevoProveedor = new ProveedorModel();
   }
 

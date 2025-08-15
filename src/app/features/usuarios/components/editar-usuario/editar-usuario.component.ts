@@ -4,7 +4,7 @@ import { CustomMaterialModule } from '../../../common/material/custom-material.m
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
-import { Usuario } from '../../models/usuario.model';
+import { UsuarioModel } from '../../models/usuario.model';
 import { UsuariosService } from '../../services/usuarios.service';
 import { EmpresaModel } from '../../../empresas/models/empresa.model';
 import { EmpresaService } from '../../../empresas/services/empresa.service';
@@ -31,7 +31,7 @@ import { TextareaModule } from 'primeng/textarea';
   styleUrl: './editar-usuario.component.scss',
 })
 export class EditarUsuarioComponent {
-  usuarioEditar: Usuario = new Usuario();
+  usuarioEditar: UsuarioModel = new UsuarioModel();
   empresasDropdown: EmpresaModel[] = [];
   parametro: string;
   cargando: boolean;
@@ -50,7 +50,7 @@ export class EditarUsuarioComponent {
   obtenerUsuario() {
     this.cargando = true;
     this.usuarioService.obtenerPorId(this.parametro).subscribe({
-      next: (response: Usuario) => {
+      next: (response: UsuarioModel) => {
         this.cargando = false;
         this.usuarioEditar = response;
         console.log(response)
@@ -71,7 +71,7 @@ export class EditarUsuarioComponent {
     this.cargando = true;
     this.usuarioService.editar(this.usuarioEditar.Id, this.usuarioEditar)
     .subscribe({
-      next: ((response: Usuario) => {
+      next: ((response: UsuarioModel) => {
         this.cargando = false;
         this.ref.close();
       }),

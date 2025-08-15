@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
-import { Usuario } from '../../models/usuario.model';
+import { UsuarioModel } from '../../models/usuario.model';
 import { EmpresaModel } from '../../../empresas/models/empresa.model';
 import { UsuariosService } from '../../services/usuarios.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -30,7 +30,7 @@ import { TextareaModule } from 'primeng/textarea';
   styleUrl: './nuevo-usuario.component.scss',
 })
 export class NuevoUsuarioComponent {
-  nuevoUsuario: Usuario = new Usuario();
+  nuevoUsuario: UsuarioModel = new UsuarioModel();
   empresasDropdown: EmpresaModel[] = [];
   cargando: boolean;
   visible: boolean;
@@ -46,7 +46,7 @@ export class NuevoUsuarioComponent {
   onSubmit() {
     this.cargando = true;
     this.usuariosService.crear(this.nuevoUsuario).subscribe({
-      next: (response: Usuario) => {
+      next: (response: UsuarioModel) => {
         this.cargando = false;
         this.limpiarModel();
         this.ref.close(); 
@@ -64,6 +64,6 @@ export class NuevoUsuarioComponent {
   }
 
   limpiarModel(){
-    this.nuevoUsuario = new Usuario();
+    this.nuevoUsuario = new UsuarioModel();
   }
 }
