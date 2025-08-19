@@ -20,6 +20,7 @@ import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { Select } from 'primeng/select';
 import { AlertasService } from '../../../common/services/alertas.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-nueva-compra',
@@ -54,6 +55,7 @@ export class NuevaCompraComponent {
   private productosService = inject(ProductosService);
   private qrService = inject(QrScannerService);
   private alertasService = inject(AlertasService);
+  private messageService = inject(MessageService);
 
   ngOnInit() {
     this.cargarProductosCombo();
@@ -67,7 +69,7 @@ export class NuevaCompraComponent {
     this.productosService.obtenerProductoPorCodigoBarra(this.codigoBarra)
       .subscribe({
         next: (response: ProductoModel) => {
-          console.log('QR escaneado ALERTA NECESARIA');
+          this.messageService.add(({ severity: 'success', summary: 'QR ESCANEADO', detail: 'El producto se escaneo correctamente' }));
           this.productoSeleccionado = response.Id;
           this.productoSeleccionadoEvent(response.Id);
         },
@@ -78,46 +80,15 @@ export class NuevaCompraComponent {
       })
   }
 
-  editarItem(id: string) {
-
-  }
-
-  onSubmit() {
-    this.cargando = true;
-    this.comprasService.crear(this.nuevaCompra).subscribe({
-      next: (response: CompraModel) => {
-        this.cargando = false;
-        this.limpiarModel();
-      },
-      error: (err) => {
-        this.cargando = false;
-        console.log(err);
-      },
-      complete: () => { },
-    });
-  }
-
-  cargarProductosCombo() {
-    this.productosService.obtenerTodos()
-      .subscribe({
-        next: (response: ProductoModel[]) => {
-          this.productosCombo = response;
-          this.productosCombo.forEach(prod => prod.Descripcion = prod.Nombre);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-        complete: () => { },
-      });
-  }
-
   crearNuevoItem() {
     if (this.verificarItem()) {
       this.nuevaCompra.Items.push(this.nuevoItem);
-      this.nuevoItem = new CompraItemModel();
-      this.productoSeleccionado = "";
+      this.limpiarProductoSeleccionado();
     } else {
-      console.log('ALERTA')
+      this.alertasService.advertenciaAlerta(
+        'No se pudo agregar el item',
+        'Este producto y proveedor ya están registrados en la compra.'
+      );
     }
   }
 
@@ -169,6 +140,7 @@ export class NuevaCompraComponent {
   }
 
   limpiarProductoSeleccionado() {
+    this.productoSeleccionado = "";
     this.nuevoItem = new CompraItemModel();
     this.proveedoresCombo = [];
     this.nuevoItem.Subtotal = 0;
@@ -178,7 +150,7 @@ export class NuevaCompraComponent {
     this.alertasService.confirmacionAlerta(
       'Confirmar eliminación',
       `Vas a eliminar el ítem "${compraItem.Producto?.Descripcion ?? 'sin descripción'}" de la compra. 
-    Esta acción no se puede deshacer. ¿Deseas continuar?`
+      Esta acción no se puede deshacer. ¿Deseas continuar?`
     ).then((result) => {
       if (result.isConfirmed) {
         const index = this.nuevaCompra.Items.findIndex(item => item.Id == compraItem.Id);
@@ -187,5 +159,38 @@ export class NuevaCompraComponent {
         }
       }
     });
+  }
+
+  editarItem(id: string) {
+
+  }
+
+  onSubmit() {
+    this.cargando = true;
+    this.comprasService.crear(this.nuevaCompra).subscribe({
+      next: (response: CompraModel) => {
+        this.cargando = false;
+        this.limpiarModel();
+      },
+      error: (err) => {
+        this.cargando = false;
+        console.log(err);
+      },
+      complete: () => { },
+    });
+  }
+
+  cargarProductosCombo() {
+    this.productosService.obtenerTodos()
+      .subscribe({
+        next: (response: ProductoModel[]) => {
+          this.productosCombo = response;
+          this.productosCombo.forEach(prod => prod.Descripcion = prod.Nombre);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => { },
+      });
   }
 }

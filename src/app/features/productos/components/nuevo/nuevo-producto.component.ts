@@ -1,10 +1,8 @@
-import { Component, inject, NgZone, Renderer2, ViewChild } from '@angular/core';
-import { ProductoDetalleModel, ProductoModel } from '../../models/producto.model';
-import { Router } from '@angular/router';
+import { Component, inject, NgZone, Renderer2 } from '@angular/core';
+import { ProductoModel } from '../../models/producto.model';
 import { ProductosService } from '../../services/producto.service';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
-import { SelectChosenComponent } from '../../../common/components/select-chosen/select-chosen.component';
 import { ProductoTipoModel } from '../../models/producto-tipo.model';
 import { ProveedorModel } from '../../../proveedores/models/proveedor.model';
 import { ProveedoresService } from '../../../proveedores/services/proveedores.service';
@@ -13,24 +11,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProductoTiposService } from '../../services/producto-tipo.service';
 import { ProductoCategoriasService } from '../../services/producto-categoria.service';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { FloatLabel } from 'primeng/floatlabel';
 import { TextareaModule } from 'primeng/textarea';
 import { MarcaModel } from '../../models/marca.model';
 import { MarcasService } from '../../services/marcas.service';
-import JsBarcode from 'jsbarcode';
-import { v4 as uuidv4 } from 'uuid';
 import { StockService } from '../../../stock/services/stock.service';
 import { ProductoStock } from '../../../stock/models/producto-stock.model';
+import { Select } from 'primeng/select';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @Component({
   selector: 'app-nuevo-producto',
   imports: [
     PrimeNgModule,
     CustomMaterialModule,
-    SelectChosenComponent,
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
@@ -38,6 +35,8 @@ import { ProductoStock } from '../../../stock/models/producto-stock.model';
     ToastModule,
     FloatLabel,
     TextareaModule,
+    Select,
+    MultiSelectModule
   ],
   templateUrl: './nuevo-producto.component.html',
   styleUrl: './nuevo-producto.component.scss',
@@ -113,10 +112,6 @@ export class NuevoProductoComponent {
 
   modoCodigoBarra = 'existente';
 
-  opcionCambio(opcion: string) {
-    this.nuevoProducto.CodigoBarra = '';
-  }
-
   onModoCodigoBarraChange(modo: string) {
     if (modo === 'propio') {
       this.generarCodigoBarra();
@@ -127,10 +122,6 @@ export class NuevoProductoComponent {
   generarCodigoBarra() {
     this.nuevoProducto.CodigoBarra = Math.floor(Math.random() * 1e13).toString().padStart(13, '0');
   }
-  procesarCodigoEscaneado() {
-    console.log("Código escaneado:", this.nuevoProducto.CodigoBarra);
-  }
-
 
   onSubmit() {
     this.cargando = true;

@@ -7,7 +7,7 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { RatingModule } from 'primeng/rating';
 import { CommonModule } from '@angular/common';
-import { ToastModule } from 'primeng/toast';
+import { Toast, ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -197,6 +197,7 @@ import { AutoFocusModule } from 'primeng/autofocus';
         StyleClassModule,
         AutoFocusModule,
         CarouselModule,
+        Toast
     ],
 exports: [
         PanelMenuModule,
@@ -289,6 +290,7 @@ exports: [
         TreeSelectModule ,
         TreeTableModule ,
         AnimateOnScrollModule ,
+        Toast,
         CardModule ,
         BlockUIModule,
         RippleModule,

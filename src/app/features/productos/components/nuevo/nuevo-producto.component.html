@@ -14,29 +14,49 @@
         <label for="nombre">Nombre</label>
       </p-floatlabel>
     </div>
-    <div class="flex flex-col grow basis-0 gap-2">
-      <app-select-chosen class="w-100" title="Tipo" [(ngModel)]="nuevoProducto.Tipo" name="tipo"
-        placeholder="Tipo de producto" [dataSource]="tiposProductosCombo"
-        (recargar)="cargarTiposProductosCombo()"></app-select-chosen>
+    <div class="col-span-1">
+      <p-floatlabel class="w-100 md:w-56 relative" variant="in">
+        <p-select [(ngModel)]="nuevoProducto.Tipo" inputId="in_label" [options]="tiposProductosCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="productoTipo" [filter]="true"
+          [showClear]="true" optionValue="Id">
+        </p-select>
+        <label for="in_label">Tipo</label>
+      </p-floatlabel>
     </div>
-    <div class="flex flex-col grow basis-0 gap-2">
-      <app-select-chosen class="w-100" title="marca" [(ngModel)]="nuevoProducto.Marca" name="marca"
-        placeholder="Marca del producto" [dataSource]="marcasProductosCombo"
-        (recargar)="cargarMarcasProductosCombo()"></app-select-chosen>
+
+    <div class="col-span-1">
+      <p-floatlabel class="w-100 md:w-56 relative" variant="in">
+        <p-select [(ngModel)]="nuevoProducto.Marca" inputId="in_label" [options]="marcasProductosCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="productoMarca" [filter]="true"
+          [showClear]="true" optionValue="Id">
+        </p-select>
+        <label for="in_label">Marca</label>
+      </p-floatlabel>
     </div>
-    <div class="flex flex-col grow basis-0 gap-2">
-      <app-select-chosen class="w-100" title="Categoria" [(ngModel)]="nuevoProducto.Categoria" name="categoria"
-        placeholder="Categoria del producto" [dataSource]="categoriasProductosCombo"
-        (recargar)="cargarCategoriasProductosCombo()"></app-select-chosen>
+
+    <div class="col-span-1">
+      <p-floatlabel class="w-100 md:w-56 relative" variant="in">
+        <p-select [(ngModel)]="nuevoProducto.Categoria" inputId="in_label" [options]="categoriasProductosCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="productoCategoria" [filter]="true"
+          [showClear]="true" optionValue="Id">
+        </p-select>
+        <label for="in_label">Categoria</label>
+      </p-floatlabel>
     </div>
-    <div class="flex flex-col grow basis-0 gap-2">
-      <app-select-chosen class="w-100" title="Proveedores" [multiple]="true" [(ngModel)]="nuevoProducto.Proveedores"
-        name="proveedores" placeholder="Proveedores del producto" [dataSource]="proveedoresCombo"
-        (recargar)="cargarProveedoresCombo()"></app-select-chosen>
+
+    <div class="col-span-1">
+      <p-floatlabel class="w-100 md:w-56 relative" variant="in">
+        <p-multiSelect [(ngModel)]="nuevoProducto.Proveedores" inputId="in_label" [options]="proveedoresCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="proveedores" [filter]="true" [showClear]="true"
+          optionValue="Id">
+        </p-multiSelect>
+        <label for="in_label">Proveedores</label>
+      </p-floatlabel>
     </div>
     <!-- Selección del tipo de código de barra -->
     <div class="flex flex-col grow basis-0 gap-2">
-      <p-selectbutton [options]="opcionesCodigoBarra" (ngModelChange)="opcionCambio($event)" [(ngModel)]="modoCodigoBarra" name="modoCodigoBarra">
+      <p-selectbutton [options]="opcionesCodigoBarra" (ngModelChange)="onModoCodigoBarraChange($event)"
+        [(ngModel)]="modoCodigoBarra" name="modoCodigoBarra" [unselectable]="false">
       </p-selectbutton>
     </div>
 
@@ -44,8 +64,7 @@
     <div class="flex flex-col grow basis-0 gap-2" *ngIf="modoCodigoBarra === 'existente'">
       <p-floatlabel variant="in">
         <input pInputText type="text" id="codigoBarra" #codigoBarra="ngModel" class="w-100" name="codigoBarra"
-          [(ngModel)]="nuevoProducto.CodigoBarra" readonly
-          (keyup.enter)="procesarCodigoEscaneado()" />
+          [(ngModel)]="nuevoProducto.CodigoBarra" readonly/>
         <label for="codigoBarra">Código Barra Existente</label>
       </p-floatlabel>
     </div>

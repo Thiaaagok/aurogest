@@ -17,27 +17,43 @@
     </div>
 
     <div class="col-span-1">
-      <app-select-chosen class="w-100" title="Tipo" [(ngModel)]="productoEditar.Tipo" name="tipo"
-        placeholder="Tipo de producto" [dataSource]="tiposProductosCombo"
-        (recargar)="cargarTiposProductosCombo()"></app-select-chosen>
+      <p-floatlabel class="w-100 md:w-56 relative" variant="in">
+        <p-select [(ngModel)]="productoEditar.Tipo" inputId="in_label" [options]="tiposProductosCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="productoTipo" [filter]="true" [showClear]="true"
+          optionValue="Id">
+        </p-select>
+        <label for="in_label">Tipo</label>
+      </p-floatlabel>
     </div>
 
     <div class="col-span-1">
-      <app-select-chosen class="w-100" title="marca" [(ngModel)]="productoEditar.Marca" name="marca"
-        placeholder="Marca del producto" [dataSource]="marcasProductosCombo"
-        (recargar)="cargarMarcasProductosCombo()"></app-select-chosen>
+      <p-floatlabel class="w-100 md:w-56 relative" variant="in">
+        <p-select [(ngModel)]="productoEditar.Marca" inputId="in_label" [options]="marcasProductosCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="productoMarca" [filter]="true" [showClear]="true"
+          optionValue="Id">
+        </p-select>
+        <label for="in_label">Marca</label>
+      </p-floatlabel>
     </div>
 
     <div class="col-span-1">
-      <app-select-chosen class="w-100" title="Categoria" [(ngModel)]="productoEditar.Categoria" name="categoria"
-        placeholder="Categoria del producto" [dataSource]="categoriasProductosCombo"
-        (recargar)="cargarCategoriasProductosCombo()" [multiple]="false"></app-select-chosen>
+      <p-floatlabel class="w-100 md:w-56 relative" variant="in">
+        <p-select [(ngModel)]="productoEditar.Categoria" inputId="in_label" [options]="categoriasProductosCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="productoCategoria" [filter]="true" [showClear]="true"
+          optionValue="Id">
+        </p-select>
+        <label for="in_label">Categoria</label>
+      </p-floatlabel>
     </div>
 
     <div class="col-span-1">
-      <app-select-chosen class="w-100" title="Proveedores" [multiple]="true" [(ngModel)]="productoEditar.Proveedores"
-        name="proveedores" placeholder="Proveedores del producto" [dataSource]="proveedoresCombo"
-        (recargar)="cargarProveedoresCombo()"></app-select-chosen>
+      <p-floatlabel class="w-100 md:w-56 relative" variant="in">
+        <p-multiSelect  [(ngModel)]="productoEditar.Proveedores" inputId="in_label" [options]="proveedoresCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="proveedores" [filter]="true" [showClear]="true"
+          optionValue="Id">
+        </p-multiSelect>
+        <label for="in_label">Proveedores</label>
+      </p-floatlabel>
     </div>
 
     <div class="col-span-1">

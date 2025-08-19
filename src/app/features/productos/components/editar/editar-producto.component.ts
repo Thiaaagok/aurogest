@@ -3,10 +3,8 @@ import { ProductoModel } from '../../models/producto.model';
 import { ProductoTipoModel } from '../../models/producto-tipo.model';
 import { ProveedorModel } from '../../../proveedores/models/proveedor.model';
 import { ProductosService } from '../../services/producto.service';
-import { SelectChosenComponent } from '../../../common/components/select-chosen/select-chosen.component';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
-import { timer } from 'rxjs';
 import { ProductoCategoriaModel } from '../../models/producto-categoria.model';
 import { ProductoTiposService } from '../../services/producto-tipo.service';
 import { ProductoCategoriasService } from '../../services/producto-categoria.service';
@@ -19,13 +17,15 @@ import { ToastModule } from 'primeng/toast';
 import { FloatLabel } from 'primeng/floatlabel';
 import { MarcaModel } from '../../models/marca.model';
 import { MarcasService } from '../../services/marcas.service';
+import { Select } from 'primeng/select';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @Component({
   selector: 'app-editar-producto',
-  imports: [PrimeNgModule, CustomMaterialModule, SelectChosenComponent, ReactiveFormsModule, FormsModule, CommonModule,
+  imports: [PrimeNgModule, CustomMaterialModule, ReactiveFormsModule, FormsModule, CommonModule,
     InputTextModule,
     ToastModule,
-    FloatLabel,],
+    FloatLabel,Select,MultiSelectModule],
   templateUrl: './editar-producto.component.html',
   styleUrl: './editar-producto.component.scss',
 })
@@ -48,11 +48,11 @@ export class EditarProductoComponent {
 
   ngOnInit() {
     this.parametro = this.config.data;
-    this.obtenerProducto();
     this.cargarTiposProductosCombo();
     this.cargarMarcasProductosCombo();
     this.cargarCategoriasProductosCombo();
     this.cargarProveedoresCombo();
+    this.obtenerProducto();
   }
 
   onSubmit() {

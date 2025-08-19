@@ -12,6 +12,8 @@ import { Table } from 'primeng/table';
 import { DialogService } from 'primeng/dynamicdialog';
 import { NuevoProveedorComponent } from '../nuevo/nuevo-proveedor.component';
 import { EditarProveedorComponent } from '../editar/editar-proveedor.component';
+import { AlertasService } from '../../../common/services/alertas.service';
+
 @Component({
   selector: 'app-grilla-proveedores',
   imports: [PrimeNgModule, CommonModule, RouterModule, FontAwesomeModule, CustomMaterialModule, FormsModule],
@@ -30,6 +32,7 @@ export class GrillaProveedoresComponent {
   private GrillaUtilService = inject(GrillaUtilService);
   private proveedoresService = inject(ProveedoresService);
   private dialogService = inject(DialogService);
+  private alertasService = inject(AlertasService);
 
   ngOnInit() {
     this.registrosGrillaActivos = true;
@@ -77,8 +80,10 @@ export class GrillaProveedoresComponent {
     });
 
     dialog.onClose
-      .subscribe(() => {
-        this.obtenerProveedores();
+      .subscribe((resultado: boolean) => {
+        if (resultado) {
+          this.obtenerProveedores();
+        }
       })
   }
 
@@ -93,8 +98,10 @@ export class GrillaProveedoresComponent {
     });
 
     dialog.onClose
-      .subscribe(() => {
-        this.obtenerProveedores();
+      .subscribe((resultado: boolean) => {
+        if (resultado) {
+          this.obtenerProveedores();
+        }
       })
   }
 }
