@@ -71,6 +71,11 @@
             Precio Venta
           </div>
         </th>
+        <th>
+          <div class="flex justify-between items-center">
+            Acciones
+          </div>
+        </th>
       </tr>
     </ng-template>
 
@@ -83,6 +88,21 @@
         <td>{{ producto.Categoria?.Descripcion }}</td>
         <td>{{ producto.PrecioCompra | currency:'ARS':'symbol'}}</td>
         <td>{{ producto.PrecioVenta | currency:'ARS':'symbol'}}</td>
+        <td>
+          <button mat-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()" style="cursor: pointer;">
+            <i class="pi pi-ellipsis-v" style="font-size: 1.3rem; color: black;"></i>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="editarPrecioCompra(producto)">
+              <i class="pi pi-pencil" style="font-size: 1.3rem; color: black;"></i>
+              Actualizar Precio Compra
+            </button>
+            <button mat-menu-item (click)="editarPrecioVenta(producto)">
+              <i class="pi pi-pencil" style="font-size: 1.3rem; color: black;"></i>
+              Actualizar Precio Venta
+            </button>
+          </mat-menu>
+        </td>
       </tr>
     </ng-template>
     }

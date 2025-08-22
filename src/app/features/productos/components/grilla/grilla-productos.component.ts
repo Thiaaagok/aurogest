@@ -12,10 +12,11 @@ import { FormsModule } from '@angular/forms';
 import { DialogService } from 'primeng/dynamicdialog';
 import { NuevoProductoComponent } from '../nuevo/nuevo-producto.component';
 import { EditarProductoComponent } from '../editar/editar-producto.component';
+import { EditarPrecioComponent } from './editar-precio/editar-precio.component';
 
 @Component({
   selector: 'app-grilla-productos',
-  imports: [    
+  imports: [
     PrimeNgModule,
     CommonModule,
     RouterModule,
@@ -25,7 +26,7 @@ import { EditarProductoComponent } from '../editar/editar-producto.component';
   templateUrl: './grilla-productos.component.html',
   styleUrl: './grilla-productos.component.scss',
 })
-export class GrillaProductosComponent { 
+export class GrillaProductosComponent {
 
   @ViewChild('filter') filter!: ElementRef;
 
@@ -59,7 +60,7 @@ export class GrillaProductosComponent {
         this.cargando = false;
         console.log(err);
       },
-      complete: () => {},
+      complete: () => { },
     });
   }
 
@@ -75,9 +76,9 @@ export class GrillaProductosComponent {
     });
 
     dialog.onClose
-    .subscribe(() => {
-      this.obtenerProductos();
-    })
+      .subscribe(() => {
+        this.obtenerProductos();
+      })
   }
 
   editarProducto(id: string) {
@@ -85,16 +86,56 @@ export class GrillaProductosComponent {
       header: 'Editar Producto',
       width: '50%',
       height: 'fit-content',
-      data: id ,
+      data: id,
       modal: true,
       styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
     });
 
 
     dialog.onClose
-    .subscribe(() => {
-      this.obtenerProductos();
-    })
+      .subscribe(() => {
+        this.obtenerProductos();
+      })
+  }
+
+  editarPrecioCompra(producto: ProductoModel) {
+    const dialog = this.dialogService.open(EditarPrecioComponent, {
+      header: 'Editar precio compra',
+      width: '50%',
+      height: 'fit-content',
+      data: {
+        Producto: producto,
+        Tipo: 'COMPRA'
+      },
+      modal: true,
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
+    });
+
+
+    dialog.onClose
+      .subscribe(() => {
+        this.obtenerProductos();
+      })
+  }
+
+  editarPrecioVenta(producto: ProductoModel) {
+    const dialog = this.dialogService.open(EditarPrecioComponent, {
+      header: 'Editar precio venta',
+      width: '50%',
+      height: 'fit-content',
+      data: {
+        Producto: producto,
+        Tipo: 'VENTA'
+      },
+      modal: true,
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
+    });
+
+
+    dialog.onClose
+      .subscribe(() => {
+        this.obtenerProductos();
+      })
   }
 
   cargarGrilla() {
@@ -102,7 +143,7 @@ export class GrillaProductosComponent {
       this.productosFiltro,
       this.registrosGrillaActivos
     )
-  }  
+  }
 
   limpiarFiltrado(table: Table) {
     this.GrillaUtilService.limpiarFiltrado(table);

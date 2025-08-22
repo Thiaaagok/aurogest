@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Config } from '../../common/config/config';
 import { Observable } from 'rxjs';
 import { ProductoModel } from '../models/producto.model';
+import { RegistroActualizacionPrecio } from '../../registros/models/registroActualizacionPrecio.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductosService {
@@ -35,9 +36,15 @@ export class ProductosService {
     return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
   }
 
-  obtenerProductoPorCodigoBarra(codigoBarra: string){
+  obtenerProductoPorCodigoBarra(codigoBarra: string) {
     return this.http.get<ProductoModel>(`${this.apiUrl}/codigo-barra/${codigoBarra}`);
   }
 
+  editarPrecio(productoId: string, nuevoPrecio: number, tipo: 'COMPRA' | 'VENTA'): Observable<ProductoModel> {
+    return this.http.put<ProductoModel>(
+      `${this.apiUrl}/editar-precio/${tipo}/${productoId}`,
+      { nuevoPrecio } 
+    );
+  }
 
 }

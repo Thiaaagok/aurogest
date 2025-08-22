@@ -48,11 +48,6 @@
                 </th>
                 <th style="min-width: 10rem">
                     <div class="flex justify-between items-center">
-                        Stock Minimo
-                    </div>
-                </th>
-                <th style="min-width: 10rem">
-                    <div class="flex justify-between items-center">
                         Stock Reservado
                     </div>
                 </th>
@@ -71,7 +66,6 @@
             <tr class="cursor-pointer">
                 <td>{{ productoStock.Producto.Nombre }}</td>
                 <td>{{ productoStock.StockActual }}</td>
-                <td>{{ productoStock.StockMinimo }}</td>
                 <td>{{ productoStock.StockReservado }}</td>
                 <td>{{ productoStock.UltimaActualizacion | date: 'dd/MM/yyyy' }}</td>
             </tr>
