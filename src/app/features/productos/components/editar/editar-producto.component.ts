@@ -48,11 +48,11 @@ export class EditarProductoComponent {
 
   ngOnInit() {
     this.parametro = this.config.data;
+    this.obtenerProducto();
     this.cargarTiposProductosCombo();
     this.cargarMarcasProductosCombo();
     this.cargarCategoriasProductosCombo();
     this.cargarProveedoresCombo();
-    this.obtenerProducto();
   }
 
   onSubmit() {

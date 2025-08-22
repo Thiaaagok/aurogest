@@ -1,12 +1,5 @@
 <div class="card">
   <form #form="ngForm" novalidate class="grid-formulario" [ngStyle]="gridStyles">
-    <div class="col-span-1">
-      <p-floatlabel variant="in">
-        <input pInputText type="text" id="codigo" #codigo="ngModel" class="w-100" name="codigo"
-          [(ngModel)]="productoEditar.Codigo" required />
-        <label for="codigo">Código</label>
-      </p-floatlabel>
-    </div>
 
     <div class="col-span-1">
       <p-floatlabel variant="in">
@@ -18,57 +11,39 @@
 
     <div class="col-span-1">
       <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-        <p-select [(ngModel)]="productoEditar.Tipo" inputId="in_label" [options]="tiposProductosCombo"
-          optionLabel="Descripcion" class="w-100" variant="filled" name="productoTipo" [filter]="true" [showClear]="true"
-          optionValue="Id">
+        <p-select [(ngModel)]="productoEditar.Tipo" inputId="productoTipo" [options]="tiposProductosCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="productoTipo" [filter]="true" [showClear]="true">
         </p-select>
-        <label for="in_label">Tipo</label>
+        <label for="productoTipo">Tipo</label>
       </p-floatlabel>
     </div>
 
     <div class="col-span-1">
       <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-        <p-select [(ngModel)]="productoEditar.Marca" inputId="in_label" [options]="marcasProductosCombo"
-          optionLabel="Descripcion" class="w-100" variant="filled" name="productoMarca" [filter]="true" [showClear]="true"
-          optionValue="Id">
+        <p-select [(ngModel)]="productoEditar.Marca" inputId="marca" [options]="marcasProductosCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="productoMarca" [filter]="true"
+          [showClear]="true">
         </p-select>
-        <label for="in_label">Marca</label>
+        <label for="marca">Marca</label>
       </p-floatlabel>
     </div>
 
     <div class="col-span-1">
       <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-        <p-select [(ngModel)]="productoEditar.Categoria" inputId="in_label" [options]="categoriasProductosCombo"
-          optionLabel="Descripcion" class="w-100" variant="filled" name="productoCategoria" [filter]="true" [showClear]="true"
-          optionValue="Id">
+        <p-select [(ngModel)]="productoEditar.Categoria" inputId="categoria" [options]="categoriasProductosCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="productoCategoria" [filter]="true"
+          [showClear]="true">
         </p-select>
-        <label for="in_label">Categoria</label>
+        <label for="categoria">Categoria</label>
       </p-floatlabel>
     </div>
 
     <div class="col-span-1">
       <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-        <p-multiSelect  [(ngModel)]="productoEditar.Proveedores" inputId="in_label" [options]="proveedoresCombo"
-          optionLabel="Descripcion" class="w-100" variant="filled" name="proveedores" [filter]="true" [showClear]="true"
-          optionValue="Id">
+        <p-multiSelect [(ngModel)]="productoEditar.Proveedores" inputId="proveedores" [options]="proveedoresCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="proveedores" [filter]="true" [showClear]="true">
         </p-multiSelect>
-        <label for="in_label">Proveedores</label>
-      </p-floatlabel>
-    </div>
-
-    <div class="col-span-1">
-      <p-floatlabel variant="in">
-        <p-inputnumber id="precioCompra" class="w-100" [(ngModel)]="productoEditar.PrecioCompra" name="precioCompra"
-          [showButtons]="true" inputId="stacked" mode="currency" currency="ARG" />
-        <label for="precioCompra">Precio Compra</label>
-      </p-floatlabel>
-    </div>
-
-    <div class="col-span-1">
-      <p-floatlabel variant="in">
-        <p-inputnumber id="precioVenta" class="w-100" [(ngModel)]="productoEditar.PrecioVenta" name="precioVenta"
-          [showButtons]="true" inputId="precioVenta" mode="currency" currency="ARG" />
-        <label for="precioVenta">Precio Venta</label>
+        <label for="proveedores">Proveedores</label>
       </p-floatlabel>
     </div>
 
@@ -84,7 +59,7 @@
         (click)="reactivarProducto()" [disabled]="cargando"></p-button>
       }
 
-      <p-button label="Guardar" severity="success" icon="pi pi-check" (click)="onSubmit()" [disabled]="!form.valid">
+      <p-button label="Guardar" severity="success" icon="pi pi-check" (click)="onSubmit()" [disabled]="!form.valid || cargando">
       </p-button>
     </div>
   </form>

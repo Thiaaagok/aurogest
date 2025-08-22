@@ -6,7 +6,6 @@ import { ProductoTipoModel } from "./producto-tipo.model";
 
 export class ProductoModel {
     Id: string;
-    Codigo: string;
     CodigoBarra: string;
     Nombre: string;
     Descripcion: string;

@@ -2,13 +2,6 @@
   <form #form="ngForm" novalidate class="flex flex-col gap-4">
     <div class="flex flex-col grow basis-0 gap-2">
       <p-floatlabel variant="in">
-        <input pInputText type="text" id="codigo" #codigo="ngModel" class="w-100" name="codigo"
-          [(ngModel)]="nuevoProducto.Codigo" required />
-        <label for="codigo">Código</label>
-      </p-floatlabel>
-    </div>
-    <div class="flex flex-col grow basis-0 gap-2">
-      <p-floatlabel variant="in">
         <input pInputText type="text" id="nombre" class="w-100" #nombre="ngModel" name="nombre"
           [(ngModel)]="nuevoProducto.Nombre" required />
         <label for="nombre">Nombre</label>

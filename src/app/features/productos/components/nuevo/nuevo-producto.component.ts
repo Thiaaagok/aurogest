@@ -1,4 +1,4 @@
-import { Component, inject, NgZone, Renderer2 } from '@angular/core';
+import { Component, inject, NgZone, Renderer2, ViewEncapsulation  } from '@angular/core';
 import { ProductoModel } from '../../models/producto.model';
 import { ProductosService } from '../../services/producto.service';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
@@ -40,6 +40,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
   ],
   templateUrl: './nuevo-producto.component.html',
   styleUrl: './nuevo-producto.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class NuevoProductoComponent {
 
