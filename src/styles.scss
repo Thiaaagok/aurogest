@@ -93,6 +93,17 @@ input.ng-invalid.ng-touched {
   z-index: 999;
   cursor: grab;
 }
+
 .floating-button:active {
   cursor: grabbing;
+}
+
+:root {
+  --p-floatlabel-color: black !important;
+  --p-floatlabel-font-weight: 550 !important;
+  --p-floatlabel-active-font-size: 0.85rem;
+  --p-floatlabel-active-font-weight: 600;
+  --p-floatlabel-active-color: #000;
+  --p-floatlabel-focus-color: #1a73e8;
+  --p-floatlabel-invalid-color: red;
 }
