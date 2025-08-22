@@ -38,4 +38,7 @@ export class ComprasService {
     return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
   }
 
+  descargarRemito(compra: CompraModel) {
+    return this.http.get(`${this.apiUrl}/remito/${compra.Id}`, { responseType: 'blob' });
+  }
 }

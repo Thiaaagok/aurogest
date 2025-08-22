@@ -146,6 +146,17 @@ export class NuevaCompraComponent {
     this.nuevoItem.Subtotal = 0;
   }
 
+  descargar(compra: CompraModel) {
+    this.comprasService.descargarRemito(compra).subscribe((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `remito-${compra.Id}.pdf`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
+
   eliminarItem(compraItem: CompraItemModel) {
     this.alertasService.confirmacionAlerta(
       'Confirmar eliminación',
@@ -167,9 +178,12 @@ export class NuevaCompraComponent {
 
   onSubmit() {
     this.cargando = true;
+    this.nuevaCompra.Fecha = new Date();
+    this.nuevaCompra.Total = this.nuevaCompra.Items.reduce((acc, item) => acc + item.Subtotal, 0);
     this.comprasService.crear(this.nuevaCompra).subscribe({
       next: (response: CompraModel) => {
         this.cargando = false;
+        this.descargar(response);
         this.limpiarModel();
       },
       error: (err) => {

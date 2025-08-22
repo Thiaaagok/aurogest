@@ -9,6 +9,7 @@ export class CompraModel {
   Items: CompraItemModel[];
 
   constructor() {
+    this.Id = uuid(); 
     this.Items = [];
   }
 }
@@ -21,7 +22,7 @@ export class CompraItemModel {
   Cantidad: number;
   Subtotal: number;
 
-  constructor(){
+  constructor() {
     this.Id = uuid();
     this.Cantidad = 1;
   }

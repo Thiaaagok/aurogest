@@ -18,21 +18,21 @@
                 <div class="flex flex-wrap items-center gap-2">
                     <div class="flex flex-col w-20 gap-0">
                         <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-                            <p-select [(ngModel)]="productoSeleccionado" inputId="in_label" [options]="productosCombo"
+                            <p-select [(ngModel)]="productoSeleccionado" inputId="producto" [options]="productosCombo"
                                 optionLabel="Descripcion" class="w-100" variant="filled" name="producto" [filter]="true"
                                 (onChange)="productoSeleccionadoEvent($event.value)" [showClear]="true"
                                 (onClear)="limpiarProductoSeleccionado()" optionValue="Id">
                             </p-select>
-                            <label for="in_label">Producto</label>
+                            <label for="producto">Producto</label>
                         </p-floatlabel>
                     </div>
                     <div class="flex flex-col w-20 gap-0">
                         <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-                            <p-select [(ngModel)]="nuevoItem.Proveedor" inputId="in_label" [options]="proveedoresCombo"
+                            <p-select [(ngModel)]="nuevoItem.Proveedor" inputId="proveedor" [options]="proveedoresCombo"
                                 optionLabel="Descripcion" class="w-100" variant="filled" name="proveedor"
                                 [filter]="true" [showClear]="true">
                             </p-select>
-                            <label for="in_label">Proveedor</label>
+                            <label for="proveedor">Proveedor</label>
                         </p-floatlabel>
                     </div>
                     <div class="flex flex-col gap-0">
