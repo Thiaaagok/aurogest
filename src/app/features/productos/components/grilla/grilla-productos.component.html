@@ -42,12 +42,6 @@
         </th>
         <th style="min-width: 10rem">
           <div class="flex justify-between items-center">
-            Código
-            <p-columnFilter type="text" field="Codigo" display="menu" placeholder="Buscar por código"></p-columnFilter>
-          </div>
-        </th>
-        <th style="min-width: 10rem">
-          <div class="flex justify-between items-center">
             Tipo
             <p-columnFilter type="text" field="Tipo.Descripcion" display="menu"
               placeholder="Buscar por tipo"></p-columnFilter>
@@ -67,6 +61,16 @@
               placeholder="Buscar por categoria"></p-columnFilter>
           </div>
         </th>
+        <th>
+          <div class="flex justify-between items-center">
+            Precio Compra
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-between items-center">
+            Precio Venta
+          </div>
+        </th>
       </tr>
     </ng-template>
 
@@ -74,10 +78,11 @@
     <ng-template #body let-producto>
       <tr (click)="editarProducto(producto.Id)" class="cursor-pointer">
         <td>{{ producto.Nombre }}</td>
-        <td>{{ producto.Codigo }}</td>
         <td>{{ producto.Tipo?.Descripcion }}</td>
         <td>{{ producto.Marca?.Descripcion }}</td>
         <td>{{ producto.Categoria?.Descripcion }}</td>
+        <td>{{ producto.PrecioCompra | currency:'ARS':'symbol'}}</td>
+        <td>{{ producto.PrecioVenta | currency:'ARS':'symbol'}}</td>
       </tr>
     </ng-template>
     }
