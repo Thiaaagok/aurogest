@@ -1,5 +1,5 @@
 @if(!login){
-  <div class="example-container">
+<div class="example-container">
   <div class="layout-topbar">
     <div class="layout-topbar-logo-container">
       <button mat-icon-button (click)="snav.toggle()">
@@ -34,6 +34,14 @@
 
       <div class="layout-topbar-menu hidden lg:block">
         <div class="layout-topbar-menu-content">
+          <button type="button" routerLink="ventas/nueva" class="layout-topbar-action">
+            <i class="pi pi-dollar"></i>
+            <span>Nueva Venta</span>
+          </button>
+          <button type="button" routerLink="compras/nueva" class="layout-topbar-action">
+            <i class="pi pi-cart-arrow-down"></i>
+            <span>Nueva Compra</span>
+          </button>
           <button type="button" class="layout-topbar-action">
             <i class="pi pi-calendar"></i>
             <span>Calendar</span>
@@ -93,5 +101,5 @@
   </mat-sidenav-container>
 </div>
 }@else{
-  <router-outlet></router-outlet>
+<router-outlet></router-outlet>
 }
