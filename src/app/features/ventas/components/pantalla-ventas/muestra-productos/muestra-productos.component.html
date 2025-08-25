@@ -8,7 +8,8 @@
         pInputText
         type="text"
         class="w-full text-sm px-2 py-1"
-        (input)="filtrarProductos($event)"
+        (input)="filtrarProductos()"
+        [(ngModel)]="filtroBusqueda"
         placeholder="Buscar"
       />
     </p-iconfield>
@@ -17,7 +18,7 @@
       label="Limpiar"
       class="p-button-outlined p-button-sm text-xs"
       icon="pi pi-filter-slash"
-      (click)="limpiarFiltrado()"
+      (click)="LimpiarFiltrado()"
     ></button>
   </div>
   

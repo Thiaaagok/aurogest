@@ -11,20 +11,4 @@ import { GrillaProductosSeleccionadosComponent } from "./grilla-productos-selecc
 })
 export class FacturaVentaComponent { 
 
-  listasPrecios = [
-    { label: 'General', value: 'general' },
-    { label: 'Distribuidor', value: 'distribuidor' }
-  ];
-
-  listaPrecioSeleccionada: any;
-  
-  numeraciones = [
-    { label: 'Principal', value: 'principal' },
-    { label: 'Alternativa', value: 'alternativa' }
-  ];
-  
-  clientes = [
-    { label: 'Consumidor final (222222222222)', value: 'cf' },
-    { label: 'Empresa X (20304050607)', value: 'empresa' }
-  ];
 }

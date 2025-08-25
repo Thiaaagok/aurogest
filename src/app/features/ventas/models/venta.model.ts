@@ -1,4 +1,4 @@
-import { ProductoStock, ProductoStockLote } from "../../stock/models/producto-stock.model";
+import { ProductoStock } from "../../stock/models/producto-stock.model";
 
 export class VentaModel {
     Id: string;
@@ -12,6 +12,7 @@ export class VentaItem {
     Id: string;
     Venta: VentaModel;
     ProductoStock: ProductoStock;
+    Descripcion: string;
     Cantidad: number;
     LotesVendidos: ProductoStockLoteVendido[];
     PrecioUnitarioVenta: number;

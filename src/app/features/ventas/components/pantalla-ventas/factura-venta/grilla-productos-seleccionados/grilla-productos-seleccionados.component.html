@@ -1,16 +1,18 @@
-<p-table [paginator]="true" [rows]="15" [value]="productosSeleccionados">
-    <ng-template #header>
-      <tr class="py-1">
-        <th>Descripcion</th>
-        <th>Cantidad</th>
-        <th>Total</th>
-      </tr>
-    </ng-template>
-    <ng-template #body let-producto>
-      <tr class="py-1">
-        <td class="py-1">{{ producto.Descripcion }}</td>
-        <td class="py-1">{{ producto.Cantidad }}</td>
-        <td class="py-1">{{ producto.Total }}</td>
-      </tr>
-    </ng-template>
+<p-table [paginator]="true" [rows]="15" [value]="ventas">
+  <ng-template #header>
+    <tr class="py-1">
+      <th>Descripción</th>
+      <th>Cantidad</th>
+      <th>Precio Unitario</th>
+      <th>Subtotal</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-venta>
+    <tr class="py-1">
+      <td class="py-1">{{ venta.Descripcion }}</td>
+      <td class="py-1">{{ venta.Cantidad }}</td>
+      <td class="py-1">{{ venta.PrecioUnitarioVenta }}</td>
+      <td class="py-1">{{ venta.Subtotal }}</td>
+    </tr>
+  </ng-template>
 </p-table>

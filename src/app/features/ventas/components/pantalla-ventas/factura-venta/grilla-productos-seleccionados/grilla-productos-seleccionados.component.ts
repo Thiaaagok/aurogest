@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { PrimeNgModule } from '../../../../../common/material/primeng.module';
+import { VentaItem } from '../../../../models/venta.model';
 
 @Component({
   selector: 'app-grilla-productos-seleccionados',
@@ -11,95 +12,6 @@ import { PrimeNgModule } from '../../../../../common/material/primeng.module';
 })
 export class GrillaProductosSeleccionadosComponent { 
 
-  productosSeleccionados: any[] = [];
+  ventas: VentaItem[];
 
-  ngOnInit(){
-    this.productosSeleccionados = [
-      {
-        Descripcion: 'Aceite sintético 5W-30',
-        Cantidad: 2,
-        Total: 1000
-      },
-      {
-        Descripcion: 'Filtro de aire',
-        Cantidad: 1,
-        Total: 500
-      },
-      {
-        Descripcion: 'Limpieza de inyectores',
-        Cantidad: 1,
-        Total: 1500
-      },
-      {
-        Descripcion: 'Aceite sintético 5W-30',
-        Cantidad: 2,
-        Total: 1000
-      },
-      {
-        Descripcion: 'Filtro de aire',
-        Cantidad: 1,
-        Total: 500
-      },
-      {
-        Descripcion: 'Limpieza de inyectores',
-        Cantidad: 1,
-        Total: 1500
-      },
-      {
-        Descripcion: 'Aceite sintético 5W-30',
-        Cantidad: 2,
-        Total: 1000
-      },
-      {
-        Descripcion: 'Filtro de aire',
-        Cantidad: 1,
-        Total: 500
-      },
-      {
-        Descripcion: 'Limpieza de inyectores',
-        Cantidad: 1,
-        Total: 1500
-      },
-      {
-        Descripcion: 'Aceite sintético 5W-30',
-        Cantidad: 2,
-        Total: 1000
-      },
-      {
-        Descripcion: 'Filtro de aire',
-        Cantidad: 1,
-        Total: 500
-      },
-      {
-        Descripcion: 'Limpieza de inyectores',
-        Cantidad: 1,
-        Total: 1500
-      },
-      {
-        Descripcion: 'Aceite sintético 5W-30',
-        Cantidad: 2,
-        Total: 1000
-      },
-      {
-        Descripcion: 'Filtro de aire',
-        Cantidad: 1,
-        Total: 500
-      },
-      {
-        Descripcion: 'Limpieza de inyectores',
-        Cantidad: 1,
-        Total: 1500
-      },
-      {
-        Descripcion: 'Aceite sintético 5W-30',
-        Cantidad: 2,
-        Total: 1000
-      },
-      {
-        Descripcion: 'Filtro de aire',
-        Cantidad: 1,
-        Total: 500
-      },
-    ];
-  }
 }
