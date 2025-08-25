@@ -23,6 +23,7 @@ export class ProductoStockLoteVendido {
     VentaItem: VentaItem;
     ProductoStockLoteId: string;
     CantidadVendida: number;
+    CantidadRestante: number;
     PrecioUnitarioCompra: number;
     Subtotal: number;
 }
