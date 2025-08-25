@@ -9,6 +9,7 @@ export class ProductoModel {
     CodigoBarra: string;
     Codigo: string;
     Descripcion: string;
+    Imagen: File;
     Tipo?: ProductoTipoModel;
     Categoria?: ProductoCategoriaModel;
     Marca?: MarcaModel;

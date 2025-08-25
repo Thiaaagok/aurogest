@@ -14,35 +14,6 @@
         <label for="descripcion">Descripcion</label>
       </p-floatlabel>
     </div>
-    <div class="col-span-1">
-      <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-        <p-select [(ngModel)]="nuevoProducto.Tipo" inputId="in_label" [options]="tiposProductosCombo"
-          optionLabel="Descripcion" class="w-100" variant="filled" name="productoTipo" [filter]="true"
-          [showClear]="true" optionValue="Id">
-        </p-select>
-        <label for="in_label">Tipo</label>
-      </p-floatlabel>
-    </div>
-
-    <div class="col-span-1">
-      <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-        <p-select [(ngModel)]="nuevoProducto.Marca" inputId="in_label" [options]="marcasProductosCombo"
-          optionLabel="Descripcion" class="w-100" variant="filled" name="productoMarca" [filter]="true"
-          [showClear]="true" optionValue="Id">
-        </p-select>
-        <label for="in_label">Marca</label>
-      </p-floatlabel>
-    </div>
-
-    <div class="col-span-1">
-      <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-        <p-select [(ngModel)]="nuevoProducto.Categoria" inputId="in_label" [options]="categoriasProductosCombo"
-          optionLabel="Descripcion" class="w-100" variant="filled" name="productoCategoria" [filter]="true"
-          [showClear]="true" optionValue="Id">
-        </p-select>
-        <label for="in_label">Categoria</label>
-      </p-floatlabel>
-    </div>
 
     <div class="col-span-1">
       <p-floatlabel class="w-100 md:w-56 relative" variant="in">
@@ -92,6 +63,37 @@
         <label for="precioVenta">Precio Venta</label>
       </p-floatlabel>
     </div>
+
+    <div class="col-span-1">
+      <p-floatlabel class="w-100 md:w-56 relative" variant="in">
+        <p-select [(ngModel)]="nuevoProducto.Tipo" inputId="in_label" [options]="tiposProductosCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="productoTipo" [filter]="true"
+          [showClear]="true" optionValue="Id">
+        </p-select>
+        <label for="in_label">Tipo</label>
+      </p-floatlabel>
+    </div>
+
+    <div class="col-span-1">
+      <p-floatlabel class="w-100 md:w-56 relative" variant="in">
+        <p-select [(ngModel)]="nuevoProducto.Marca" inputId="in_label" [options]="marcasProductosCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="productoMarca" [filter]="true"
+          [showClear]="true" optionValue="Id">
+        </p-select>
+        <label for="in_label">Marca</label>
+      </p-floatlabel>
+    </div>
+
+    <div class="col-span-1">
+      <p-floatlabel class="w-100 md:w-56 relative" variant="in">
+        <p-select [(ngModel)]="nuevoProducto.Categoria" inputId="in_label" [options]="categoriasProductosCombo"
+          optionLabel="Descripcion" class="w-100" variant="filled" name="productoCategoria" [filter]="true"
+          [showClear]="true" optionValue="Id">
+        </p-select>
+        <label for="in_label">Categoria</label>
+      </p-floatlabel>
+    </div>
+    
     <div class="flex justify-end gap-2 pt-4">
       <p-button label="Cancelar" icon="pi pi-times" class="p-button-outlined" (click)="cerrar()"></p-button>
       <p-button label="Guardar" severity="success" icon="pi pi-check" (click)="onSubmit()"

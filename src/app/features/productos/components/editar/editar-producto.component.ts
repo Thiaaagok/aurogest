@@ -25,7 +25,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
   imports: [PrimeNgModule, CustomMaterialModule, ReactiveFormsModule, FormsModule, CommonModule,
     InputTextModule,
     ToastModule,
-    FloatLabel,Select,MultiSelectModule],
+    FloatLabel, Select, MultiSelectModule],
   templateUrl: './editar-producto.component.html',
   styleUrl: './editar-producto.component.scss',
 })
@@ -190,6 +190,21 @@ export class EditarProductoComponent {
     return {
       'grid-template-columns': `repeat(${this.columnasFormulario}, 1fr)`
     };
+  }
+
+  imagenPreview: string | ArrayBuffer | null = null;
+
+  subirImagen(event: any) {
+    const file: File = event.files[0];
+    if (!file) return;
+    this.productoEditar.Imagen = file;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagenPreview = reader.result;
+    };
+    reader.readAsDataURL(file);
+
+    event.options.clear();
   }
 
 }
