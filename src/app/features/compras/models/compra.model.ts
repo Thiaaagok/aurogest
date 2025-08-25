@@ -19,6 +19,7 @@ export class CompraItemModel {
   Proveedor?: ProveedorModel;
   CompraId: string;
   Producto: ProductoModel;
+  PrecioUnitarioCompra: number;
   Cantidad: number;
   Subtotal: number;
 

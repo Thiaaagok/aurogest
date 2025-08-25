@@ -103,6 +103,7 @@ export class NuevaCompraComponent {
     const producto = this.productosCombo.find(p => p.Id == productoId);
     if (producto) {
       this.nuevoItem.Producto = producto;
+      this.nuevoItem.PrecioUnitarioCompra = producto.PrecioCompra;
       this.proveedoresCombo = producto.Proveedores;
       this.nuevoItem.Subtotal = producto.PrecioCompra * this.nuevoItem.Cantidad;
     }
@@ -110,7 +111,7 @@ export class NuevaCompraComponent {
 
   disminuirCantidad(event: MouseEvent, compraItem: CompraItemModel) {
     event.stopPropagation();
-    if (compraItem.Cantidad > 0) {
+    if (compraItem.Cantidad > 1) {
       compraItem.Cantidad--;
       compraItem.Subtotal = compraItem.Producto.PrecioCompra * compraItem.Cantidad;
     }
@@ -199,7 +200,6 @@ export class NuevaCompraComponent {
       .subscribe({
         next: (response: ProductoModel[]) => {
           this.productosCombo = response;
-          this.productosCombo.forEach(prod => prod.Descripcion = prod.Nombre);
         },
         error: (err) => {
           console.log(err);

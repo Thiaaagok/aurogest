@@ -82,3 +82,29 @@
   -webkit-appearance: none;
   margin: 0;
 }
+
+.custom-shadow {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease-in-out;
+}
+
+.custom-shadow:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.cantidad-input {
+  height: 36px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 4px;
+  font-size: 14px;
+  text-align: center;
+  transition: box-shadow 0.2s;
+}
+
+.cantidad-input:focus {
+  outline: none;
+  box-shadow: 0 0 6px #2196f3;
+  border-color: #2196f3;
+}
