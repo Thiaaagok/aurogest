@@ -3,16 +3,25 @@
 
     <div class="col-span-1">
       <p-floatlabel variant="in">
-        <input pInputText type="text" id="nombre" class="w-100" #nombre="ngModel" name="nombre"
-          [(ngModel)]="productoEditar.Nombre" required />
-        <label for="nombre">Nombre</label>
+        <input pInputText type="text" id="codigo" class="w-100" #codigo="ngModel" name="codigo"
+          [(ngModel)]="productoEditar.Codigo" required />
+        <label for="codigo">Código</label>
+      </p-floatlabel>
+    </div>
+
+    <div class="col-span-1">
+      <p-floatlabel variant="in">
+        <input pInputText type="text" id="descripcion" class="w-100" #descripcion="ngModel" name="descripcion"
+          [(ngModel)]="productoEditar.Descripcion" required />
+        <label for="descripcion">Descripcion</label>
       </p-floatlabel>
     </div>
 
     <div class="col-span-1">
       <p-floatlabel class="w-100 md:w-56 relative" variant="in">
         <p-select [(ngModel)]="productoEditar.Tipo" inputId="productoTipo" [options]="tiposProductosCombo"
-          optionLabel="Descripcion" class="w-100" variant="filled" name="productoTipo" [filter]="true" [showClear]="true">
+          optionLabel="Descripcion" class="w-100" variant="filled" name="productoTipo" [filter]="true"
+          [showClear]="true">
         </p-select>
         <label for="productoTipo">Tipo</label>
       </p-floatlabel>
@@ -41,7 +50,8 @@
     <div class="col-span-1">
       <p-floatlabel class="w-100 md:w-56 relative" variant="in">
         <p-multiSelect [(ngModel)]="productoEditar.Proveedores" inputId="proveedores" [options]="proveedoresCombo"
-          optionLabel="Descripcion" class="w-100" variant="filled" name="proveedores" [filter]="true" [showClear]="true">
+          optionLabel="Descripcion" class="w-100" variant="filled" name="proveedores" [filter]="true"
+          [showClear]="true">
         </p-multiSelect>
         <label for="proveedores">Proveedores</label>
       </p-floatlabel>
@@ -59,7 +69,8 @@
         (click)="reactivarProducto()" [disabled]="cargando"></p-button>
       }
 
-      <p-button label="Guardar" severity="success" icon="pi pi-check" (click)="onSubmit()" [disabled]="!form.valid || cargando">
+      <p-button label="Guardar" severity="success" icon="pi pi-check" (click)="onSubmit()"
+        [disabled]="!form.valid || cargando">
       </p-button>
     </div>
   </form>

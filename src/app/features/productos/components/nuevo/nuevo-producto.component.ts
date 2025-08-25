@@ -132,7 +132,7 @@ export class NuevoProductoComponent {
           const productoStock: ProductoStock = new ProductoStock();
           productoStock.Producto = response;
           productoStock.StockMinimo = 0;
-          productoStock.StockActual = 0;
+          productoStock.StockActualTotal = 0;
           productoStock.StockReservado = 0;
           this.stockService.crear(productoStock)
             .subscribe({

@@ -13,6 +13,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { NuevoProductoComponent } from '../nuevo/nuevo-producto.component';
 import { EditarProductoComponent } from '../editar/editar-producto.component';
 import { EditarPrecioComponent } from './editar-precio/editar-precio.component';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-grilla-productos',
@@ -32,6 +33,8 @@ export class GrillaProductosComponent {
 
   productos: ProductoModel[] = [];
   productosFiltro: ProductoModel[] = [];
+  productoSeleccionado: ProductoModel;
+  menuItems: MenuItem[] = [];
 
   cargando: boolean;
   registrosGrillaActivos: boolean;
@@ -46,6 +49,23 @@ export class GrillaProductosComponent {
 
   ngOnInit() {
     this.obtenerProductos();
+    this.menuItems = [
+      {
+        label: 'Actualizar Precio Compra',
+        icon: 'pi pi-pencil',
+        command: () => this.editarPrecioCompra(this.productoSeleccionado)
+      },
+      {
+        label: 'Actualizar Precio Venta',
+        icon: 'pi pi-pencil',
+        command: () => this.editarPrecioVenta(this.productoSeleccionado)
+      }
+    ];
+  }
+
+  abrirMenu(event: Event, menu: any, producto: ProductoModel) {
+    this.productoSeleccionado = producto;
+    menu.toggle(event);
   }
 
   obtenerProductos() {

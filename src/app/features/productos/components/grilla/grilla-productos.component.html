@@ -36,8 +36,25 @@
       <tr>
         <th style="min-width: 12rem">
           <div class="flex justify-between items-center">
-            Nombre
-            <p-columnFilter type="text" field="Nombre" display="menu" placeholder="Buscar por nombre"></p-columnFilter>
+            Código
+            <p-columnFilter type="text" field="Codigo" display="menu" placeholder="Buscar por código"></p-columnFilter>
+          </div>
+        </th>
+        <th style="min-width: 12rem">
+          <div class="flex justify-between items-center">
+            Descripción
+            <p-columnFilter type="text" field="Descripcion" display="menu"
+              placeholder="Buscar por descripción"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-between items-center">
+            Precio Compra
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-between items-center">
+            Precio Venta
           </div>
         </th>
         <th style="min-width: 10rem">
@@ -63,16 +80,6 @@
         </th>
         <th>
           <div class="flex justify-between items-center">
-            Precio Compra
-          </div>
-        </th>
-        <th>
-          <div class="flex justify-between items-center">
-            Precio Venta
-          </div>
-        </th>
-        <th>
-          <div class="flex justify-between items-center">
             Acciones
           </div>
         </th>
@@ -82,27 +89,22 @@
     @if(!cargando){
     <ng-template #body let-producto>
       <tr (click)="editarProducto(producto.Id)" class="cursor-pointer">
-        <td>{{ producto.Nombre }}</td>
+        <td>{{ producto.Codigo }}</td>
+        <td>{{ producto.Descripcion }}</td>
+        <td>{{ producto.PrecioCompra | currency:'ARS':'symbol'}}</td>
+        <td>{{ producto.PrecioVenta | currency:'ARS':'symbol'}}</td>
         <td>{{ producto.Tipo?.Descripcion }}</td>
         <td>{{ producto.Marca?.Descripcion }}</td>
         <td>{{ producto.Categoria?.Descripcion }}</td>
-        <td>{{ producto.PrecioCompra | currency:'ARS':'symbol'}}</td>
-        <td>{{ producto.PrecioVenta | currency:'ARS':'symbol'}}</td>
         <td>
-          <button mat-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()" style="cursor: pointer;">
-            <i class="pi pi-ellipsis-v" style="font-size: 1.3rem; color: black;"></i>
+          <button pButton type="button" icon="pi pi-ellipsis-v" (click)="$event.stopPropagation(); abrirMenu($event, menu, producto)"
+            class="p-button-text p-button-rounded p-button-plain"
+            style="cursor: pointer; font-size: 1.3rem; color: black;">
           </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="editarPrecioCompra(producto)">
-              <i class="pi pi-pencil" style="font-size: 1.3rem; color: black;"></i>
-              Actualizar Precio Compra
-            </button>
-            <button mat-menu-item (click)="editarPrecioVenta(producto)">
-              <i class="pi pi-pencil" style="font-size: 1.3rem; color: black;"></i>
-              Actualizar Precio Venta
-            </button>
-          </mat-menu>
+
+          <p-menu #menu [popup]="true" [model]="menuItems" appendTo="body"></p-menu>
         </td>
+
       </tr>
     </ng-template>
     }
