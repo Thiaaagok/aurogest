@@ -75,17 +75,17 @@ export class StockComponent {
 
   filtrarBajoStock() {
     this.productos.sort((a, b) => {
-      const aBajo = a.StockActual < a.StockMinimo ? 0 : 1;
-      const bBajo = b.StockActual < b.StockMinimo ? 0 : 1;
-      return aBajo - bBajo; // primero los con bajo stock
+      const aBajo = a.StockActualTotal < a.StockMinimo ? 0 : 1;
+      const bBajo = b.StockActualTotal < b.StockMinimo ? 0 : 1;
+      return aBajo - bBajo; 
     });
 
   }
 
   filtrarSinStock() {
     this.productos.sort((a, b) => {
-      const aSin = a.StockActual === 0 ? 0 : 1;
-      const bSin = b.StockActual === 0 ? 0 : 1;
+      const aSin = a.StockActualTotal === 0 ? 0 : 1;
+      const bSin = b.StockActualTotal === 0 ? 0 : 1;
       return aSin - bSin;
     });
   }
