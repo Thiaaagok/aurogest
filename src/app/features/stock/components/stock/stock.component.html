@@ -64,8 +64,8 @@
         @if(!cargando){
         <ng-template #body let-productoStock>
             <tr class="cursor-pointer">
-                <td>{{ productoStock.Producto.Nombre }}</td>
-                <td>{{ productoStock.StockActual }}</td>
+                <td>{{ productoStock.Producto.Descripcion }}</td>
+                <td>{{ productoStock.StockActualTotal }}</td>
                 <td>{{ productoStock.StockReservado }}</td>
                 <td>{{ productoStock.UltimaActualizacion | date: 'dd/MM/yyyy' }}</td>
             </tr>

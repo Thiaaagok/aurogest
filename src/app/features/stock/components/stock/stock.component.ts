@@ -28,7 +28,6 @@ export class StockComponent {
   registrosGrillaActivos: boolean;
 
   private stockService = inject(StockService);
-  private dialogService = inject(DialogService);
   private GrillaUtilService = inject(GrillaUtilService);
   private facturaService = inject(FacturaService);
 
