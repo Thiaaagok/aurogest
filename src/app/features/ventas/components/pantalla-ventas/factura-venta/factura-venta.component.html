@@ -1,0 +1,28 @@
+<div>
+  <p-card styleClass="mb-3">
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="text-xl font-semibold">Factura de venta</h2>
+      <div class="flex items-center gap-2">
+        <button pButton icon="pi pi-print" class="p-button-text"></button>
+        <button pButton icon="pi pi-cog" class="p-button-text"></button>
+        <button pButton icon="pi pi-refresh" class="p-button-text"></button>
+      </div>
+    </div>
+
+    <app-grilla-productos-seleccionados class="h-60"></app-grilla-productos-seleccionados>
+
+    <div class="flex justify-between items-center mt-2">
+      <div class="full-width">
+        <button pButton label="Vender"
+          class="text-white bg-blue-600 hover:bg-blue-700 px-4 py-1 rounded disabled:opacity-50 flex full-width justify-between"
+          disabled>
+          <p>$0</p>
+        </button>
+      </div>
+    </div>
+    <div class="flex justify-between text-gray-500  mt-2">
+      <div class="mt-2  text-gray-500">0 productos</div>
+      <button pButton severity="danger" label="Cancelar" class="ml-3 "></button>
+    </div>
+  </p-card>
+</div>

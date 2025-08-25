@@ -12,6 +12,7 @@ import { StockComponent } from './features/stock/components/stock/stock.componen
 import { MarcasComponent } from './features/productos/components/configuracion/marcas/marcas.component';
 import { LoginComponent } from './features/common/components/login/login.component';
 import { NuevaCompraComponent } from './features/compras/components/nueva-compra/nueva-compra.component';
+import { PantallaVentasComponent } from './features/ventas/components/pantalla-ventas/pantalla-ventas.component';
 
 export const routes: Routes = [
     {
@@ -65,5 +66,9 @@ export const routes: Routes = [
     {
         path: 'compras/nueva',
         component: NuevaCompraComponent
+    },
+    {
+        path: 'ventas/nueva',
+        component: PantallaVentasComponent
     }
 ];

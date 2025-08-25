@@ -42,15 +42,6 @@ export class NavbarComponent {
 
   ngOnInit(): void {
     this.modulos = Modulos
-    this.subscription = this.utilitiesService.tituloActual$.subscribe((tituloActual: string) => {
-      if (tituloActual === 'Venta') {
-        this.ventaNueva = true;
-        this.cerrarSnav();
-      } else {
-        this.ventaNueva = false;
-      }
-    });
-
     this.utilitiesService.login$.subscribe((login: boolean) => {
       this.ngZone.run(() => {
         this.login = login;
