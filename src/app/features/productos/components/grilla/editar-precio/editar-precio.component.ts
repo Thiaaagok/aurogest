@@ -59,9 +59,11 @@ export class EditarPrecioComponent {
     this.productosService.editarPrecio(this.productoEditar.Id, this.nuevoPrecio, this.parametro.Tipo)
       .subscribe({
         next: (productoActualizado) => {
-          console.log('Producto actualizado:', productoActualizado);
           this.cargando = false;
-          this.ref.close();
+          this.ref.close({
+            resultado: true,
+            nuevoPrecio: this.nuevoPrecio
+          });
         },
         error: (err) => {
           console.error('Error al actualizar precio', err);

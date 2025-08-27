@@ -1,7 +1,7 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +21,8 @@ import { MessageModule } from 'primeng/message';
 import { Select } from 'primeng/select';
 import { AlertasService } from '../../../common/services/alertas.service';
 import { MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { EditarPrecioComponent } from '../../../productos/components/grilla/editar-precio/editar-precio.component';
 
 @Component({
   selector: 'app-nueva-compra',
@@ -56,6 +58,8 @@ export class NuevaCompraComponent {
   private qrService = inject(QrScannerService);
   private alertasService = inject(AlertasService);
   private messageService = inject(MessageService);
+  private dialogService = inject(DialogService);
+  private router = inject(Router);
 
   ngOnInit() {
     this.cargarProductosCombo();
@@ -199,7 +203,7 @@ export class NuevaCompraComponent {
     this.productosService.obtenerTodos()
       .subscribe({
         next: (response: ProductoModel[]) => {
-          this.productosCombo = response;
+          this.productosCombo = response.filter(producto => producto.Activo);
         },
         error: (err) => {
           console.log(err);
@@ -207,4 +211,32 @@ export class NuevaCompraComponent {
         complete: () => { },
       });
   }
+
+  editarPrecioCompra(compraItem: CompraItemModel) {
+    const dialog = this.dialogService.open(EditarPrecioComponent, {
+      header: 'Editar precio compra',
+      width: '50%',
+      height: 'fit-content',
+      data: {
+        Producto: compraItem.Producto,
+        Tipo: 'COMPRA'
+      },
+      modal: true,
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
+    });
+
+
+    dialog.onClose
+      .subscribe((response: any) => {
+        if(response.resultado){
+          compraItem.PrecioUnitarioCompra = response.nuevoPrecio;
+          compraItem.Subtotal = compraItem.PrecioUnitarioCompra * compraItem.Cantidad;
+        }
+      })
+  }
+
+  verHistorialCompras(){
+    this.router.navigateByUrl('compras/grilla');
+  }
+
 }

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Config } from '../../common/config/config';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { CompraModel } from '../models/compra.model';
 import { Observable } from 'rxjs';
 
@@ -18,11 +18,33 @@ export class ComprasService {
     return this.http.get<CompraModel[]>(`${this.apiUrl}`);
   }
 
+  buscarCompras(params: {
+    fechaDesde: string;
+    fechaHasta: string;
+    usuarioId?: string;
+    productoId?: string;
+  }): Observable<CompraModel[]> {
+    let httpParams = new HttpParams()
+      .set('fechaDesde', params.fechaDesde)
+      .set('fechaHasta', params.fechaHasta);
+
+    if (params.usuarioId) {
+      httpParams = httpParams.set('usuarioId', params.usuarioId);
+    }
+    if (params.productoId) {
+      httpParams = httpParams.set('productoId', params.productoId);
+    }
+
+    return this.http.get<CompraModel[]>(`${this.apiUrl}/buscar`, { params: httpParams });
+  }
+
   obtenerPorId(id: string): Observable<CompraModel> {
     return this.http.get<CompraModel>(`${this.apiUrl}/${id}`);
   }
 
   crear(CompraModel: Partial<CompraModel>): Observable<CompraModel> {
+    const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+    CompraModel.UsuarioId = usuario.Id
     return this.http.post<CompraModel>(this.apiUrl, CompraModel);
   }
 

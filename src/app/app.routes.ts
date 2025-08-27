@@ -13,6 +13,7 @@ import { MarcasComponent } from './features/productos/components/configuracion/m
 import { LoginComponent } from './features/common/components/login/login.component';
 import { NuevaCompraComponent } from './features/compras/components/nueva-compra/nueva-compra.component';
 import { PantallaVentasComponent } from './features/ventas/components/pantalla-ventas/pantalla-ventas.component';
+import { HistoricoComprasComponent } from './features/compras/components/historico-compras/historico-compras.component';
 
 export const routes: Routes = [
     {
@@ -66,6 +67,10 @@ export const routes: Routes = [
     {
         path: 'compras/nueva',
         component: NuevaCompraComponent
+    },
+    {
+        path: 'compras/grilla',
+        component: HistoricoComprasComponent
     },
     {
         path: 'ventas/nueva',

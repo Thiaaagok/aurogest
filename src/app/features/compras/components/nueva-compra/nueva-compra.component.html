@@ -5,6 +5,9 @@
         <button mat-mini-fab color="primary" matTooltip="Crear una nueva compra" (click)="onSubmit()">
             <i class="fa-solid fa-square-plus"></i>
         </button>
+        <button mat-mini-fab color="primary" matTooltip="Ver historial de compras" (click)="verHistorialCompras()">
+            <i class="fa-solid fa-list"></i>
+        </button>
     </div>
 </div>
 <div class="card">
@@ -99,12 +102,11 @@
 
         <ng-template #body let-compraItem>
             <tr (click)="editarItem(compraItem.Id)" class="cursor-pointer">
-                <td>{{ compraItem.Producto?.Nombre }}</td>
+                <td>{{ compraItem.Producto?.Descripcion }}</td>
                 <td>{{ compraItem.Proveedor?.Descripcion }}</td>
                 <td>
                     <p-button icon="pi pi-minus" styleClass="p-button-rounded p-button-danger p-button-sm custom-shadow"
-                        [style]="{'font-size':'1.2rem'}"
-                        (onClick)="disminuirCantidad($event, compraItem)">
+                        [style]="{'font-size':'1.2rem'}" (onClick)="disminuirCantidad($event, compraItem)">
                     </p-button>
 
                     <input type="number" [(ngModel)]="compraItem.Cantidad"
@@ -112,15 +114,18 @@
                         style="width: 60px; text-align: center; margin: 0 6px;">
 
                     <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-success p-button-sm custom-shadow"
-                        [style]="{'font-size':'1.2rem'}"
-                        (onClick)="aumentarCantidad($event, compraItem)">
+                        [style]="{'font-size':'1.2rem'}" (onClick)="aumentarCantidad($event, compraItem)">
                     </p-button>
                 </td>
-                <td>{{ compraItem.PrecioUnitarioCompra | currency:'ARS':'symbol' }}</td>
+                <td>
+                    {{ compraItem.PrecioUnitarioCompra | currency:'ARS':'symbol' }}
+                    <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-info p-button-sm custom-shadow"
+                        [style]="{'font-size':'1.2rem'}" (onClick)="editarPrecioCompra(compraItem)">
+                    </p-button>
+                </td>
                 <td style="width: 25%;">{{ compraItem.Subtotal | currency:'ARS':'symbol' }}</td>
                 <td>
-                    <p-button icon="pi pi-trash"
-                        styleClass="p-button-rounded p-button-danger p-button-outlined p-button-sm custom-shadow"
+                    <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-sm custom-shadow"
                         [style]="{'font-size':'1.5rem'}" pTooltip="Eliminar item" (onClick)="eliminarItem(compraItem)">
                     </p-button>
                 </td>
