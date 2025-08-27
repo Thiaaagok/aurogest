@@ -97,6 +97,8 @@ import { RippleModule } from 'primeng/ripple';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { StyleClassModule } from 'primeng/styleclass';
 import { AutoFocusModule } from 'primeng/autofocus';
+import { DatePicker, DatePickerModule } from 'primeng/datepicker';
+import { SelectModule } from 'primeng/select';
 
 @NgModule({
     imports: [
@@ -197,7 +199,9 @@ import { AutoFocusModule } from 'primeng/autofocus';
         StyleClassModule,
         AutoFocusModule,
         CarouselModule,
-        Toast
+        Toast,
+        DatePicker,
+        DatePickerModule
     ],
 exports: [
         PanelMenuModule,
@@ -298,6 +302,8 @@ exports: [
         StyleClassModule,
         AutoFocusModule,
         BadgeModule,
+        DatePickerModule,
+        SelectModule
     ],
 })
 export class PrimeNgModule { }
