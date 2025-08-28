@@ -5,12 +5,10 @@ export class ProductoStock {
     Id: string;
     Producto: ProductoModel;
     StockActualTotal: number;
-    StockActual: ProductoStockLote[];
+    Lotes: ProductoStockLote[];
     StockMinimo: number;
     UltimaActualizacion?: Date;
     Activo?: boolean;
-    Observaciones?: string;
-    StockReservado?: number;
 }
 
 export class ProductoStockLote {
