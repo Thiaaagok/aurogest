@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Config } from '../../common/config/config';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ProductoModel } from '../models/producto.model';
 import { RegistroActualizacionPrecio } from '../../registros/models/registroActualizacionPrecio.model';
 
@@ -43,8 +43,19 @@ export class ProductosService {
   editarPrecio(productoId: string, nuevoPrecio: number, tipo: 'COMPRA' | 'VENTA'): Observable<ProductoModel> {
     return this.http.put<ProductoModel>(
       `${this.apiUrl}/editar-precio/${tipo}/${productoId}`,
-      { nuevoPrecio } 
+      { nuevoPrecio }
     );
+  }
+
+  subirImagenes(archivos: File[]): Observable<string[]> {
+    const formData = new FormData();
+    archivos.forEach(file => formData.append('imagenes', file));
+
+    return this.http.post<{ urls: string[] }>(`${this.apiUrl}/upload-multiple`, formData)
+      .pipe(
+        // Extraemos solo el array de URLs
+        map(res => res.urls)
+      );
   }
 
 }

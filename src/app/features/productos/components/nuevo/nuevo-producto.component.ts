@@ -20,6 +20,7 @@ import { MarcaModel } from '../../models/marca.model';
 import { Select } from 'primeng/select';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { MarcasService } from '../../services/marcas.service';
+import { FileUploadEvent } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-nuevo-producto',
@@ -38,7 +39,6 @@ import { MarcasService } from '../../services/marcas.service';
   ],
   templateUrl: './nuevo-producto.component.html',
   styleUrl: './nuevo-producto.component.scss',
-  encapsulation: ViewEncapsulation.None
 })
 export class NuevoProductoComponent {
 
@@ -48,7 +48,7 @@ export class NuevoProductoComponent {
   marcasProductosCombo: MarcaModel[] = [];
   proveedoresCombo: ProveedorModel[] = [];
   categoriasProductosCombo: ProductoCategoriaModel[] = [];
-  MinimoStock: number;
+  ImagenesProducto: File[] = [];
 
   private ref = inject(DynamicDialogRef);
   private productosService = inject(ProductosService);
@@ -197,5 +197,21 @@ export class NuevoProductoComponent {
   limpiarModel() {
     this.nuevoProducto = new ProductoModel();
   }
+
+  onUpload(event: FileUploadEvent) {
+    for (let file of event.files) {
+      this.ImagenesProducto.push(file);
+    }
+    this.subir();
+  }
+
+  subir() {
+    this.productosService.subirImagenes(this.ImagenesProducto)
+      .subscribe(urls => {
+        this.nuevoProducto.Imagenes = urls;
+        console.log(this.nuevoProducto);
+      });
+  }
+
 
 }

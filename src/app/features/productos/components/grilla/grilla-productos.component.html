@@ -36,6 +36,11 @@
       <tr>
         <th style="min-width: 12rem">
           <div class="flex justify-between items-center">
+            #
+          </div>
+        </th>
+        <th style="min-width: 12rem">
+          <div class="flex justify-between items-center">
             Código
             <p-columnFilter type="text" field="Codigo" display="menu" placeholder="Buscar por código"></p-columnFilter>
           </div>
@@ -89,6 +94,11 @@
     @if(!cargando){
     <ng-template #body let-producto>
       <tr (click)="editarProducto(producto.Id)" class="cursor-pointer">
+        <td>
+          <img *ngIf="producto.Imagenes?.length > 0" [src]="producto.Imagenes[0]" alt="Imagen del producto"
+            style="width: 150px; height: 150px; object-fit: contain; border-radius: 4px;">
+          <span *ngIf="!producto.Imagenes || producto.Imagenes.length === 0">Sin foto</span>
+        </td>
         <td>{{ producto.Codigo }}</td>
         <td>{{ producto.Descripcion }}</td>
         <td>{{ producto.PrecioCompra | currency:'ARS':'symbol'}}</td>
@@ -97,7 +107,8 @@
         <td>{{ producto.Marca?.Descripcion }}</td>
         <td>{{ producto.Categoria?.Descripcion }}</td>
         <td>
-          <button pButton type="button" icon="pi pi-ellipsis-v" (click)="$event.stopPropagation(); abrirMenu($event, menu, producto)"
+          <button pButton type="button" icon="pi pi-ellipsis-v"
+            (click)="$event.stopPropagation(); abrirMenu($event, menu, producto)"
             class="p-button-text p-button-rounded p-button-plain"
             style="cursor: pointer; font-size: 1.3rem; color: black;">
           </button>

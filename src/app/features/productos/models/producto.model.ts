@@ -25,6 +25,7 @@ export class ProductoModel {
 
     constructor(){
         this.Proveedores = [];
+        this.Imagenes = [];
     }
 } 
 
