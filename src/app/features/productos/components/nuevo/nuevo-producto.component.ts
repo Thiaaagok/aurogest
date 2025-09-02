@@ -1,4 +1,4 @@
-import { Component, inject, NgZone, Renderer2, ViewEncapsulation  } from '@angular/core';
+import { Component, inject, NgZone, Renderer2, ViewEncapsulation } from '@angular/core';
 import { ProductoModel } from '../../models/producto.model';
 import { ProductosService } from '../../services/producto.service';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
@@ -17,11 +17,9 @@ import { ToastModule } from 'primeng/toast';
 import { FloatLabel } from 'primeng/floatlabel';
 import { TextareaModule } from 'primeng/textarea';
 import { MarcaModel } from '../../models/marca.model';
-import { MarcasService } from '../../services/marcas.service';
-import { StockService } from '../../../stock/services/stock.service';
-import { ProductoStock } from '../../../stock/models/producto-stock.model';
 import { Select } from 'primeng/select';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { MarcasService } from '../../services/marcas.service';
 
 @Component({
   selector: 'app-nuevo-producto',
@@ -58,7 +56,6 @@ export class NuevoProductoComponent {
   private productoTiposService = inject(ProductoTiposService);
   private productoCategoriasService = inject(ProductoCategoriasService);
   private marcasService = inject(MarcasService)
-  private stockService = inject(StockService);
   private ngZone = inject(NgZone);
   private renderer = inject(Renderer2);
   constructor() {
@@ -129,24 +126,9 @@ export class NuevoProductoComponent {
     this.productosService.crear(this.nuevoProducto)
       .subscribe({
         next: (response: ProductoModel) => {
-          const productoStock: ProductoStock = new ProductoStock();
-          productoStock.Producto = response;
-          productoStock.StockMinimo = 0;
-          productoStock.StockActualTotal = 0;
-          productoStock.StockReservado = 0;
-          this.stockService.crear(productoStock)
-            .subscribe({
-              next: (response: ProductoStock) => {
-                this.cargando = false;
-                this.limpiarModel();
-                this.ref.close();
-              },
-              error: (err) => {
-                this.cargando = false;
-                console.log(err);
-              },
-              complete: () => { },
-            });
+          this.cargando = false;
+          this.limpiarModel();
+          this.ref.close();
         },
         error: (err) => {
           this.cargando = false;
