@@ -5,7 +5,6 @@ export class VentaModel {
     Fecha: Date;
     Total: number;
     Items: VentaItem[];
-    ProductosVendidosIds: string[];
 }
 
 export class VentaItem {

@@ -8,4 +8,11 @@
 .factura-venta{
   top: 15px;
   right: 15px;
+  width: 40rem; 
+}
+
+@media screen and (max-width: 1980px) {
+  .factura-venta {
+    width: 32rem;
+  }
 }
