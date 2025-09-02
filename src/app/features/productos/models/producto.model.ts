@@ -20,6 +20,7 @@ export class ProductoModel {
     FechaActualizacion: Date;
     PermitirVenta: boolean;
     Stock: ProductoStock;
+    Imagenes: string[];
     Activo: boolean;
 
     constructor(){
