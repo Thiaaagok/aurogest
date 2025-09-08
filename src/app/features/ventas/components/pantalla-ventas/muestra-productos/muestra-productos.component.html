@@ -1,45 +1,29 @@
 <div class="flex gap-1 text-sm">
-    <p-iconfield iconPosition="left" class="flex self-center w-70 text-sm">
-      <p-inputicon>
-        <i class="pi pi-search text-xs"></i>
-      </p-inputicon>
-      <input
-        #filter
-        pInputText
-        type="text"
-        class="w-full text-sm px-2 py-1"
-        (input)="filtrarProductos()"
-        [(ngModel)]="filtroBusqueda"
-        placeholder="Buscar"
-      />
-    </p-iconfield>
-    <button
-      pButton
-      label="Limpiar"
-      class="p-button-outlined p-button-sm text-xs"
-      icon="pi pi-filter-slash"
-      (click)="LimpiarFiltrado()"
-    ></button>
-  </div>
-  
-  <div class="flex flex-wrap gap-3 mt-2 justify-around text-sm ">
-    @for(producto of productos; track $index){
-      <p-card [style]="{ width: '12rem', overflow: 'hidden' }" class="text-sm card-hover">
-        <ng-template #header>
-          <img
-            alt="Card"
-            class="w-full h-32 object-cover"
-            src="https://primefaces.org/cdn/primeng/images/card-ng.jpg"
-          />
-        </ng-template>
-        <ng-template #title>
-          <span class="block text-xs font-medium truncate">{{producto.Descripcion}}</span>
-        </ng-template>
-        <ng-template #subtitle>
-          <span class="text-xs text-gray-500">{{producto.Codigo}}</span>
-        </ng-template>
-        <p class="text-xs producto-precio font-semibold mt-1">${{producto.PrecioVenta}}</p>
-      </p-card>
-    }
-  </div>
-  
+  <p-iconfield iconPosition="left" class="flex self-center w-70 text-sm">
+    <p-inputicon>
+      <i class="pi pi-search text-xs"></i>
+    </p-inputicon>
+    <input #filter pInputText type="text" class="w-full text-sm px-2 py-1" (input)="filtrarProductos()"
+      [(ngModel)]="filtroBusqueda" placeholder="Buscar" />
+  </p-iconfield>
+  <button pButton label="Limpiar" class="p-button-outlined p-button-sm text-xs" icon="pi pi-filter-slash"
+    (click)="LimpiarFiltrado()"></button>
+</div>
+
+<div class="flex flex-wrap gap-3 mt-2 justify-around text-sm ">
+  @for(producto of productos; track $index){
+  <p-card [style]="{ width: '12rem', overflow: 'hidden', height: 'fit-content' }" class="text-sm card-hover">
+    <ng-template #header>
+      <img style="width: 150px; height: 150px; object-fit: contain; justify-self: center;" *ngIf="producto?.Imagenes?.length" [src]="producto.Imagenes[0]" alt="Imagen del producto" />
+      <img *ngIf="!producto?.Imagenes?.length" style="width: 150px; height: 150px; object-fit: contain; justify-self: center;" src="assets/no-imagen.jpg"/>
+    </ng-template>
+    <ng-template #title>
+      <span class="block text-xs font-medium truncate">{{producto.Descripcion}}</span>
+    </ng-template>
+    <ng-template #subtitle>
+      <span class="text-xs text-gray-500">{{producto.Codigo}}</span>
+    </ng-template>
+    <p class="text-xs producto-precio font-semibold mt-1">${{producto.PrecioVenta}}</p>
+  </p-card>
+  }
+</div>
