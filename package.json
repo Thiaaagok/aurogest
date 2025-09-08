@@ -1,12 +1,17 @@
 {
   "name": "aurogest",
+  "main": "main.js",
   "version": "0.0.0",
+  "authors": "sc",
+  "description": "scapp",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "electron": "ng build  --base-href ./ && electron .",
+    "dist": "ng build --base-href ./ && electron builder"
   },
   "private": true,
   "dependencies": {
@@ -48,6 +53,7 @@
     "@types/jasmine": "~5.1.0",
     "@types/qz-tray": "^2.2.2",
     "@types/uuid": "^10.0.0",
+    "electron": "^38.0.0",
     "jasmine-core": "~5.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -55,5 +61,13 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.7.2"
+  },
+  "build": {
+    "appId": "software.aurogest",
+    "productName": "Aurogest",
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "files": ["**/*", "dist/aurogest/browser/'*"]
   }
 }
