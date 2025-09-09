@@ -10,10 +10,12 @@ export class CompraModel {
   Usuario: UsuarioModel;
   UsuarioId: string;
   Items: CompraItemModel[];
+  ProductosId: string[];
 
   constructor() {
     this.Id = uuid(); 
     this.Items = [];
+    this.ProductosId = [];
   }
 }
 

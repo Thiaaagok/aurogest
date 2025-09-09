@@ -117,21 +117,27 @@ export class NuevaCompraComponent {
     event.stopPropagation();
     if (compraItem.Cantidad > 1) {
       compraItem.Cantidad--;
-      compraItem.Subtotal = compraItem.Producto.PrecioCompra * compraItem.Cantidad;
+      compraItem.Subtotal = +(
+        compraItem.Producto.PrecioCompra * compraItem.Cantidad
+      ).toFixed(2);
     }
   }
 
   aumentarCantidad(event: MouseEvent, compraItem: CompraItemModel) {
     event.stopPropagation();
     compraItem.Cantidad++;
-    compraItem.Subtotal = compraItem.Producto.PrecioCompra * compraItem.Cantidad;
+    compraItem.Subtotal = +(
+      compraItem.Producto.PrecioCompra * compraItem.Cantidad
+    ).toFixed(2);
   }
 
   cambiarCantidad(valor: number, compraItem: CompraItemModel) {
     if (valor < 0 || valor == null) {
       compraItem.Cantidad = 0;
     }
-    compraItem.Subtotal = compraItem.Producto.PrecioCompra * compraItem.Cantidad;
+    compraItem.Subtotal = +(
+      compraItem.Producto.PrecioCompra * compraItem.Cantidad
+    ).toFixed(2);
   }
 
   verificarItem() {
@@ -184,7 +190,12 @@ export class NuevaCompraComponent {
   onSubmit() {
     this.cargando = true;
     this.nuevaCompra.Fecha = new Date();
-    this.nuevaCompra.Total = this.nuevaCompra.Items.reduce((acc, item) => acc + item.Subtotal, 0);
+    this.nuevaCompra.Total = +this.nuevaCompra.Items
+      .reduce((acc, item) => acc + item.Subtotal, 0)
+      .toFixed(2);
+    this.nuevaCompra.Items.forEach(item => {
+      this.nuevaCompra.ProductosId.push(item.Producto.Id);
+    })
     this.comprasService.crear(this.nuevaCompra).subscribe({
       next: (response: CompraModel) => {
         this.cargando = false;
@@ -228,14 +239,16 @@ export class NuevaCompraComponent {
 
     dialog.onClose
       .subscribe((response: any) => {
-        if(response.resultado){
-          compraItem.PrecioUnitarioCompra = response.nuevoPrecio;
-          compraItem.Subtotal = compraItem.PrecioUnitarioCompra * compraItem.Cantidad;
+        if (response.resultado) {
+          compraItem.PrecioUnitarioCompra = parseFloat(Number(response.nuevoPrecio).toFixed(2));
+          compraItem.Subtotal = parseFloat(
+            (compraItem.PrecioUnitarioCompra * compraItem.Cantidad).toFixed(2)
+          );
         }
       })
   }
 
-  verHistorialCompras(){
+  verHistorialCompras() {
     this.router.navigateByUrl('compras/grilla');
   }
 
