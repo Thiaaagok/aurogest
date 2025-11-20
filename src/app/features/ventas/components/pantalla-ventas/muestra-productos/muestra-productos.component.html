@@ -23,7 +23,7 @@
     </ng-template>
   </p-card>
   @for(producto of productos; track $index){
-  <p-card [style]="{ width: '12rem', overflow: 'hidden', height: 'fit-content' }" class="text-sm card-hover">
+  <p-card [style]="{ width: '12rem', overflow: 'hidden', height: 'fit-content' }" (click)="productoSeleccionado(producto)" class="text-sm card-hover">
     <ng-template #header>
       <img style="width: 150px; height: 150px; object-fit: contain; justify-self: center;"
         *ngIf="producto?.Imagenes?.length" [src]="producto.Imagenes[0]" alt="Imagen del producto" />

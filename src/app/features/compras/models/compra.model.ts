@@ -1,15 +1,13 @@
-import { ProductoModel } from "../../productos/models/producto.model";
-import { ProveedorModel } from "../../proveedores/models/proveedor.model";
 import { v4 as uuid } from 'uuid';
-import { UsuarioModel } from "../../usuarios/models/usuario.model";
+import { ProductoModel } from '../../productos/models/producto.model';
+import { ProveedorModel } from '../../proveedores/models/proveedor.model';
 
 export class CompraModel {
   Id: string;
   Fecha: Date;
   Total: number;
-  Usuario: UsuarioModel;
   UsuarioId: string;
-  Items: CompraItemModel[];
+  Items: CompraItem[];
   ProductosId: string[];
 
   constructor() {
@@ -19,17 +17,29 @@ export class CompraModel {
   }
 }
 
-export class CompraItemModel {
+export class CompraItem {
   Id: string;
-  Proveedor?: ProveedorModel;
+  ProveedorId?: string;
   CompraId: string;
-  Producto: ProductoModel;
+  ProductoId: string;
   PrecioUnitarioCompra: number;
   Cantidad: number;
   Subtotal: number;
+  Frontend: CompraItemFrontend;
 
   constructor() {
     this.Id = uuid();
     this.Cantidad = 1;
+    this.Frontend = new CompraItemFrontend();
+  }
+} 
+
+export class CompraItemFrontend {
+  Producto: ProductoModel;
+  Proveedor: ProveedorModel;
+
+  constructor(){
+    this.Producto = new ProductoModel();
+    this.Proveedor = new ProveedorModel();
   }
 }

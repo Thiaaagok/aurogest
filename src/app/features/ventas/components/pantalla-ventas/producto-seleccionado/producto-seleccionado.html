@@ -1,0 +1,42 @@
+<div class="card">
+    <div class="flex producto-seleccionado">
+        <img style="width: 250px; height: 250px; object-fit: contain; justify-self: center;"
+            *ngIf="productoSeleccionado?.Imagenes?.length" [src]="productoSeleccionado.Imagenes[0]"
+            alt="Imagen del producto" />
+        <img *ngIf="!productoSeleccionado?.Imagenes?.length"
+            style="width: 250px; height: 250px; object-fit: contain; justify-self: center;"
+            src="assets/no-imagen.jpg" />
+        <form #form="ngForm" novalidate class="flex informacion">
+            <span class="block descripcion-producto font-medium truncate">{{productoSeleccionado.Descripcion}}</span>
+            <span class="text-lg">Precio Unitario</span>
+            <p class="text-lg font-semibold mt-1">${{productoSeleccionado.PrecioVenta}}</p>
+            <span class="text-lg">Subtotal</span>
+            <p class="text-lg font-semibold mt-1">${{subtotal}}</p>
+
+            <div class="flex">
+                <p-button type="button" icon="pi pi-minus" class="botones"
+                    styleClass="p-button-rounded p-button-danger p-button-sm custom-shadow"
+                    (onClick)="disminuirCantidad($event)">
+                </p-button>
+
+                <input type="number" [(ngModel)]="cantidad" (ngModelChange)="cambiarCantidad($event)"
+                    class="cantidad-input" min="1"
+                    style="width: 80px; text-align: center; margin: 0 6px; font-size: 1rem;" name="cantidad"
+                    tabindex="0">
+
+                <p-button type="button" icon="pi pi-plus" class="botones"
+                    styleClass="p-button-rounded p-button-success p-button-sm custom-shadow"
+                    (onClick)="aumentarCantidad($event)">
+                </p-button>
+            </div>
+
+
+            <p-button label="Aceptar" severity="success" name="aceptar" icon="pi pi-check" class="mt-2 boton-aceptar"
+                (click)="aceptar()" [disabled]="!form.valid">
+            </p-button>
+
+            <p-button label="Cancelar" severity="danger" name="cancelar" icon="pi pi-times" class="mt-2"
+                (click)="cancelar()"></p-button>
+        </form>
+    </div>
+</div>

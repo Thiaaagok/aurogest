@@ -32,7 +32,7 @@
                     </div>
                     <div class="flex flex-col w-20 gap-0">
                         <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-                            <p-select [(ngModel)]="nuevoItem.Proveedor" inputId="proveedor" [options]="proveedoresCombo"
+                            <p-select [(ngModel)]="nuevoItem.Frontend.Proveedor" inputId="proveedor" [options]="proveedoresCombo"
                                 optionLabel="Descripcion" class="w-100" variant="filled" name="proveedor"
                                 [filter]="true" [showClear]="true">
                             </p-select>
@@ -58,7 +58,7 @@
             </form>
             <div class="flex flex-wrap items-center gap-2">
                 <p-button label="Nuevo item"
-                    [disabled]=" !nuevoItem.Producto || !nuevoItem.Cantidad || nuevoItem.Cantidad <= 0" class="mt-2"
+                    [disabled]=" !nuevoItem.Frontend.Producto || !nuevoItem.Cantidad || nuevoItem.Cantidad <= 0" class="mt-2"
                     icon="pi pi-plus-circle" (click)="crearNuevoItem()" />
             </div>
         </ng-template>
@@ -68,13 +68,13 @@
                 <th>
                     <div class="flex justify-between items-center">
                         Producto
-                        <p-columnFilter type="text" field="Producto.Nombre" display="menu"></p-columnFilter>
+                        <p-columnFilter type="text" field="Frontend.Producto.Descripcion" display="menu"></p-columnFilter>
                     </div>
                 </th>
                 <th>
                     <div class="flex justify-between items-center">
                         Proveedor
-                        <p-columnFilter type="text" field="Proveedor.Nombre" display="menu"></p-columnFilter>
+                        <p-columnFilter type="text" field="Frontend.Proveedor.Descripcion" display="menu"></p-columnFilter>
                     </div>
                 </th>
                 <th>
@@ -101,9 +101,9 @@
         </ng-template>
 
         <ng-template #body let-compraItem>
-            <tr (click)="editarItem(compraItem.Id)" class="cursor-pointer">
-                <td>{{ compraItem.Producto?.Descripcion }}</td>
-                <td>{{ compraItem.Proveedor?.Descripcion }}</td>
+            <tr class="cursor-pointer">
+                <td>{{ compraItem.Frontend.Producto?.Descripcion }}</td>
+                <td>{{ compraItem.Frontend.Proveedor?.Descripcion }}</td>
                 <td>
                     <p-button icon="pi pi-minus" styleClass="p-button-rounded p-button-danger p-button-sm custom-shadow"
                         [style]="{'font-size':'1.2rem'}" (onClick)="disminuirCantidad($event, compraItem)">

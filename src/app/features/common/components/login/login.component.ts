@@ -6,6 +6,8 @@ import { PrimeNgModule } from '../../material/primeng.module';
 import { FluidModule } from 'primeng/fluid';
 import { UtilitiesService } from '../../services/utilities.services';
 import { Login } from '../../models/login.model';
+import { jwtDecode } from 'jwt-decode';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
@@ -19,24 +21,22 @@ export class LoginComponent {
 
   private utilitiesService = inject(UtilitiesService);
   private router = inject(Router);
+  private auth = inject(AuthService);
 
   constructor() {
     this.utilitiesService.setearLogin(true);
   }
 
   login() {
+    this.auth.login(this.loginUsuario.Usuario, this.loginUsuario.Contrasenia).subscribe((res: any) => {
+      const token = res.access_token;
+      const decoded: any = jwtDecode(token);
 
-    const usuario = {
-      Id: 'd89da3c3-2687-4647-9b3e-17d6414115fd',
-      Usuario: 'Thiago',
-    };
+      localStorage.setItem('token', token);
+      localStorage.setItem('token_exp', decoded.exp.toString());
 
-    localStorage.setItem('usuario', JSON.stringify({
-      Id: usuario.Id,
-      Usuario: usuario.Usuario,
-    }));
-
-    this.router.navigateByUrl('home')
+      this.router.navigate(['/home']);
+    });
   }
 
 }

@@ -6,6 +6,10 @@ import { CustomMaterialModule } from '../../../common/material/custom-material.m
 import { UtilitiesService } from '../../../common/services/utilities.services';
 import { ProductoModel } from '../../../productos/models/producto.model';
 import { ProductosService } from '../../../productos/services/producto.service';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ProductoSeleccionado } from './producto-seleccionado/producto-seleccionado';
+import { VentaItem, VentaModel } from '../../models/venta.model';
+import { VentasService } from '../../services/ventas';
 
 @Component({
   selector: 'app-pantalla-ventas',
@@ -17,10 +21,14 @@ export class PantallaVentasComponent implements OnInit {
 
   cargando: boolean;
   productosFiltro: ProductoModel[] = [];
+  ventasItem: VentaItem[] = [];
+  venta: VentaModel = new VentaModel();
   productos: ProductoModel[] = [];
 
   private utilitiesService = inject(UtilitiesService);
   private productosService = inject(ProductosService);
+  private dialogService = inject(DialogService);
+  private ventasService = inject(VentasService);
 
   ngOnInit() {
     this.utilitiesService.setTituloPagina('Venta');
@@ -57,8 +65,42 @@ export class PantallaVentasComponent implements OnInit {
         producto.Descripcion.toLowerCase().includes(texto)
       )
     );
+  }
 
-    console.log(this.productos);
+  productoSeleccionado(producto: ProductoModel) {
+    const dialog = this.dialogService.open(ProductoSeleccionado, {
+      width: '40%',
+      height: 'fit-content',
+      data: producto,
+      modal: true,
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent'
+    });
+
+
+    dialog.onClose.subscribe((resultado: any) => {
+      if (resultado) {
+
+        const productoId = resultado.producto.Id;
+
+        const existente = this.ventasItem.find(item => item.ProductoId === productoId);
+
+        if (existente) {
+          existente.Cantidad += resultado.cantidad;
+          existente.Subtotal = existente.Cantidad * existente.PrecioUnitarioVenta;
+        } else {
+          const ventaItem: VentaItem = new VentaItem();
+          ventaItem.ProductoId = productoId;
+          ventaItem.Descripcion = resultado.producto.Descripcion;
+          ventaItem.Cantidad = resultado.cantidad;
+          ventaItem.PrecioUnitarioVenta = resultado.producto.PrecioVenta;
+          ventaItem.Subtotal = resultado.subtotal;
+
+          this.ventasItem.push(ventaItem);
+        }
+
+        this.ventasService.ventasItem.set(this.ventasItem);
+      }
+    });
   }
 
 }

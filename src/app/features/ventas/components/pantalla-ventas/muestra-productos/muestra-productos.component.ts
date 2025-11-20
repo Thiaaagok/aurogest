@@ -13,6 +13,7 @@ export class MuestraProductosComponent {
   @Input() productos: ProductoModel[] = [];
   filtroBusqueda: string;
   filtrarProductosOutput = output<string>();
+  productoSeleccionadoOutput = output<ProductoModel>();
 
   filtrarProductos() {
     this.filtrarProductosOutput.emit(this.filtroBusqueda);
@@ -21,5 +22,9 @@ export class MuestraProductosComponent {
   LimpiarFiltrado() {
     this.filtroBusqueda = '';
     this.filtrarProductosOutput.emit(this.filtroBusqueda);
+  }
+
+  productoSeleccionado(producto: ProductoModel){
+    this.productoSeleccionadoOutput.emit(producto);
   }
 }

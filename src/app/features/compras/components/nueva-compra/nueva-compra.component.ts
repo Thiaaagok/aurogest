@@ -10,7 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { FloatLabel } from 'primeng/floatlabel';
 import { TextareaModule } from 'primeng/textarea';
 import { ComprasService } from '../../services/compras.service';
-import { CompraItemModel, CompraModel } from '../../models/compra.model';
+import { CompraItem, CompraModel } from '../../models/compra.model';
 import { ProductoModel } from '../../../productos/models/producto.model';
 import { ProveedorModel } from '../../../proveedores/models/proveedor.model';
 import { ProductosService } from '../../../productos/services/producto.service';
@@ -23,6 +23,7 @@ import { AlertasService } from '../../../common/services/alertas.service';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { EditarPrecioComponent } from '../../../productos/components/grilla/editar-precio/editar-precio.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-nueva-compra',
@@ -44,7 +45,7 @@ import { EditarPrecioComponent } from '../../../productos/components/grilla/edit
 })
 export class NuevaCompraComponent {
   nuevaCompra: CompraModel = new CompraModel();
-  nuevoItem: CompraItemModel = new CompraItemModel();
+  nuevoItem: CompraItem = new CompraItem();
   productoSeleccionado: string;
 
   productosCombo: ProductoModel[] = [];
@@ -52,6 +53,8 @@ export class NuevaCompraComponent {
 
   codigoBarra: string;
   cargando: boolean;
+
+  private qrSubscription!: Subscription;
 
   private comprasService = inject(ComprasService);
   private productosService = inject(ProductosService);
@@ -63,12 +66,17 @@ export class NuevaCompraComponent {
 
   ngOnInit() {
     this.cargarProductosCombo();
-    this.qrService.qrScanned.subscribe((qr: string) => {
+    this.qrSubscription = this.qrService.qrScanned.subscribe((qr: string) => {
       this.codigoBarra = qr;
       this.obtenerProductoEscaneado();
     });
   }
 
+  ngOnDestroy() {
+    if (this.qrSubscription) {
+      this.qrSubscription.unsubscribe();
+    }
+  }
   obtenerProductoEscaneado() {
     this.productosService.obtenerProductoPorCodigoBarra(this.codigoBarra)
       .subscribe({
@@ -102,57 +110,58 @@ export class NuevaCompraComponent {
 
   productoSeleccionadoEvent(productoId: string) {
     this.productoSeleccionado = productoId;
-    this.nuevoItem.Proveedor = undefined;
+    this.nuevoItem.ProveedorId = undefined;
     this.nuevoItem.Subtotal = 0;
     const producto = this.productosCombo.find(p => p.Id == productoId);
     if (producto) {
-      this.nuevoItem.Producto = producto;
+      this.nuevoItem.Frontend.Producto = producto;
+      this.nuevoItem.ProductoId = productoId;
       this.nuevoItem.PrecioUnitarioCompra = producto.PrecioCompra;
       this.proveedoresCombo = producto.Proveedores;
       this.nuevoItem.Subtotal = producto.PrecioCompra * this.nuevoItem.Cantidad;
     }
   }
 
-  disminuirCantidad(event: MouseEvent, compraItem: CompraItemModel) {
+  disminuirCantidad(event: MouseEvent, compraItem: CompraItem) {
     event.stopPropagation();
     if (compraItem.Cantidad > 1) {
       compraItem.Cantidad--;
       compraItem.Subtotal = +(
-        compraItem.Producto.PrecioCompra * compraItem.Cantidad
+        compraItem.Frontend.Producto.PrecioCompra * compraItem.Cantidad
       ).toFixed(2);
     }
   }
 
-  aumentarCantidad(event: MouseEvent, compraItem: CompraItemModel) {
+  aumentarCantidad(event: MouseEvent, compraItem: CompraItem) {
     event.stopPropagation();
     compraItem.Cantidad++;
     compraItem.Subtotal = +(
-      compraItem.Producto.PrecioCompra * compraItem.Cantidad
+      compraItem.Frontend.Producto.PrecioCompra * compraItem.Cantidad
     ).toFixed(2);
   }
 
-  cambiarCantidad(valor: number, compraItem: CompraItemModel) {
+  cambiarCantidad(valor: number, compraItem: CompraItem) {
     if (valor < 0 || valor == null) {
       compraItem.Cantidad = 0;
     }
     compraItem.Subtotal = +(
-      compraItem.Producto.PrecioCompra * compraItem.Cantidad
+      compraItem.Frontend.Producto.PrecioCompra * compraItem.Cantidad
     ).toFixed(2);
   }
 
   verificarItem() {
-    const productoVerificar = this.nuevoItem.Producto;
-    const proveedorVerificar = this.nuevoItem.Proveedor;
-    return !this.nuevaCompra.Items.some(item => item.Producto.Id == productoVerificar.Id && item.Proveedor == proveedorVerificar);
+    const productoVerificar = this.nuevoItem.Frontend.Producto;
+    const proveedorVerificar = this.nuevoItem.ProveedorId;
+    return !this.nuevaCompra.Items.some(item => item.ProductoId == productoVerificar.Id && item.ProveedorId == proveedorVerificar);
   }
 
   cantidadCambio(cantidadNueva: number) {
-    this.nuevoItem.Subtotal = this.nuevoItem.Producto.PrecioCompra * cantidadNueva;
+    this.nuevoItem.Subtotal = this.nuevoItem.Frontend.Producto.PrecioCompra * cantidadNueva;
   }
 
   limpiarProductoSeleccionado() {
     this.productoSeleccionado = "";
-    this.nuevoItem = new CompraItemModel();
+    this.nuevoItem = new CompraItem();
     this.proveedoresCombo = [];
     this.nuevoItem.Subtotal = 0;
   }
@@ -168,10 +177,10 @@ export class NuevaCompraComponent {
     });
   }
 
-  eliminarItem(compraItem: CompraItemModel) {
+  eliminarItem(compraItem: CompraItem) {
     this.alertasService.confirmacionAlerta(
       'Confirmar eliminación',
-      `Vas a eliminar el ítem "${compraItem.Producto?.Descripcion ?? 'sin descripción'}" de la compra. 
+      `Vas a eliminar el ítem "${compraItem.Frontend.Producto?.Descripcion ?? 'sin descripción'}" de la compra. 
       Esta acción no se puede deshacer. ¿Deseas continuar?`
     ).then((result) => {
       if (result.isConfirmed) {
@@ -183,10 +192,6 @@ export class NuevaCompraComponent {
     });
   }
 
-  editarItem(id: string) {
-
-  }
-
   onSubmit() {
     this.cargando = true;
     this.nuevaCompra.Fecha = new Date();
@@ -194,12 +199,14 @@ export class NuevaCompraComponent {
       .reduce((acc, item) => acc + item.Subtotal, 0)
       .toFixed(2);
     this.nuevaCompra.Items.forEach(item => {
-      this.nuevaCompra.ProductosId.push(item.Producto.Id);
+      const productosId = [];
+      productosId.push(item.Frontend.Producto.Id);
+      this.nuevaCompra.ProductosId = productosId;
     })
     this.comprasService.crear(this.nuevaCompra).subscribe({
       next: (response: CompraModel) => {
         this.cargando = false;
-        this.descargar(response);
+        /* this.descargar(response); */
         this.limpiarModel();
       },
       error: (err) => {
@@ -223,13 +230,13 @@ export class NuevaCompraComponent {
       });
   }
 
-  editarPrecioCompra(compraItem: CompraItemModel) {
+  editarPrecioCompra(compraItem: CompraItem) {
     const dialog = this.dialogService.open(EditarPrecioComponent, {
       header: 'Editar precio compra',
       width: '50%',
       height: 'fit-content',
       data: {
-        Producto: compraItem.Producto,
+        Producto: compraItem.Frontend.Producto,
         Tipo: 'COMPRA'
       },
       modal: true,

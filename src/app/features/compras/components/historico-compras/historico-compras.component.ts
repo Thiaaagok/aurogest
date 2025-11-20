@@ -81,6 +81,10 @@ export class HistoricoComprasComponent {
       });
   }
 
+  buscarUsuarioPorCompra(compra: CompraModel){
+    return this.usuariosCombo.find(usuario => usuario.Id == compra.UsuarioId);
+  }
+
   cargarUsuariosCombo() {
     this.usuariosService.obtenerTodos().subscribe({
       next: (response: UsuarioModel[]) => {

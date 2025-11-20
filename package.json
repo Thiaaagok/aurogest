@@ -33,6 +33,7 @@
     "chart.js": "^4.4.8",
     "esbuild": "^0.25.8",
     "jsbarcode": "^3.12.1",
+    "jwt-decode": "^4.0.0",
     "ngx-barcode": "^0.3.0",
     "ngx-mat-select-search": "^8.0.0",
     "postcss": "^8.5.3",
@@ -68,6 +69,9 @@
     "mac": {
       "category": "public.app-category.developer-tools"
     },
-    "files": ["**/*", "dist/aurogest/browser/'*"]
+    "files": [
+      "**/*",
+      "dist/aurogest/browser/'*"
+    ]
   }
 }

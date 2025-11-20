@@ -19,6 +19,7 @@ import { MarcaModel } from '../../models/marca.model';
 import { MarcasService } from '../../services/marcas.service';
 import { Select } from 'primeng/select';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { FileUploadEvent } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-editar-producto',
@@ -37,6 +38,7 @@ export class EditarProductoComponent {
   marcasProductosCombo: MarcaModel[] = [];
   proveedoresCombo: ProveedorModel[] = [];
   categoriasProductosCombo: ProductoCategoriaModel[] = [];
+  ImagenesProducto: File[] = [];
 
   private ref = inject(DynamicDialogRef);
   private config = inject(DynamicDialogConfig);
@@ -184,7 +186,7 @@ export class EditarProductoComponent {
     this.productoEditar = new ProductoModel();
   }
 
-  columnasFormulario: number = 1; // Este valor puede venir de config
+  columnasFormulario: number = 1;
 
   get gridStyles() {
     return {
@@ -206,5 +208,20 @@ export class EditarProductoComponent {
 
     event.options.clear();
   }
+
+  onUpload(event: FileUploadEvent) {
+    for (let file of event.files) {
+      this.ImagenesProducto.push(file);
+    }
+    this.subir();
+  }
+
+  subir() {
+    this.productosService.subirImagenes(this.ImagenesProducto)
+      .subscribe(urls => {
+        this.productoEditar.Imagenes = urls;
+      });
+  }
+
 
 }

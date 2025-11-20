@@ -71,7 +71,7 @@
             <tr class="cursor-pointer">
                 <td>{{ compra.Fecha | date: 'dd/MM/yyyy' }}</td>
                 <td>{{ compra.Total | currency:'ARS':'symbol' }}</td>
-                <td>{{ compra.Usuario?.Usuario }}</td>
+                <td>{{ buscarUsuarioPorCompra(compra)?.Usuario }}</td>
             </tr>
         </ng-template>
         }
