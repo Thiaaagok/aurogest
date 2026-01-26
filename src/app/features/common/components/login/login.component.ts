@@ -7,16 +7,21 @@ import { FluidModule } from 'primeng/fluid';
 import { UtilitiesService } from '../../services/utilities.services';
 import { Login } from '../../models/login.model';
 import { jwtDecode } from 'jwt-decode';
-import { AuthService } from '../../services/auth';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [PrimeNgModule, CustomMaterialModule, CommonModule, RouterModule, FluidModule],
+  imports: [
+    PrimeNgModule,
+    CustomMaterialModule,
+    CommonModule,
+    RouterModule,
+    FluidModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-
   loginUsuario: Login = new Login();
 
   private utilitiesService = inject(UtilitiesService);
@@ -28,15 +33,16 @@ export class LoginComponent {
   }
 
   login() {
-    this.auth.login(this.loginUsuario.Usuario, this.loginUsuario.Contrasenia).subscribe((res: any) => {
-      const token = res.access_token;
-      const decoded: any = jwtDecode(token);
-
-      localStorage.setItem('token', token);
-      localStorage.setItem('token_exp', decoded.exp.toString());
-
-      this.router.navigate(['/home']);
-    });
+    this.auth
+      .login(this.loginUsuario.Usuario, this.loginUsuario.Contrasenia)
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          console.error(err);
+          alert('Usuario o contraseña incorrectos');
+        },
+      });
   }
-
 }

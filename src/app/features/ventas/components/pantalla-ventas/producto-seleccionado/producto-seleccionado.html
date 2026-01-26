@@ -1,4 +1,5 @@
-<div class="card">
+<div class="card" tabindex="0"
+  (keydown)="teclaPresionada($event)">
     <div class="flex producto-seleccionado">
         <img style="width: 250px; height: 250px; object-fit: contain; justify-self: center;"
             *ngIf="productoSeleccionado?.Imagenes?.length" [src]="productoSeleccionado.Imagenes[0]"
@@ -15,7 +16,7 @@
 
             <div class="flex">
                 <p-button type="button" icon="pi pi-minus" class="botones"
-                    styleClass="p-button-rounded p-button-danger p-button-sm custom-shadow"
+                    styleClass="p-button-rounded p-button-danger p-button-sm custom-shadow" name="disminuirBoton"
                     (onClick)="disminuirCantidad($event)">
                 </p-button>
 
@@ -25,7 +26,7 @@
                     tabindex="0">
 
                 <p-button type="button" icon="pi pi-plus" class="botones"
-                    styleClass="p-button-rounded p-button-success p-button-sm custom-shadow"
+                    styleClass="p-button-rounded p-button-success p-button-sm custom-shadow" name="aumentarBoton"
                     (onClick)="aumentarCantidad($event)">
                 </p-button>
             </div>

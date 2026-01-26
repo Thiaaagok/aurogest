@@ -12,11 +12,9 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
   styleUrl: './producto-seleccionado.scss',
 })
 export class ProductoSeleccionado {
-
   productoSeleccionado: ProductoModel = new ProductoModel();
   subtotal: number = 0;
   cantidad: number = 1;
-
 
   private ref = inject(DynamicDialogRef);
   private config = inject(DynamicDialogConfig);
@@ -25,14 +23,40 @@ export class ProductoSeleccionado {
     this.productoSeleccionado = this.config.data;
   }
 
+  teclaPresionada(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'ArrowRight':
+      case 'ArrowUp':
+        this.aumentarCantidad();
+        event.preventDefault();
+        break;
+
+      case 'ArrowLeft':
+      case 'ArrowDown':
+        this.disminuirCantidad();
+        event.preventDefault();
+        break;
+
+      case 'Enter':
+        this.aceptar();
+        break;
+
+      case 'Escape':
+        this.ref.close();
+        break;
+    }
+  }
+
   ngOnInit() {
     this.subtotal = +(
       this.productoSeleccionado.PrecioVenta * this.cantidad
     ).toFixed(2);
   }
 
-  disminuirCantidad(event: MouseEvent) {
-    event.stopPropagation();
+  disminuirCantidad(event?: MouseEvent) {
+    if (event) {
+      event.stopPropagation();
+    }
     if (this.cantidad) {
       this.cantidad--;
       this.subtotal = +(
@@ -41,8 +65,10 @@ export class ProductoSeleccionado {
     }
   }
 
-  aumentarCantidad(event: MouseEvent) {
-    event.stopPropagation();
+  aumentarCantidad(event?: MouseEvent) {
+    if (event) {
+      event.stopPropagation();
+    }
     this.cantidad++;
     this.subtotal = +(
       this.productoSeleccionado.PrecioVenta * this.cantidad
@@ -62,12 +88,11 @@ export class ProductoSeleccionado {
     this.ref.close({
       producto: this.productoSeleccionado,
       cantidad: this.cantidad,
-      subtotal: this.subtotal
+      subtotal: this.subtotal,
     });
   }
 
   cancelar() {
     this.ref.close();
   }
-
 }
