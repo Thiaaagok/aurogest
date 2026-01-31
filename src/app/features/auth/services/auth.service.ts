@@ -10,7 +10,7 @@ import { Config } from '../../common/config/config';
 export class AuthService {
   private accessToken: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private readonly apiUrl = `${Config.APIURL}/auth`;
 
@@ -31,18 +31,29 @@ export class AuthService {
       );
   }
 
-  refresh() {
-    const refreshToken = localStorage.getItem('refresh_token');
+  refreshToken() {
+    const refreshToken = this.getRefreshToken();
 
-    return this.http
-      .post<any>('https://localhost:3000/auth/refresh', {
-        refreshToken,
-      })
-      .pipe(tap((res) => (this.accessToken = res.accessToken)));
+    if (!refreshToken) {
+      throw new Error('No refresh token available');
+    }
+
+    return this.http.post<{ accessToken: string }>(
+      `${this.apiUrl}/refresh`,
+      { refreshToken }
+    );
   }
 
-  getAccessToken(): string | null {
+  getAccessToken() {
     return localStorage.getItem('access_token');
+  }
+
+  getRefreshToken() {
+    return localStorage.getItem('refresh_token');
+  }
+
+  setAccessToken(token: string) {
+    localStorage.setItem('accessToken', token);
   }
 
   logout() {

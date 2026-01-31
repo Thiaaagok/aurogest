@@ -52,24 +52,25 @@ export class PantallaVentasComponent implements OnInit {
   }
 
   filtrarProductos(filtro: string) {
-    console.log('filtro', filtro);
-    if (!filtro || filtro.trim() === '') {
+    const texto = filtro?.trim().toLowerCase();
+
+    if (!texto) {
       this.productos = this.productosFiltro.filter(p => p.Activo);
       return;
     }
-    const texto = filtro.toLowerCase();
+
     this.productos = this.productosFiltro.filter(producto =>
       producto.Activo &&
       (
-        producto.Codigo.toLowerCase().includes(texto) ||
-        producto.Descripcion.toLowerCase().includes(texto)
+        producto.Codigo?.toLowerCase().includes(texto) ||
+        producto.Descripcion?.toLowerCase().includes(texto)
       )
     );
   }
 
   productoSeleccionado(producto: ProductoModel) {
     const dialog = this.dialogService.open(ProductoSeleccionado, {
-      width: '40%',
+      width: '60%',
       height: 'fit-content',
       data: producto,
       modal: true,

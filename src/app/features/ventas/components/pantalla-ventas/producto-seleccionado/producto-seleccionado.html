@@ -2,9 +2,9 @@
   (keydown)="teclaPresionada($event)">
     <div class="flex producto-seleccionado">
         <img style="width: 250px; height: 250px; object-fit: contain; justify-self: center;"
-            *ngIf="productoSeleccionado?.Imagenes?.length" [src]="productoSeleccionado.Imagenes[0]"
+            *ngIf="productoSeleccionado.Imagenes.length" [src]="productoSeleccionado.Imagenes[0]"
             alt="Imagen del producto" />
-        <img *ngIf="!productoSeleccionado?.Imagenes?.length"
+        <img *ngIf="!productoSeleccionado.Imagenes.length"
             style="width: 250px; height: 250px; object-fit: contain; justify-self: center;"
             src="assets/no-imagen.jpg" />
         <form #form="ngForm" novalidate class="flex informacion">
