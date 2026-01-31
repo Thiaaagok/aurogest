@@ -209,7 +209,6 @@ export class NuevoProductoComponent {
     this.productosService.subirImagenes(this.ImagenesProducto)
       .subscribe(urls => {
         this.nuevoProducto.Imagenes = urls;
-        console.log(this.nuevoProducto);
       });
   }
 
