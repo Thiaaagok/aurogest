@@ -14,6 +14,7 @@ import { LoginComponent } from './features/common/components/login/login.compone
 import { NuevaCompraComponent } from './features/compras/components/nueva-compra/nueva-compra.component';
 import { PantallaVentasComponent } from './features/ventas/components/pantalla-ventas/pantalla-ventas.component';
 import { HistoricoComprasComponent } from './features/compras/components/historico-compras/historico-compras.component';
+import { AuthGuard } from './features/auth/guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -22,58 +23,72 @@ export const routes: Routes = [
     },
     {
         path: 'home',
-        component: HomeComponent
+        component: HomeComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'usuarios',
-        component: GrillaUsuariosComponent
+        component: GrillaUsuariosComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'empresas',
-        component: GrillaEmpresasComponent
+        component: GrillaEmpresasComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'proveedores',
-        component: GrillaProveedoresComponent
+        component: GrillaProveedoresComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'productos',
-        component: GrillaProductosComponent
+        component: GrillaProductosComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'productos/nuevo',
-        component: NuevoProductoComponent
+        component: NuevoProductoComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'productos/editar/:id',
-        component: EditarProductoComponent
+        component: EditarProductoComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'marcas',
-        component: MarcasComponent
+        component: MarcasComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'productos-tipo',
-        component: TipoProductoComponent
+        component: TipoProductoComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'productos-categoria',
-        component: CategoriaProductoComponent
+        component: CategoriaProductoComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'stock',
-        component: StockComponent
+        component: StockComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'compras/nueva',
-        component: NuevaCompraComponent
+        component: NuevaCompraComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'compras/grilla',
-        component: HistoricoComprasComponent
+        component: HistoricoComprasComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'ventas/nueva',
-        component: PantallaVentasComponent
+        component: PantallaVentasComponent,
+        canActivate: [AuthGuard]
     }
 ];

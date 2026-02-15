@@ -10,7 +10,7 @@ import { Config } from '../../common/config/config';
 export class AuthService {
   private accessToken: string | null = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   private readonly apiUrl = `${Config.APIURL}/auth`;
 
@@ -27,21 +27,23 @@ export class AuthService {
 
           const decoded: any = jwtDecode(res.accessToken);
           localStorage.setItem('token_exp', decoded.exp.toString());
-        })
+        }),
       );
   }
 
   refreshToken() {
     const refreshToken = this.getRefreshToken();
 
-    if (!refreshToken) {
-      throw new Error('No refresh token available');
-    }
+    return this.http
+      .post<{ accessToken: string }>(`${this.apiUrl}/refresh`, { refreshToken })
+      .pipe(
+        tap((res) => {
+          localStorage.setItem('access_token', res.accessToken);
 
-    return this.http.post<{ accessToken: string }>(
-      `${this.apiUrl}/refresh`,
-      { refreshToken }
-    );
+          const decoded: any = jwtDecode(res.accessToken);
+          localStorage.setItem('token_exp', decoded.exp.toString());
+        }),
+      );
   }
 
   getAccessToken() {
@@ -53,15 +55,22 @@ export class AuthService {
   }
 
   setAccessToken(token: string) {
-    localStorage.setItem('accessToken', token);
+    localStorage.setItem('access_token', token);
   }
 
   logout() {
-    this.accessToken = null;
+    localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('token_exp');
   }
 
   isLoggedIn(): boolean {
-    return !!this.accessToken;
+    const token = this.getAccessToken();
+    if (!token) return false;
+
+    const exp = localStorage.getItem('token_exp');
+    if (!exp) return false;
+
+    return Date.now() < Number(exp) * 1000;
   }
 }
