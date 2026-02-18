@@ -1,0 +1,89 @@
+<div class="botonera-flotante">
+    <div class="botonera-contenedor">
+        <button mat-mini-fab color="accent" matTooltip="Cargar las ventas" (click)="obtenerVentas()">
+            <i class="fa-solid fa-arrows-rotate"></i>
+        </button>
+    </div>
+</div>
+<div class="card">
+    <div class="font-semibold text-xl mb-4">Ventas</div>
+    <p-table #grillaVentas [value]="ventas" dataKey="Id" [rows]="10" [loading]="cargando" [rowHover]="true"
+        [showGridlines]="true" [paginator]="true" responsiveLayout="scroll">
+        <ng-template #caption>
+            <div class="flex flex-wrap items-center gap-2">
+                <!-- Rango de fechas -->
+                <div class="flex flex-col w-65 gap-0">
+                    <p-floatlabel variant="in" class="w-full">
+                        <p-datepicker [(ngModel)]="fechasRango" inputId="rangoFechas" showIcon iconDisplay="input"
+                            selectionMode="range" [readonlyInput]="true" class="w-full"></p-datepicker>
+                        <label for="rangoFechas">Rango de fechas</label>
+                    </p-floatlabel>
+                </div>
+
+                <!-- Usuario -->
+                <div class="flex flex-col w-65 gap-0">
+                    <p-floatlabel class="w-full relative" variant="in">
+                        <p-select [(ngModel)]="Usuario" inputId="usuario" [options]="usuariosCombo"
+                            optionLabel="Usuario" class="w-full" variant="filled" name="usuario" [filter]="true"
+                            [showClear]="true"></p-select>
+                        <label for="usuario">Usuario</label>
+                    </p-floatlabel>
+                </div>
+
+                <!-- Producto -->
+                <div class="flex flex-col w-65 gap-0">
+                    <p-floatlabel class="w-full relative" variant="in">
+                        <p-select [(ngModel)]="Producto" inputId="producto" [options]="productosCombo"
+                            optionLabel="Descripcion" class="w-full" variant="filled" name="producto" [filter]="true"
+                            [showClear]="true"></p-select>
+                        <label for="producto">Producto</label>
+                    </p-floatlabel>
+                </div>
+
+                <div class="flex items-end mt-1">
+                    <button pButton type="button" label="Buscar" icon="pi pi-search" class="p-button-outlined"
+                        (click)="obtenerVentas()"></button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #header>
+            <tr>
+                <th style="min-width: 12rem">
+                    <div class="flex justify-between items-center">
+                        Fecha
+                    </div>
+                </th>
+                <th style="min-width: 10rem">
+                    <div class="flex justify-between items-center">
+                        Total
+                    </div>
+                </th>
+                <th style="min-width: 10rem">
+                    <div class="flex justify-between items-center">
+                        Usuario
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+
+        @if(!cargando){
+        <ng-template #body let-venta>
+            <tr class="cursor-pointer">
+                <td>{{ venta.Fecha | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ venta.Total | currency:'ARS':'symbol' }}</td>
+                <td>{{ buscarUsuarioPorVenta(venta)?.Usuario }}</td>
+            </tr>
+        </ng-template>
+        }
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="8">No se encontraron ventas.</td>
+            </tr>
+        </ng-template>
+        <ng-template #loadingbody>
+            <tr>
+                <td colspan="8">Cargando ventas...</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

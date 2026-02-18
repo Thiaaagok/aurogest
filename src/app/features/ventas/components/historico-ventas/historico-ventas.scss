@@ -1,0 +1,62 @@
+.botonera-flotante {
+  position: fixed;
+  top: 65px;
+  right: 2%;
+  z-index: 100;
+  background: rgba(240, 240, 240, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 14px 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease-in-out;
+
+  @media (min-width: 576px) { width: 39%; }
+  @media (min-width: 768px) { width: 31%; }
+  @media (min-width: 992px) { width: 26%; }
+  @media (min-width: 1200px) { width: 21%; }
+}
+
+.botonera-contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+::ng-deep button.mat-mini-fab i {
+  font-size: 0.5rem;
+  color: red;
+}
+
+::ng-deep button.mat-mdc-mini-fab.mat-mdc-button-base {
+  width: 35px !important;
+  height: 35px !important;
+}
+
+::ng-deep button.mat-mini-fab{
+  width: fit-content;
+}
+
+::ng-deep .mdc-switch__track {
+  height: 30px;
+}
+
+.toggle-label {
+  margin-left: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.w-20 {
+  width: 20vw;
+}
+
+.w-40{
+  width: 40%;
+}
+
+::ng-deep .p-datepicker{
+  width: 100% !important;
+}

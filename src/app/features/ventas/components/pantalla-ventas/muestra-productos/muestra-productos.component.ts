@@ -72,6 +72,7 @@ export class MuestraProductosComponent {
   seleccionarProducto(producto: ProductoModel) {
     this.mostrarAutocomplete = false;
     this.filtroBusqueda = '';
+    this.onInput();
     this.productoSeleccionadoOutput.emit(producto);
   }
 

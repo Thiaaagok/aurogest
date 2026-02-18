@@ -35,7 +35,6 @@ export class FacturaVentaComponent {
         })
 
         nuevaVenta.Items = ventasItem;
-        /* Falta obtencion de usuario */
         nuevaVenta.UsuarioId = '123'
 
         this.ventasService.crear(nuevaVenta).subscribe({

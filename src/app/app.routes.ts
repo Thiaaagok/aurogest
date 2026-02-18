@@ -15,6 +15,7 @@ import { NuevaCompraComponent } from './features/compras/components/nueva-compra
 import { PantallaVentasComponent } from './features/ventas/components/pantalla-ventas/pantalla-ventas.component';
 import { HistoricoComprasComponent } from './features/compras/components/historico-compras/historico-compras.component';
 import { AuthGuard } from './features/auth/guards/auth.guard';
+import { HistoricoVentas } from './features/ventas/components/historico-ventas/historico-ventas';
 
 export const routes: Routes = [
     {
@@ -90,5 +91,10 @@ export const routes: Routes = [
         path: 'ventas/nueva',
         component: PantallaVentasComponent,
         canActivate: [AuthGuard]
-    }
+    },
+    {
+        path: 'ventas/grilla',
+        component: HistoricoVentas,
+        canActivate: [AuthGuard]
+    },
 ];
