@@ -1,0 +1,160 @@
+<div class="uploader">
+
+      <!-- ── Header ── -->
+      <div class="uploader-header">
+        <h3 class="uploader-title">Imágenes del producto</h3>
+        <span class="counter">{{ imagenes.length }} / 10</span>
+      </div>
+
+      <!-- ── Zona drag & drop ── -->
+      <div
+        class="dropzone"
+        [class.dragging]="dragging"
+        [class.disabled]="imagenes.length >= 10"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave()"
+        (drop)="onDrop($event)"
+        (click)="fileInput.click()"
+      >
+        <div class="dropzone-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+          </svg>
+        </div>
+        <p class="dropzone-text">
+          <strong>Arrastrá tus fotos acá</strong>
+          <span>o hacé click para seleccionar</span>
+        </p>
+        <p class="dropzone-hint">JPG, PNG, WEBP · Máx. 5 MB por imagen · Hasta 10 fotos</p>
+        <input #fileInput type="file" multiple accept="image/*"
+          style="display:none" (change)="onFileSelect($event)" />
+      </div>
+
+      <!-- ── Grid de imágenes ── -->
+      <div class="imagenes-grid" *ngIf="imagenes.length > 0"
+        (dragover)="$event.preventDefault()"
+      >
+        <div
+          *ngFor="let img of imagenes; let i = index"
+          class="imagen-item"
+          [class.dragging-item]="dragIndex === i"
+          [class.drag-over-item]="dragOverIndex === i"
+          draggable="true"
+          (dragstart)="onItemDragStart(i)"
+          (dragenter)="onItemDragEnter(i)"
+          (dragend)="onItemDragEnd()"
+        >
+          <!-- Thumbnail -->
+          <div class="thumb-wrap">
+            <img [src]="img.cropUrl || img.url" [alt]="'imagen ' + (i+1)" class="thumb" />
+
+            <!-- Overlay estado -->
+            <div class="thumb-overlay" *ngIf="img.estado !== 'subido'">
+              <div *ngIf="img.estado === 'subiendo'" class="progress-ring">
+                <svg viewBox="0 0 40 40">
+                  <circle cx="20" cy="20" r="16" fill="none" stroke="#ffffff33" stroke-width="3"/>
+                  <circle cx="20" cy="20" r="16" fill="none" stroke="#fff" stroke-width="3"
+                    stroke-dasharray="100.5"
+                    [style.stroke-dashoffset]="100.5 - (img.progreso / 100 * 100.5)"
+                    stroke-linecap="round"
+                    style="transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset .3s"/>
+                </svg>
+                <span class="progress-text">{{ img.progreso }}%</span>
+              </div>
+              <div *ngIf="img.estado === 'error'" class="error-overlay">
+                <span>⚠</span>
+                <small>{{ img.error }}</small>
+              </div>
+              <div *ngIf="img.estado === 'pendiente'" class="pending-overlay">
+                <span class="dot-pulse"></span>
+              </div>
+            </div>
+
+            <!-- Portada badge -->
+            <div class="portada-badge" *ngIf="i === 0">Portada</div>
+
+            <!-- Handle drag -->
+            <div class="drag-handle" title="Arrastrar para reordenar">
+              <svg viewBox="0 0 20 20" fill="currentColor">
+                <circle cx="7" cy="5" r="1.5"/><circle cx="13" cy="5" r="1.5"/>
+                <circle cx="7" cy="10" r="1.5"/><circle cx="13" cy="10" r="1.5"/>
+                <circle cx="7" cy="15" r="1.5"/><circle cx="13" cy="15" r="1.5"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Acciones -->
+          <div class="item-actions">
+            <button class="btn-icon" title="Recortar" (click)="abrirCrop(img)" *ngIf="img.file">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M5 1v14h14M1 5h14v14"/>
+              </svg>
+            </button>
+            <button
+              class="btn-icon btn-portada"
+              [class.btn-portada-active]="i === 0"
+              [title]="i === 0 ? 'Imagen principal' : 'Establecer como principal'"
+              (click)="establecerPortada(i)"
+              [disabled]="i === 0"
+            >
+              <svg viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
+            </button>
+            <button class="btn-icon btn-delete" title="Eliminar" (click)="eliminar(img, i)">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path stroke-linecap="round" d="M6 6l8 8M14 6l-8 8"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Botón agregar más -->
+        <div class="imagen-item add-more" (click)="fileInput.click()" *ngIf="imagenes.length < 10">
+          <div class="add-more-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" d="M12 4.5v15m7.5-7.5h-15"/>
+            </svg>
+            <span>Agregar</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Botón subir pendientes ── -->
+      <div class="upload-actions" *ngIf="hayPendientes">
+        <button class="btn-upload" (click)="subirTodas()" [disabled]="subiendo">
+          <span *ngIf="!subiendo">
+            ↑ Subir {{ cantidadPendientes }} {{ cantidadPendientes === 1 ? 'imagen' : 'imágenes' }}
+          </span>
+          <span *ngIf="subiendo">Subiendo...</span>
+        </button>
+      </div>
+
+      <!-- ── Modal crop ── -->
+      <div class="crop-modal" *ngIf="cropImage" (click)="cerrarCrop()">
+        <div class="crop-modal-content" (click)="$event.stopPropagation()">
+          <h4>Recortar imagen</h4>
+          <div class="crop-area">
+            <canvas #cropCanvas class="crop-canvas"></canvas>
+            <div
+              class="crop-selection"
+              [style.left.px]="cropRect.x"
+              [style.top.px]="cropRect.y"
+              [style.width.px]="cropRect.w"
+              [style.height.px]="cropRect.h"
+              (mousedown)="startCropDrag($event)"
+            >
+              <div class="crop-handle nw" (mousedown)="startResize($event, 'nw')"></div>
+              <div class="crop-handle ne" (mousedown)="startResize($event, 'ne')"></div>
+              <div class="crop-handle sw" (mousedown)="startResize($event, 'sw')"></div>
+              <div class="crop-handle se" (mousedown)="startResize($event, 'se')"></div>
+            </div>
+          </div>
+          <div class="crop-actions">
+            <button class="btn-secondary" (click)="cerrarCrop()">Cancelar</button>
+            <button class="btn-primary" (click)="aplicarCrop()">Aplicar recorte</button>
+          </div>
+        </div>
+    </div>
+</div>

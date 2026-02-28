@@ -1,31 +1,39 @@
 <p-table [paginator]="true" [rows]="15" [value]="ventas">
   <ng-template #header>
-    <tr class="py-1">
+    <tr>
       <th>Descripción</th>
-      <th>Cantidad</th>
+      <th style="text-align:center">Cantidad</th>
       <th>Precio Unitario</th>
       <th>Subtotal</th>
-      <th>Acciones</th>
+      <th style="text-align:center">Acciones</th>
     </tr>
   </ng-template>
+
   <ng-template #body let-venta>
-    <tr class="py-1">
-      <td class="py-1">{{ venta.Descripcion }}</td>
-      <td class="py-1">
-        <p-button icon="pi pi-minus" styleClass="p-button-rounded p-button-danger p-button-sm custom-shadow"
-          [style]="{'font-size':'1.2rem'}" (onClick)="disminuirCantidad($event, venta)">
-        </p-button>
-        {{ venta.Cantidad }}
-        <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-success p-button-sm custom-shadow"
-          [style]="{'font-size':'1.2rem'}" (onClick)="aumentarCantidad($event, venta)">
-        </p-button>
-      </td>
-      <td class="py-1">$ {{ venta.PrecioUnitarioVenta }}</td>
-      <td class="py-1">$ {{ venta.Subtotal }}</td>
+    <tr>
+      <td>{{ venta.Descripcion }}</td>
+
+      <!-- Cantidad -->
       <td>
-        <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-sm custom-shadow"
-          [style]="{'font-size':'1.5rem'}" pTooltip="Eliminar item" (onClick)="eliminarItem(venta)">
-        </p-button>
+        <div class="qty-control">
+          <button class="qty-btn minus" (click)="disminuirCantidad($event, venta)">
+            <i class="pi pi-minus"></i>
+          </button>
+          <span class="qty-value">{{ venta.Cantidad }}</span>
+          <button class="qty-btn plus" (click)="aumentarCantidad($event, venta)">
+            <i class="pi pi-plus"></i>
+          </button>
+        </div>
+      </td>
+
+      <td>$ {{ venta.PrecioUnitarioVenta }}</td>
+      <td><strong>$ {{ venta.Subtotal }}</strong></td>
+
+      <!-- Eliminar -->
+      <td style="text-align:center">
+        <button class="delete-btn" (click)="eliminarItem(venta)" pTooltip="Eliminar item">
+          <i class="pi pi-trash"></i>
+        </button>
       </td>
     </tr>
   </ng-template>

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProductoModel } from '../../../../productos/models/producto.model';
 import { PrimeNgModule } from '../../../../common/material/primeng.module';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Config } from '../../../../common/config/config';
 
 @Component({
   selector: 'app-producto-seleccionado',
@@ -15,6 +16,7 @@ export class ProductoSeleccionado {
   productoSeleccionado: ProductoModel = new ProductoModel();
   subtotal: number = 0;
   cantidad: number = 1;
+  apiUrl = Config.APIURL;
 
   private ref = inject(DynamicDialogRef);
   private config = inject(DynamicDialogConfig);

@@ -16,3 +16,72 @@
     width: 45rem;
   }
 }
+
+.autocomplete-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--ag-surface2);
+  border: 1px solid var(--ag-border);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.25);
+  z-index: 1000;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.autocomplete-item {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .625rem .875rem;
+  cursor: pointer;
+  transition: background .15s;
+  border-bottom: 1px solid var(--ag-border);
+
+  &:last-child { border-bottom: none; }
+
+  &:hover, &.active {
+    background: var(--ag-accent-dim);
+    color: var(--ag-accent-light);
+  }
+}
+
+.autocomplete-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 6px;
+  flex-shrink: 0;
+  background: var(--ag-surface3);
+}
+
+.autocomplete-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.autocomplete-nombre {
+  font-size: .84rem;
+  font-weight: 500;
+  color: var(--ag-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.autocomplete-codigo {
+  font-size: .72rem;
+  color: var(--ag-text-muted);
+}
+
+.autocomplete-precio {
+  font-size: .84rem;
+  font-weight: 600;
+  color: var(--ag-accent-light);
+  flex-shrink: 0;
+}

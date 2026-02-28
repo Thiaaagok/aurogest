@@ -8,8 +8,6 @@ import { Config } from '../../common/config/config';
   providedIn: 'root',
 })
 export class AuthService {
-  private accessToken: string | null = null;
-
   constructor(private http: HttpClient) {}
 
   private readonly apiUrl = `${Config.APIURL}/auth`;

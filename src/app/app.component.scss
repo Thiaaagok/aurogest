@@ -1,0 +1,14 @@
+.main-content {
+  margin-top: var(--ag-topbar-h);
+  margin-left: var(--ag-sidebar-w);
+  min-height: calc(100vh - var(--ag-topbar-h));
+  height: calc(100vh - var(--ag-topbar-h));
+  background: var(--ag-bg);
+  overflow-y: auto;
+  transition: margin-left .22s cubic-bezier(.4,0,.2,1);
+  padding: 1.5rem;
+
+  &.collapsed {
+    margin-left: var(--ag-sidebar-c);
+  }
+}

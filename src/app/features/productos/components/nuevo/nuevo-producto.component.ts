@@ -21,6 +21,7 @@ import { Select } from 'primeng/select';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { MarcasService } from '../../services/marcas.service';
 import { FileUploadEvent } from 'primeng/fileupload';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-nuevo-producto',
@@ -35,8 +36,8 @@ import { FileUploadEvent } from 'primeng/fileupload';
     FloatLabel,
     TextareaModule,
     Select,
-    MultiSelectModule
-  ],
+    MultiSelectModule,
+],
   templateUrl: './nuevo-producto.component.html',
   styleUrl: './nuevo-producto.component.scss',
 })
@@ -71,6 +72,7 @@ export class NuevoProductoComponent {
     this.cargarMarcasProductosCombo();
     this.cargarCategoriasProductosCombo();
     this.cargarProveedoresCombo();
+    this.nuevoProducto.Id = uuid();
     this.listenerFn = this.renderer.listen('window', 'keydown', (e: KeyboardEvent) => {
       if (this.modoCodigoBarra !== 'existente') return;
       const tagName = (e.target as HTMLElement).tagName;

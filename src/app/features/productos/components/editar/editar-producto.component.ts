@@ -20,13 +20,14 @@ import { MarcasService } from '../../services/marcas.service';
 import { Select } from 'primeng/select';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FileUploadEvent } from 'primeng/fileupload';
+import { ProductoImagenesComponent } from './producto-imagenes/producto-imagenes.component';
 
 @Component({
   selector: 'app-editar-producto',
   imports: [PrimeNgModule, CustomMaterialModule, ReactiveFormsModule, FormsModule, CommonModule,
     InputTextModule,
     ToastModule,
-    FloatLabel, Select, MultiSelectModule],
+    FloatLabel, Select, MultiSelectModule, ProductoImagenesComponent],
   templateUrl: './editar-producto.component.html',
   styleUrl: './editar-producto.component.scss',
 })
@@ -72,12 +73,17 @@ export class EditarProductoComponent {
     });
   }
 
+  onImagenesChange(imagenes: string[]): void {
+    this.productoEditar.Imagenes = imagenes;
+  } 
+
   obtenerProducto() {
     this.cargando = true;
     this.productosService.obtenerPorId(this.parametro).subscribe({
       next: (response: ProductoModel) => {
         this.cargando = false;
         this.productoEditar = response;
+        console.log(this.productoEditar.Imagenes)
       },
       error: (err) => {
         this.cargando = false;

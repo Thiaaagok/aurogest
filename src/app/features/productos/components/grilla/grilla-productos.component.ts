@@ -14,6 +14,7 @@ import { NuevoProductoComponent } from '../nuevo/nuevo-producto.component';
 import { EditarProductoComponent } from '../editar/editar-producto.component';
 import { EditarPrecioComponent } from './editar-precio/editar-precio.component';
 import { MenuItem } from 'primeng/api';
+import { Config } from '../../../common/config/config';
 
 @Component({
   selector: 'app-grilla-productos',
@@ -28,7 +29,8 @@ import { MenuItem } from 'primeng/api';
   styleUrl: './grilla-productos.component.scss',
 })
 export class GrillaProductosComponent {
-
+  
+  apiUrl = Config.APIURL; 
   @ViewChild('filter') filter!: ElementRef;
 
   productos: ProductoModel[] = [];

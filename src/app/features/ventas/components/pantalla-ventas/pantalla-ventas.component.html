@@ -1,10 +1,51 @@
 <div class="flex justify-between">
-    <div class="flex-1"> 
-        <app-muestra-productos (productoSeleccionadoOutput)="productoSeleccionado($event)" (filtrarProductosOutput)="filtrarProductos($event)" [productos]="productos"></app-muestra-productos>
-    </div>
-    
+  <div class="flex-1">
 
-    <div class="factura-venta z-50">
-        <app-factura-venta></app-factura-venta>
-    </div>
+    <!-- Buscador con dropdown -->
+    <p-card styleClass="mb-3">
+      <div class="relative">
+        <p-iconfield iconPosition="left">
+          <p-inputicon>
+            <i class="pi pi-search text-xs"></i>
+          </p-inputicon>
+          <input
+            pInputText
+            type="text"
+            class="w-full text-sm px-2 py-2"
+            placeholder="Código o descripción"
+            [(ngModel)]="filtroBusqueda"
+            (input)="onInput()"
+            (keydown)="onKeyDown($event)"
+          />
+        </p-iconfield>
+
+        <div *ngIf="mostrarAutocomplete" class="autocomplete-panel">
+          <div
+            *ngFor="let prod of productos; let i = index"
+            class="autocomplete-item"
+            [class.active]="i === indiceSeleccionado"
+            (click)="seleccionarProducto(prod)"
+          >
+            <img
+              *ngIf="prod?.Imagenes?.length"
+              [src]="apiUrl + '/uploads/producto-imagenes/' + prod.Imagenes[0]"
+              class="autocomplete-img"
+            />
+            <img
+              *ngIf="!prod?.Imagenes?.length"
+              src="assets/no-imagen.jpg"
+              class="autocomplete-img"
+            />
+            <div class="autocomplete-info">
+              <span class="autocomplete-nombre">{{ prod.Descripcion }}</span>
+              <span class="autocomplete-codigo">{{ prod.Codigo }}</span>
+            </div>
+            <span class="autocomplete-precio">${{ prod.PrecioVenta }}</span>
+          </div>
+        </div>
+      </div>
+    </p-card>
+
+    <app-factura-venta></app-factura-venta>
+  </div>
 </div>

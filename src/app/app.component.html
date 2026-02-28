@@ -1,2 +1,18 @@
+@if (!login) {
+  <!-- Topbar -->
+  <app-topbar
+    [collapsed]="collapsed()"
+    (toggleCollapse)="collapsed.set(!collapsed())"
+  >
+  </app-topbar>
 
-<app-navbar></app-navbar>
+  <!-- Sidebar -->
+  <app-sidebar [collapsed]="collapsed()"></app-sidebar>
+
+  <!-- Contenido principal -->
+  <main class="main-content" [class.collapsed]="collapsed()">
+    <router-outlet></router-outlet>
+  </main>
+} @else {
+  <router-outlet></router-outlet>
+}
