@@ -1,14 +1,16 @@
 .botonera-flotante {
-  position: fixed;
-  top: 65px;
+    position: fixed;
+  top: calc(
+    var(--ag-topbar-h) + 8px
+  ); 
   right: 2%;
-  z-index: 99;
-  background: rgba(240, 240, 240, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 95; 
+  background: var(--ag-surface2);
+  border: 1px solid var(--ag-border);
   border-radius: 12px;
   padding: 14px 20px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
   transition: all 0.3s ease-in-out;
 
   @media (min-width: 576px) { width: 30%; }

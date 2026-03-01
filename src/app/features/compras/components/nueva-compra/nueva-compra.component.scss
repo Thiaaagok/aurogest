@@ -2,9 +2,9 @@
   position: fixed;
   top: calc(
     var(--ag-topbar-h) + 8px
-  ); // ← usa la variable en vez de 65px hardcodeado
+  ); 
   right: 2%;
-  z-index: 95; // ← menor que el topbar (100) para no superponerse
+  z-index: 95; 
   background: var(--ag-surface2);
   border: 1px solid var(--ag-border);
   border-radius: 12px;
