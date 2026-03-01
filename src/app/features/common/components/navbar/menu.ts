@@ -1,4 +1,4 @@
-import { MenuItem } from "primeng/api";
+import { MenuItem } from 'primeng/api';
 
 export class Modulo {
   label!: string; // Cambiado de 'descripcion' a 'label'
@@ -20,29 +20,29 @@ export const Modulos: MenuItem[] = [
       {
         label: 'Productos',
         icon: 'pi pi-box',
-        route: 'productos'
+        route: 'productos',
       },
       {
         label: 'Marcas',
         icon: 'pi pi-tag',
-        route: 'marcas'
+        route: 'marcas',
       },
       {
         label: 'Tipos',
         icon: 'pi pi-cog',
-        route: 'productos-tipo'
+        route: 'productos-tipo',
       },
       {
         label: 'Categorias',
         icon: 'pi pi-cog',
-        route: 'productos-categoria'
-      }
-    ]
+        route: 'productos-categoria',
+      },
+    ],
   },
   {
     label: 'Stock',
     icon: 'pi pi-box',
-    route: 'stock'
+    route: 'stock',
   },
   {
     label: 'Compras',
@@ -51,14 +51,14 @@ export const Modulos: MenuItem[] = [
       {
         label: 'Nueva',
         icon: 'pi pi-cart-plus',
-        route: 'compras/nueva'
+        route: 'compras/nueva',
       },
       {
         label: 'Historico',
         icon: 'pi pi-align-justify',
-        route: 'compras/grilla'
-      }
-    ]
+        route: 'compras/grilla',
+      },
+    ],
   },
   {
     label: 'Ventas',
@@ -67,34 +67,44 @@ export const Modulos: MenuItem[] = [
       {
         label: 'Nueva',
         icon: 'pi pi-cart-plus',
-        route: 'ventas/nueva'
+        route: 'ventas/nueva',
       },
       {
         label: 'Historico',
         icon: 'pi pi-align-justify',
-        route: 'ventas/grilla'
-      }
-    ]
+        route: 'ventas/grilla',
+      },
+    ],
   },
   {
     label: 'Usuarios',
     icon: 'pi pi-users',
-    route: '/usuarios'
+    items: [
+      {
+        label: 'Usuarios',
+        icon: 'pi pi-align-justify',
+        route: 'usuarios',
+      },
+      {
+        label: 'Nueva',
+        icon: 'pi pi-cog',
+        route: 'roles-usuario',
+      },
+    ],
   },
   {
     label: 'Proveedores',
     icon: 'pi pi-shop',
-    route: '/proveedores'
+    route: '/proveedores',
   },
   {
     label: 'Facturación',
     icon: 'pi pi-file-o',
-    route: '/facturacion'
+    route: '/facturacion',
   },
   {
     label: 'Reportes',
     icon: 'pi pi-chart-bar',
-    items: [
-    ]
-  }
+    items: [],
+  },
 ];

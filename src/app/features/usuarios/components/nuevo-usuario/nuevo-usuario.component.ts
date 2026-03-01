@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { FloatLabel } from 'primeng/floatlabel';
 import { TextareaModule } from 'primeng/textarea';
+import { RolUsuarioModel } from '../../../roles-usuario/models/rol-usuario.model';
+import { RolesUsuarioService } from '../../../roles-usuario/services/roles-usuario';
 
 @Component({
   selector: 'app-nuevo-usuario',
@@ -24,23 +26,24 @@ import { TextareaModule } from 'primeng/textarea';
     InputTextModule,
     ToastModule,
     FloatLabel,
-    TextareaModule
+    TextareaModule,
   ],
   templateUrl: './nuevo-usuario.component.html',
   styleUrl: './nuevo-usuario.component.scss',
 })
 export class NuevoUsuarioComponent {
   nuevoUsuario: UsuarioModel = new UsuarioModel();
-  empresasDropdown: EmpresaModel[] = [];
+  rolesDisponibles: RolUsuarioModel[] = [];
   cargando: boolean;
   visible: boolean;
   mostrarDialog: boolean = true;
 
   private ref = inject(DynamicDialogRef);
-  private config = inject(DynamicDialogConfig);
   private usuariosService = inject(UsuariosService);
+  private rolesService = inject(RolesUsuarioService);
 
   ngOnInit() {
+    this.cargarRoles();
   }
 
   onSubmit() {
@@ -49,7 +52,7 @@ export class NuevoUsuarioComponent {
       next: (response: UsuarioModel) => {
         this.cargando = false;
         this.limpiarModel();
-        this.ref.close(); 
+        this.ref.close();
       },
       error: (err) => {
         this.cargando = false;
@@ -59,11 +62,17 @@ export class NuevoUsuarioComponent {
     });
   }
 
+  cargarRoles() {
+    this.rolesService.obtenerTodos().subscribe((roles) => {
+      this.rolesDisponibles = roles.filter((r) => r.Activo);
+    });
+  }
+
   cerrar() {
     this.ref.close();
   }
 
-  limpiarModel(){
+  limpiarModel() {
     this.nuevoUsuario = new UsuarioModel();
   }
 }

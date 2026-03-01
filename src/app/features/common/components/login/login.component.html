@@ -1,31 +1,49 @@
-<div class="flex layout-dark min-h-screen">
-    <img class="w-6/12 h-screen hidden md:block flex-shrink-0" style="max-width: 550px;"
-        src="assets/login-ondark.png" />
-    <div class="w-full flex items-center" style="background-color: #0D0D0D;">
-        <div class="flex flex-col items-center card-login w-full max-w-md p-6" style="margin-left: 5rem;">
-            <div class="form-container w-full">
-                <div class="flex flex-col gap-4">
-                    <img class="w-6/12 h-screen hidden md:block flex-shrink-0" style="width: 200px;height: 150px; margin-left: auto; margin-right: auto;"
-                        src="assets/aurogest-logo.png" />
-                    <p-floatlabel variant="in">
-                        <input pInputText type="text" id="usuario" class="w-full" #usuario="ngModel" name="usuario"
-                            [(ngModel)]="loginUsuario.Usuario" required />
-                        <label for="usuario">Usuario</label>
-                    </p-floatlabel>
-
-                    <p-floatlabel variant="in">
-                        <input pInputText type="password" id="contrasenia" class="w-full" #contrasenia="ngModel"
-                            name="contrasenia" [(ngModel)]="loginUsuario.Contrasenia" required />
-                        <label for="contrasenia">Contraseña</label>
-                    </p-floatlabel>
-
-                    <button pButton type="button" class="p-button p-component p-button-fluid mt-4"
-                        style="max-width: 320px; margin-left: auto; margin-right: auto;"
-                        (click)="login()">
-                        Login
-                    </button>
-                </div>
-            </div>
-        </div>
+<div class="login-wrapper">
+  <!-- Panel izquierdo con imagen -->
+  <div class="login-left">
+    <img src="assets/login-ondark.png" class="login-bg-image" />
+    <div class="login-left-overlay"></div>
+    <div class="login-left-text">
+      <span class="login-tagline">Gestión inteligente,<br/>resultados reales.</span>
     </div>
+  </div>
+
+  <!-- Panel derecho con formulario -->
+  <div class="login-right">
+    <div class="login-card">
+
+      <div class="login-logo-wrapper">
+        <img src="assets/aurogest-logo.png" class="login-logo" />
+      </div>
+
+      <h2 class="login-title">Bienvenido</h2>
+      <p class="login-subtitle">Ingresá tus credenciales para continuar</p>
+
+      <div class="login-form">
+        <div class="login-field">
+          <p-floatlabel variant="in">
+            <input pInputText type="text" id="usuario" class="w-full login-input"
+              #usuario="ngModel" name="usuario"
+              [(ngModel)]="loginUsuario.Usuario" required />
+            <label for="usuario">Usuario</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="login-field">
+          <p-floatlabel variant="in">
+            <input pInputText type="password" id="contrasenia" class="w-full login-input"
+              #contrasenia="ngModel" name="contrasenia"
+              [(ngModel)]="loginUsuario.Contrasenia" required />
+            <label for="contrasenia">Contraseña</label>
+          </p-floatlabel>
+        </div>
+
+        <button pButton type="button" class="login-btn w-full" (click)="login()">
+          <span>Ingresar</span>
+          <i class="pi pi-arrow-right"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
 </div>

@@ -8,6 +8,7 @@ import { UtilitiesService } from '../../services/utilities.services';
 import { Login } from '../../models/login.model';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from '../../../auth/services/auth.service';
+import { AlertasService } from '../../services/alertas.service';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,7 @@ export class LoginComponent {
   private utilitiesService = inject(UtilitiesService);
   private router = inject(Router);
   private auth = inject(AuthService);
+  private alertasService = inject(AlertasService);
 
   constructor() {
     this.utilitiesService.setearLogin(true);
@@ -41,7 +43,10 @@ export class LoginComponent {
         },
         error: (err) => {
           console.error(err);
-          alert('Usuario o contraseña incorrectos');
+          this.alertasService.errorAlerta(
+            'Credenciales inválidas',
+            'El usuario o la contraseña son incorrectos. Verificá los datos e intentá nuevamente.',
+          );
         },
       });
   }

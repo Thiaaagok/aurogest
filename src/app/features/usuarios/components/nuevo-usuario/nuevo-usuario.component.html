@@ -41,6 +41,15 @@
             </p-floatlabel>
         </div>
         <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel class="w-100 md:w-56 relative" variant="in">
+                <p-select [(ngModel)]="nuevoUsuario.Rol" inputId="categoria" [options]="rolesDisponibles"
+                optionLabel="Descripcion" class="w-100" variant="filled" name="rolUsuario" [filter]="true"
+                [showClear]="true">
+                </p-select>
+                <label for="categoria">Rol</label>
+            </p-floatlabel>
+        </div>
+        <div class="flex flex-col grow basis-0 gap-2">
             <p-floatlabel variant="in">
                 <textarea rows="5" id="observaciones" cols="30" name="observaciones" class="w-100" pTextarea
                     [(ngModel)]="nuevoUsuario.Observaciones"></textarea>

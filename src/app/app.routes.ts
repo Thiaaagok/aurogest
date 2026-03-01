@@ -16,85 +16,107 @@ import { PantallaVentasComponent } from './features/ventas/components/pantalla-v
 import { HistoricoComprasComponent } from './features/compras/components/historico-compras/historico-compras.component';
 import { AuthGuard } from './features/auth/guards/auth.guard';
 import { HistoricoVentas } from './features/ventas/components/historico-ventas/historico-ventas';
+import { Permisos } from './features/common/enums/roles.enum';
+import { RolesUsuario } from './features/roles-usuario/components/roles-usuario';
 
 export const routes: Routes = [
-    {
-        path: 'login',
-        component: LoginComponent
-    },
-    {
-        path: 'home',
-        component: HomeComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'usuarios',
-        component: GrillaUsuariosComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'empresas',
-        component: GrillaEmpresasComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'proveedores',
-        component: GrillaProveedoresComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'productos',
-        component: GrillaProductosComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'productos/nuevo',
-        component: NuevoProductoComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'productos/editar/:id',
-        component: EditarProductoComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'marcas',
-        component: MarcasComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'productos-tipo',
-        component: TipoProductoComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'productos-categoria',
-        component: CategoriaProductoComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'stock',
-        component: StockComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'compras/nueva',
-        component: NuevaCompraComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'compras/grilla',
-        component: HistoricoComprasComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'ventas/nueva',
-        component: PantallaVentasComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'ventas/grilla',
-        component: HistoricoVentas,
-        canActivate: [AuthGuard]
-    },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'usuarios',
+    component: GrillaUsuariosComponent,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.VER_USUARIOS }
+  },
+  {
+    path: 'roles-usuario',
+    component: RolesUsuario,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.VER_ROLES }
+  },
+  {
+    path: 'empresas',
+    component: GrillaEmpresasComponent,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.VER_EMPRESAS }
+  },
+  {
+    path: 'proveedores',
+    component: GrillaProveedoresComponent,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.VER_PROVEEDORES }
+  },
+  {
+    path: 'productos',
+    component: GrillaProductosComponent,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.VER_PRODUCTOS }
+  },
+  {
+    path: 'productos/nuevo',
+    component: NuevoProductoComponent,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.CREAR_PRODUCTO }
+  },
+  {
+    path: 'productos/editar/:id',
+    component: EditarProductoComponent,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.EDITAR_PRODUCTO }
+  },
+  {
+    path: 'marcas',
+    component: MarcasComponent,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.VER_MARCAS }
+  },
+  {
+    path: 'productos-tipo',
+    component: TipoProductoComponent,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.VER_TIPOS_PRODUCTO }
+  },
+  {
+    path: 'productos-categoria',
+    component: CategoriaProductoComponent,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.VER_CATEGORIAS_PRODUCTO }
+  },
+  {
+    path: 'stock',
+    component: StockComponent,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.VER_STOCK }
+  },
+  {
+    path: 'compras/nueva',
+    component: NuevaCompraComponent,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.CREAR_COMPRA }
+  },
+  {
+    path: 'compras/grilla',
+    component: HistoricoComprasComponent,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.VER_HISTORICO_COMPRAS }
+  },
+  {
+    path: 'ventas/nueva',
+    component: PantallaVentasComponent,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.CREAR_VENTA }
+  },
+  {
+    path: 'ventas/grilla',
+    component: HistoricoVentas,
+    canActivate: [AuthGuard],
+    data: { permiso: Permisos.VER_HISTORICO_VENTAS }
+  },
 ];

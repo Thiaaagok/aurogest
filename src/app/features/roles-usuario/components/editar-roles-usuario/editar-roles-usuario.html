@@ -1,0 +1,50 @@
+<div class="flex flex-col gap-4">
+    <form #form="ngForm" novalidate class="flex flex-col gap-4">
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <input pInputText type="text" id="codigo" class="w-100" #codigo="ngModel" name="codigo"
+                    [(ngModel)]="rolUsuarioEditar.Codigo" required />
+                <label for="codigo">Código</label>
+            </p-floatlabel>
+        </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+            <p-floatlabel variant="in">
+                <input pInputText type="text" id="descripcion" class="w-100" #descripcion="ngModel" name="descripcion"
+                    [(ngModel)]="rolUsuarioEditar.Descripcion" required />
+                <label for="descripcion">Descripción</label>
+            </p-floatlabel>
+        </div>
+        <div class="flex flex-col gap-2">
+            <label class="font-medium">Permisos</label>
+            <p-multiselect
+                name="permisos"
+                [options]="permisosDisponibles"
+                [(ngModel)]="rolUsuarioEditar.Permisos"
+                optionLabel="label"
+                optionValue="value"
+                placeholder="Seleccionar permisos"
+                [filter]="true"
+                filterPlaceholder="Buscar permiso"
+                [showToggleAll]="true"
+                [group]="true"
+                optionGroupLabel="label"
+                optionGroupChildren="items"
+                display="chip"
+                styleClass="w-full"
+                appendTo="body">
+            </p-multiselect>
+        </div>
+        <div class="flex justify-end gap-2 pt-4">
+            <p-button label="Cancelar" icon="pi pi-times" class="p-button-outlined" [disabled]="cargando" (click)="cerrar()"></p-button>
+            @if(rolUsuarioEditar.Activo){
+            <p-button label="Eliminar" severity="danger" matTooltip="Eliminar rol" icon="pi pi-trash"
+                (click)="eliminarRolUsuarioEditar()" [disabled]="cargando"></p-button>
+            }@else{
+            <p-button label="Reactivar" severity="info" matTooltip="Reactivar rol" icon="pi pi-unlock"
+                (click)="reactivarRolUsuarioEditar()" [disabled]="cargando"></p-button>
+            }
+            <p-button label="Guardar" severity="success" icon="pi pi-check" (click)="onSubmit()"
+                [disabled]="!form.valid || cargando"></p-button>
+        </div>
+    </form>
+</div>

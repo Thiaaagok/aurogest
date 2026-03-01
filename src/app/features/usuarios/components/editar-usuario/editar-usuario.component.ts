@@ -13,6 +13,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { FloatLabel } from 'primeng/floatlabel';
 import { TextareaModule } from 'primeng/textarea';
+import { RolUsuarioModel } from '../../../roles-usuario/models/rol-usuario.model';
+import { RolesUsuarioService } from '../../../roles-usuario/services/roles-usuario';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -25,7 +27,7 @@ import { TextareaModule } from 'primeng/textarea';
     InputTextModule,
     ToastModule,
     FloatLabel,
-    TextareaModule
+    TextareaModule,
   ],
   templateUrl: './editar-usuario.component.html',
   styleUrl: './editar-usuario.component.scss',
@@ -33,18 +35,19 @@ import { TextareaModule } from 'primeng/textarea';
 export class EditarUsuarioComponent {
   usuarioEditar: UsuarioModel = new UsuarioModel();
   empresasDropdown: EmpresaModel[] = [];
+  rolesDisponibles: RolUsuarioModel[] = [];
   parametro: string;
   cargando: boolean;
 
   private usuarioService = inject(UsuariosService);
-  private empresasService = inject(EmpresaService);
+  private rolesService = inject(RolesUsuarioService);
   public ref = inject(DynamicDialogRef);
   public config = inject(DynamicDialogConfig);
-
 
   ngOnInit() {
     this.parametro = this.config.data;
     this.obtenerUsuario();
+    this.cargarRoles();
   }
 
   obtenerUsuario() {
@@ -53,7 +56,9 @@ export class EditarUsuarioComponent {
       next: (response: UsuarioModel) => {
         this.cargando = false;
         this.usuarioEditar = response;
-        console.log(response)
+        this.rolesService.obtenerPorId(response.RolId).subscribe((rol) => {
+          this.usuarioEditar.Rol = rol;
+        });
       },
       error: (err) => {
         this.cargando = false;
@@ -63,56 +68,60 @@ export class EditarUsuarioComponent {
     });
   }
 
+  cargarRoles() {
+    this.rolesService.obtenerTodos().subscribe((roles) => {
+      this.rolesDisponibles = roles.filter((r) => r.Activo);
+    });
+  }
+
   cerrar() {
     this.ref.close();
   }
 
-  onSubmit(){
+  onSubmit() {
     this.cargando = true;
-    this.usuarioService.editar(this.usuarioEditar.Id, this.usuarioEditar)
-    .subscribe({
-      next: ((response: UsuarioModel) => {
-        this.cargando = false;
-        this.ref.close();
-      }),
-      error: (err) => {
-        this.cargando = false;
-        console.log(err);
-      },
-      complete: () => {}
-    })
+    this.usuarioService
+      .editar(this.usuarioEditar.Id, this.usuarioEditar)
+      .subscribe({
+        next: (response: UsuarioModel) => {
+          this.cargando = false;
+          this.ref.close();
+        },
+        error: (err) => {
+          this.cargando = false;
+          console.log(err);
+        },
+        complete: () => {},
+      });
   }
 
-  eliminarUsuario(){
+  eliminarUsuario() {
     this.cargando = true;
-    this.usuarioService.eliminar(this.usuarioEditar.Id)
-    .subscribe({
-      next: ((response: boolean) => {
+    this.usuarioService.eliminar(this.usuarioEditar.Id).subscribe({
+      next: (response: boolean) => {
         this.cargando = false;
         this.obtenerUsuario();
-      }),
+      },
       error: (err) => {
         this.cargando = false;
         console.log(err);
       },
-      complete: () => {}
-    })
+      complete: () => {},
+    });
   }
 
-  reactivarUsuario(){
+  reactivarUsuario() {
     this.cargando = true;
-    this.usuarioService.reactivar(this.usuarioEditar.Id)
-    .subscribe({
-      next: ((response: boolean) => {
+    this.usuarioService.reactivar(this.usuarioEditar.Id).subscribe({
+      next: (response: boolean) => {
         this.cargando = false;
         this.obtenerUsuario();
-      }),
+      },
       error: (err) => {
         this.cargando = false;
         console.log(err);
       },
-      complete: () => {}
-    })
+      complete: () => {},
+    });
   }
-
 }

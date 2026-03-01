@@ -303,7 +303,7 @@ body.ag-dark {
   .p-card {
     --p-card-background: var(--ag-surface);
     --p-card-color: var(--ag-text);
-    --p-card-shadow: 0 4px 24px rgba(0, 0, 0, .3);
+    --p-card-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
     --p-card-border-radius: var(--ag-radius-lg);
   }
 
@@ -316,23 +316,40 @@ body.ag-dark {
   }
 
   div:where(.swal2-container) div:where(.swal2-popup) {
-    --swal2-background:     var(--ag-surface2);
-    --swal2-color:          var(--ag-text);
-    --swal2-border:         1px solid var(--ag-border);
-    --swal2-border-radius:  14px;
+    --swal2-background: var(--ag-surface2);
+    --swal2-color: var(--ag-text);
+    --swal2-border: 1px solid var(--ag-border);
+    --swal2-border-radius: 14px;
   }
 
   // Título e ícono
-  .swal2-title { color: var(--ag-text) !important; }
+  .swal2-title {
+    color: var(--ag-text) !important;
+  }
   .swal2-html-container,
-  .swal2-content  { color: var(--ag-text-muted) !important; }
+  .swal2-content {
+    color: var(--ag-text-muted) !important;
+  }
 
   // Botones — mantienen su color pero se ajustan
-  .swal2-confirm { background: var(--ag-accent) !important; }
-  .swal2-cancel  { background: var(--ag-surface3) !important; color: var(--ag-text) !important; }
+  .swal2-confirm {
+    background: var(--ag-accent) !important;
+  }
+  .swal2-cancel {
+    background: var(--ag-surface3) !important;
+    color: var(--ag-text) !important;
+  }
 
   // Fondo del overlay
-  .swal2-container { background: rgba(0,0,0,.6) !important; }
+  .swal2-container {
+    background: rgba(0, 0, 0, 0.6) !important;
+  }
+
+  .p-dialog {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
 }
 
 /* ── PrimeNG Input / Select en tablas ───────────────────────────────── */
@@ -353,11 +370,4 @@ body.ag-dark {
 .main-content {
   background: var(--ag-bg) !important;
   min-height: calc(100vh - var(--ag-topbar-h));
-}
-
-
-.p-dialog {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
 }

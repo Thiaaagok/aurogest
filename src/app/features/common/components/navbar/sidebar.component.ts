@@ -67,7 +67,12 @@ export const NAV_CONFIG: NavSection[] = [
   {
     section: 'Gestión',
     items: [
-      { key: 'usuarios',    label: 'Usuarios',    route: '/usuarios',    icon: 'pi pi-users' },
+      { key: 'usuarios',    label: 'Usuarios',    icon: 'pi pi-users' ,
+        children: [
+          { label: 'Usuarios',  route: 'usuarios',  icon: 'pi pi-align-justify' },
+          { label: 'Roles', route: 'roles-usuario', icon: 'pi pi-cog' },
+        ],
+      },
       { key: 'proveedores', label: 'Proveedores', route: '/proveedores', icon: 'pi pi-shop' },
     ],
   },
@@ -77,7 +82,7 @@ export const NAV_CONFIG: NavSection[] = [
       { key: 'facturacion', label: 'Facturación', route: '/facturacion', icon: 'pi pi-file-o' },
       {
         key: 'reportes', label: 'Reportes', icon: 'pi pi-chart-bar',
-        children: [],   // vacío por ahora, se llena cuando agregues reportes
+        children: [],   
       },
     ],
   },

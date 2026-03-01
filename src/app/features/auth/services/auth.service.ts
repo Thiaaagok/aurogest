@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
-import { tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, switchMap, tap } from 'rxjs';
 import { Config } from '../../common/config/config';
+import { UsuarioModel } from '../../usuarios/models/usuario.model';
+import { RolUsuarioModel } from '../../roles-usuario/models/rol-usuario.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +24,7 @@ export class AuthService {
         tap((res) => {
           localStorage.setItem('access_token', res.accessToken);
           localStorage.setItem('refresh_token', res.refreshToken);
-
+          localStorage.setItem('user_id', res.user.Id);
           const decoded: any = jwtDecode(res.accessToken);
           localStorage.setItem('token_exp', decoded.exp.toString());
         }),
@@ -60,6 +62,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('token_exp');
+    localStorage.removeItem('user_id');
   }
 
   isLoggedIn(): boolean {
@@ -70,5 +73,29 @@ export class AuthService {
     if (!exp) return false;
 
     return Date.now() < Number(exp) * 1000;
+  }
+
+  private currentUserSubject = new BehaviorSubject<UsuarioModel | null>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
+
+  get currentUser(): UsuarioModel | null {
+    return this.currentUserSubject.value;
+  }
+
+  cargarUsuarioActual(): Observable<UsuarioModel | null>  {
+    const id = localStorage.getItem('user_id');
+    if (!id) return of(null);
+
+    return this.http.get<UsuarioModel>(`${Config.APIURL}/usuarios/${id}`).pipe(
+      switchMap(
+        (user): Observable<UsuarioModel> =>
+          this.http
+            .get<RolUsuarioModel>(
+              `${Config.APIURL}/roles-usuario/${user.RolId}`,
+            )
+            .pipe(map((rol) => ({ ...user, Rol: rol }) as UsuarioModel)),
+      ),
+      tap((user) => this.currentUserSubject.next(user)),
+    );
   }
 }
