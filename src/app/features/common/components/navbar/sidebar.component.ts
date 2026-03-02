@@ -41,8 +41,8 @@ export const NAV_CONFIG: NavSection[] = [
         children: [
           { label: 'Nueva',    route: 'ventas/nueva',  icon: 'pi pi-cart-plus' },
           { label: 'Histórico',route: 'ventas/grilla', icon: 'pi pi-align-justify' },
-          { label: 'Remitos',       route: '/remitos' },
-          { label: 'Facturas AFIP', route: '/facturas-afip' },
+          { label: 'Remitos',       route: '/remitos', icon: 'pi pi-receipt' },
+          { label: 'Facturas AFIP', route: '/facturas-afip', icon: 'pi pi-receipt' },
         ],
       },
       {
@@ -79,7 +79,6 @@ export const NAV_CONFIG: NavSection[] = [
   {
     section: 'Análisis',
     items: [
-      { key: 'facturacion', label: 'Facturación', route: '/facturacion', icon: 'pi pi-file-o' },
       {
         key: 'reportes', label: 'Reportes', icon: 'pi pi-chart-bar',
         children: [],   
@@ -88,10 +87,10 @@ export const NAV_CONFIG: NavSection[] = [
   },
 ];
 
-export const NAV_BOTTOM: NavItem = {
+/* export const NAV_BOTTOM: NavItem = {
   key: 'configuracion', label: 'Configuración', route: '/configuracion',
   icon: 'pi pi-cog',
-};
+}; */
 
 // ── Componente ─────────────────────────────────────────────────────────────
 @Component({
@@ -158,12 +157,12 @@ export const NAV_BOTTOM: NavItem = {
         </ng-container>
       </nav>
 
-      <div class="sidebar-bottom">
+      <!-- <div class="sidebar-bottom">
         <a class="nav-item" [routerLink]="navBottom.route" routerLinkActive="active" [attr.data-tip]="navBottom.label">
           <span class="nav-icon"><span [class]="navBottom.icon"></span></span>
           <span class="nav-label">{{ navBottom.label }}</span>
         </a>
-      </div>
+      </div> -->
 
     </aside>
   `,
@@ -280,7 +279,6 @@ export class SidebarComponent {
   @Input() collapsed = false;
 
   readonly navConfig = NAV_CONFIG;
-  readonly navBottom = NAV_BOTTOM;
 
   openMenu: string | null = 'ventas';
 

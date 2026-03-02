@@ -3,10 +3,11 @@ import { PrimeNgModule } from '../../../../../common/material/primeng.module';
 import { VentaItem } from '../../../../models/venta.model';
 import { VentasService } from '../../../../services/ventas';
 import { AlertasService } from '../../../../../common/services/alertas.service';
+import { TotalVentaPipe } from '../../../../../common/pipes/total-venta.pipe';
 
 @Component({
   selector: 'app-grilla-productos-seleccionados',
-  imports: [PrimeNgModule],
+  imports: [PrimeNgModule, TotalVentaPipe],
   templateUrl: './grilla-productos-seleccionados.component.html',
   styleUrl: './grilla-productos-seleccionados.component.scss',
 })
@@ -21,6 +22,7 @@ export class GrillaProductosSeleccionadosComponent {
       this.ventas = this.ventasService.ventasItem();
     });
   }
+
 
   disminuirCantidad(event: MouseEvent, ventaItem: VentaItem) {
     event.stopPropagation();

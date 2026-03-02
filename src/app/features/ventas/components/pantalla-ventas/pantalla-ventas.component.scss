@@ -1,60 +1,146 @@
-.w-70{
-  width: 70%;
-}
-.w-40{
-  width: 40%;
+/* pantalla-ventas.component.scss */
+
+.ventas-layout {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1rem;
+  min-height: 100%;
 }
 
-.factura-venta{
-  top: 15px;
-  right: 15px;
-  width: 60rem; 
+.ventas-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
 }
 
-@media screen and (max-width: 1980px) {
-  .factura-venta {
-    width: 45rem;
+/* ── Search Card ──────────────────────────────────────── */
+.search-card {
+  background: var(--ag-surface2);
+  border: 1px solid var(--ag-border);
+  border-radius: 14px;
+  padding: 1rem 1.25rem 1.25rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
+}
+
+.search-header {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: .9rem;
+}
+
+.search-icon-title {
+  font-size: 1.1rem;
+  color: var(--ag-accent-light);
+  background: var(--ag-accent-dim);
+  padding: .4rem;
+  border-radius: 8px;
+}
+
+.search-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ag-text);
+  letter-spacing: .01em;
+}
+
+.search-input {
+  width: 100%;
+  font-size: .9rem;
+  border-radius: 10px !important;
+  padding: .6rem .75rem .6rem 2.25rem !important;
+  background: var(--ag-surface3) !important;
+  border-color: var(--ag-border) !important;
+  transition: border-color .2s, box-shadow .2s;
+
+  &:focus {
+    border-color: var(--ag-accent-light) !important;
+    box-shadow: 0 0 0 3px var(--ag-accent-dim) !important;
   }
 }
 
+/* ── Autocomplete ─────────────────────────────────────── */
 .autocomplete-panel {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 6px);
   left: 0;
   right: 0;
   background: var(--ag-surface2);
   border: 1px solid var(--ag-border);
-  border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0,0,0,.25);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.28);
   z-index: 1000;
-  max-height: 320px;
+  max-height: 340px;
   overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: var(--ag-border); border-radius: 4px; }
+}
+
+.autocomplete-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5rem .875rem .4rem;
+  font-size: .7rem;
+  color: var(--ag-text-muted);
+  border-bottom: 1px solid var(--ag-border);
+  background: var(--ag-surface3);
+  border-radius: 12px 12px 0 0;
+}
+
+.autocomplete-hint {
+  kbd {
+    background: var(--ag-surface2);
+    border: 1px solid var(--ag-border);
+    border-radius: 4px;
+    padding: 0 4px;
+    font-size: .65rem;
+    font-family: inherit;
+  }
 }
 
 .autocomplete-item {
   display: flex;
   align-items: center;
   gap: .75rem;
-  padding: .625rem .875rem;
+  padding: .55rem .875rem;
   cursor: pointer;
-  transition: background .15s;
+  transition: background .13s;
   border-bottom: 1px solid var(--ag-border);
+  position: relative;
 
   &:last-child { border-bottom: none; }
 
   &:hover, &.active {
     background: var(--ag-accent-dim);
-    color: var(--ag-accent-light);
+
+    .autocomplete-nombre { color: var(--ag-accent-light); }
+    .autocomplete-add-hint { opacity: 1; transform: scale(1); }
   }
 }
 
-.autocomplete-img {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
-  border-radius: 6px;
+.autocomplete-img-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  overflow: hidden;
   flex-shrink: 0;
   background: var(--ag-surface3);
+  border: 1px solid var(--ag-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.autocomplete-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .autocomplete-info {
@@ -66,22 +152,41 @@
 }
 
 .autocomplete-nombre {
-  font-size: .84rem;
+  font-size: .85rem;
   font-weight: 500;
   color: var(--ag-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color .13s;
 }
 
 .autocomplete-codigo {
-  font-size: .72rem;
+  font-size: .7rem;
   color: var(--ag-text-muted);
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+}
+
+.autocomplete-precio-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
 }
 
 .autocomplete-precio {
-  font-size: .84rem;
-  font-weight: 600;
+  font-size: .88rem;
+  font-weight: 700;
   color: var(--ag-accent-light);
-  flex-shrink: 0;
+}
+
+.autocomplete-add-hint {
+  font-size: .75rem;
+  color: var(--ag-accent-light);
+  opacity: 0;
+  transform: scale(.8);
+  transition: opacity .13s, transform .13s;
 }

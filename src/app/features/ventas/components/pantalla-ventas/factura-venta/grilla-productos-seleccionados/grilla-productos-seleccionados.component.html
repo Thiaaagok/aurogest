@@ -1,40 +1,68 @@
-<p-table [paginator]="true" [rows]="15" [value]="ventas">
-  <ng-template #header>
-    <tr>
-      <th>Descripción</th>
-      <th style="text-align:center">Cantidad</th>
-      <th>Precio Unitario</th>
-      <th>Subtotal</th>
-      <th style="text-align:center">Acciones</th>
-    </tr>
-  </ng-template>
+<div class="grilla-wrap">
 
-  <ng-template #body let-venta>
-    <tr>
-      <td>{{ venta.Descripcion }}</td>
+  <div *ngIf="ventas.length === 0" class="grilla-empty">
+    <i class="pi pi-shopping-cart grilla-empty-icon"></i>
+    <span class="grilla-empty-text">No hay productos agregados</span>
+    <span class="grilla-empty-hint">Buscá un producto arriba para agregarlo</span>
+  </div>
 
-      <!-- Cantidad -->
-      <td>
-        <div class="qty-control">
-          <button class="qty-btn minus" (click)="disminuirCantidad($event, venta)">
-            <i class="pi pi-minus"></i>
+  <p-table *ngIf="ventas.length > 0" [paginator]="ventas.length > 15" [rows]="15" [value]="ventas" styleClass="grilla-table">
+    <ng-template #header>
+      <tr>
+        <th class="col-descripcion">Descripción</th>
+        <th class="col-center">Cantidad</th>
+        <th class="col-precio">P. Unitario</th>
+        <th class="col-precio">Subtotal</th>
+        <th class="col-center">Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-venta>
+      <tr class="grilla-row">
+        <td class="col-descripcion">
+          <span class="item-descripcion">{{ venta.Descripcion }}</span>
+        </td>
+
+        <td class="col-center">
+          <div class="qty-control">
+            <button class="qty-btn minus" (click)="disminuirCantidad($event, venta)">
+              <i class="pi pi-minus"></i>
+            </button>
+            <span class="qty-value">{{ venta.Cantidad }}</span>
+            <button class="qty-btn plus" (click)="aumentarCantidad($event, venta)">
+              <i class="pi pi-plus"></i>
+            </button>
+          </div>
+        </td>
+
+        <td>
+          <span class="precio-unitario">$ {{ venta.PrecioUnitarioVenta }}</span>
+        </td>
+
+        <td>
+          <span class="precio-subtotal">$ {{ venta.Subtotal }}</span>
+        </td>
+
+        <td class="col-center">
+          <button class="delete-btn" (click)="eliminarItem(venta)" pTooltip="Eliminar ítem" tooltipPosition="left">
+            <i class="pi pi-trash"></i>
           </button>
-          <span class="qty-value">{{ venta.Cantidad }}</span>
-          <button class="qty-btn plus" (click)="aumentarCantidad($event, venta)">
-            <i class="pi pi-plus"></i>
-          </button>
-        </div>
-      </td>
+        </td>
+      </tr>
+    </ng-template>
 
-      <td>$ {{ venta.PrecioUnitarioVenta }}</td>
-      <td><strong>$ {{ venta.Subtotal }}</strong></td>
+    <ng-template #footer>
+      <tr class="grilla-total-row">
+        <td colspan="3" class="total-label">
+          <i class="pi pi-calculator" style="margin-right:.4rem"></i>
+          Total
+        </td>
+        <td class="total-value">
+          $ {{ ventas | totalVenta }}
+        </td>
+        <td></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
 
-      <!-- Eliminar -->
-      <td style="text-align:center">
-        <button class="delete-btn" (click)="eliminarItem(venta)" pTooltip="Eliminar item">
-          <i class="pi pi-trash"></i>
-        </button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>

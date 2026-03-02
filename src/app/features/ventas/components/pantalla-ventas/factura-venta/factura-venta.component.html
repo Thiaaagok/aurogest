@@ -1,13 +1,22 @@
-<div>
-  <p-card styleClass="mb-3">
-    <div class="flex justify-between items-center mb-3">
-      <h2 class="text-xl font-semibold">Factura de venta</h2>
-      <div class="flex items-center gap-2">
+<div class="factura-card">
+  <div class="factura-header">
+    <div class="factura-title-group">
+      <div class="factura-icon">
+        <i class="pi pi-file-edit"></i>
+      </div>
+      <div>
+        <h2 class="factura-title">Factura de venta</h2>
+        <span class="factura-subtitle">Revisá los ítems antes de confirmar</span>
       </div>
     </div>
-    <app-grilla-productos-seleccionados></app-grilla-productos-seleccionados>
-    <div class="flex justify-center mt-3">
-      <p-button label="Confirmar Venta" [raised]="true" severity="success" class="boton-venta" (onClick)="finalizarVenta()"></p-button>
-    </div>
-  </p-card>
+  </div>
+
+  <app-grilla-productos-seleccionados></app-grilla-productos-seleccionados>
+
+  <div class="factura-footer">
+    <button class="btn-confirmar" (click)="finalizarVenta()">
+      <i class="pi pi-check-circle"></i>
+      Confirmar Venta
+    </button>
+  </div>
 </div>

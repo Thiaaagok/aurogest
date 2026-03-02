@@ -102,6 +102,7 @@ export class PantallaVentasComponent implements OnInit {
 
     dialog.onClose.subscribe((resultado: any) => {
       if (resultado) {
+        this.ventasItem = [...this.ventasService.ventasItem()];
         const productoId = resultado.producto.Id;
 
         const existente = this.ventasItem.find(

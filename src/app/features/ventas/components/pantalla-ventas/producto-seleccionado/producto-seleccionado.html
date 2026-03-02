@@ -1,43 +1,71 @@
-<div class="card" tabindex="0"
-  (keydown)="teclaPresionada($event)">
-    <div class="flex producto-seleccionado">
-        <img style="width: 250px; height: 250px; object-fit: contain; justify-self: center;"
-            *ngIf="productoSeleccionado.Imagenes.length" [src]="apiUrl + '/uploads/producto-imagenes/' + productoSeleccionado.Imagenes[0]"
-            alt="Imagen del producto" />
-        <img *ngIf="!productoSeleccionado.Imagenes.length"
-            style="width: 250px; height: 250px; object-fit: contain; justify-self: center;"
-            src="assets/no-imagen.jpg" />
-        <form #form="ngForm" novalidate class="flex informacion">
-            <span class="block descripcion-producto font-medium truncate">{{productoSeleccionado.Descripcion}}</span>
-            <span class="text-lg">Precio Unitario</span>
-            <p class="text-lg font-semibold mt-1">${{productoSeleccionado.PrecioVenta}}</p>
-            <span class="text-lg">Subtotal</span>
-            <p class="text-lg font-semibold mt-1">${{subtotal}}</p>
+<!-- producto-seleccionado.component.html -->
+<div class="ps-dialog" tabindex="0" (keydown)="teclaPresionada($event)">
 
-            <div class="flex">
-                <p-button type="button" icon="pi pi-minus" class="botones"
-                    styleClass="p-button-rounded p-button-danger p-button-sm custom-shadow" name="disminuirBoton"
-                    (onClick)="disminuirCantidad($event)">
-                </p-button>
+  <!-- Imagen -->
+  <div class="ps-image-wrap">
+    <img
+      *ngIf="productoSeleccionado.Imagenes.length"
+      [src]="apiUrl + '/uploads/producto-imagenes/' + productoSeleccionado.Imagenes[0]"
+      class="ps-image" alt="Imagen del producto"
+    />
+    <img
+      *ngIf="!productoSeleccionado.Imagenes.length"
+      src="assets/no-imagen.jpg"
+      class="ps-image"
+    />
+  </div>
 
-                <input type="number" [(ngModel)]="cantidad" (ngModelChange)="cambiarCantidad($event)"
-                    class="cantidad-input" min="1"
-                    style="width: 80px; text-align: center; margin: 0 6px; font-size: 1rem;" name="cantidad"
-                    tabindex="0">
+  <!-- Info + controles -->
+  <form #form="ngForm" novalidate class="ps-info">
 
-                <p-button type="button" icon="pi pi-plus" class="botones"
-                    styleClass="p-button-rounded p-button-success p-button-sm custom-shadow" name="aumentarBoton"
-                    (onClick)="aumentarCantidad($event)">
-                </p-button>
-            </div>
+    <div class="ps-product-name">{{ productoSeleccionado.Descripcion }}</div>
 
-
-            <p-button label="Aceptar" severity="success" name="aceptar" icon="pi pi-check" class="mt-2 boton-aceptar"
-                (click)="aceptar()" [disabled]="!form.valid">
-            </p-button>
-
-            <p-button label="Cancelar" severity="danger" name="cancelar" icon="pi pi-times" class="mt-2"
-                (click)="cancelar()"></p-button>
-        </form>
+    <!-- Precios -->
+    <div class="ps-prices">
+      <div class="ps-price-block">
+        <span class="ps-price-label">Precio unitario</span>
+        <span class="ps-price-value">${{ productoSeleccionado.PrecioVenta }}</span>
+      </div>
+      <div class="ps-divider"></div>
+      <div class="ps-price-block accent">
+        <span class="ps-price-label">Subtotal</span>
+        <span class="ps-price-value large">${{ subtotal }}</span>
+      </div>
     </div>
+
+    <!-- Cantidad -->
+    <div class="ps-qty-section">
+      <span class="ps-qty-label">Cantidad</span>
+      <div class="ps-qty-row">
+        <button type="button" class="ps-qty-btn minus" name="disminuirBoton" (click)="disminuirCantidad($event)">
+          <i class="pi pi-minus"></i>
+        </button>
+        <input
+          type="number"
+          [(ngModel)]="cantidad"
+          (ngModelChange)="cambiarCantidad($event)"
+          class="ps-qty-input"
+          min="1"
+          name="cantidad"
+          tabindex="0"
+        />
+        <button type="button" class="ps-qty-btn plus" name="aumentarBoton" (click)="aumentarCantidad($event)">
+          <i class="pi pi-plus"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div class="ps-actions">
+      <button type="button" class="ps-btn ps-btn-cancel" name="cancelar" (click)="cancelar()">
+        <i class="pi pi-times"></i>
+        Cancelar
+      </button>
+      <button type="button" class="ps-btn ps-btn-accept" name="aceptar" (click)="aceptar()" [disabled]="!form.valid">
+        <i class="pi pi-check"></i>
+        Agregar al carrito
+      </button>
+    </div>
+
+  </form>
 </div>

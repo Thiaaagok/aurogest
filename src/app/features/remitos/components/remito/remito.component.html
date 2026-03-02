@@ -1,0 +1,95 @@
+<div class="botonera-flotante">
+    <div class="botonera-contenedor">
+        <button mat-mini-fab color="accent" matTooltip="Cargar los remitos" (click)="obtenerRemitos()">
+            <i class="fa-solid fa-arrows-rotate"></i>
+        </button>
+    </div>
+</div>
+<div class="card">
+    <div class="font-semibold text-xl mb-4">Remitos</div>
+    <p-table #grillaVentas [value]="remitos" dataKey="Id" [rows]="10" [loading]="cargando" [rowHover]="true"
+        [showGridlines]="true" [paginator]="true" responsiveLayout="scroll">
+        <ng-template #caption>
+            <div class="flex flex-wrap items-center gap-2">
+                <!-- Rango de fechas -->
+                <div class="flex flex-col w-65 gap-0">
+                    <p-floatlabel variant="in" class="w-full">
+                        <p-datepicker [(ngModel)]="fechasRango" inputId="rangoFechas" showIcon iconDisplay="input"
+                            selectionMode="range" [readonlyInput]="true" class="w-full"></p-datepicker>
+                        <label for="rangoFechas">Rango de fechas</label>
+                    </p-floatlabel>
+                </div>
+
+                <!-- Usuario -->
+                <div class="flex flex-col w-65 gap-0">
+                    <p-floatlabel class="w-full relative" variant="in">
+                        <p-select [(ngModel)]="Usuario" inputId="usuario" [options]="usuariosCombo"
+                            optionLabel="Usuario" class="w-full" variant="filled" name="usuario" [filter]="true"
+                            [showClear]="true"></p-select>
+                        <label for="usuario">Usuario</label>
+                    </p-floatlabel>
+                </div>
+
+                <!-- Venta -->
+                <div class="flex flex-col w-65 gap-0">
+                    <p-floatlabel class="w-full relative" variant="in">
+                        <p-select [(ngModel)]="Venta" inputId="venta" [options]="ventasCombo"
+                            optionLabel="Codigo" class="w-full" variant="filled" name="venta" [filter]="true"
+                            [showClear]="true"></p-select>
+                        <label for="Venta">Venta</label>
+                    </p-floatlabel>
+                </div>
+
+                <div class="flex items-end mt-1">
+                    <button pButton type="button" label="Buscar" icon="pi pi-search" class="p-button-outlined"
+                        (click)="obtenerRemitos()"></button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #header>
+            <tr>
+                <th style="min-width: 8rem">
+                    <div class="flex justify-between items-center">Número</div>
+                </th>
+                <th style="min-width: 12rem">
+                    <div class="flex justify-between items-center">Fecha Emisión</div>
+                </th>
+                <th style="min-width: 10rem">
+                    <div class="flex justify-between items-center">Estado</div>
+                </th>
+                <th style="min-width: 10rem">
+                    <div class="flex justify-between items-center">Total</div>
+                </th>
+                <th style="min-width: 14rem">
+                    <div class="flex justify-between items-center">Observaciones</div>
+                </th>
+            </tr>
+        </ng-template>
+
+        @if(!cargando){
+        <ng-template #body let-remito>
+            <tr class="cursor-pointer">
+                <td>{{ remito.numero }}</td>
+                <td>{{ remito.fechaEmision | date: 'dd/MM/yyyy' }}</td>
+                <td>
+                    <p-tag [value]="remito.estado"
+                        [severity]="remito.estado === 'EMITIDO' ? 'success' : remito.estado === 'PENDIENTE' ? 'warn' : 'danger'">
+                    </p-tag>
+                </td>
+                <td>{{ remito.venta.total | currency:'ARS':'symbol' }}</td>
+                <td>{{ remito.observaciones ?? '-' }}</td>
+            </tr>
+        </ng-template>
+        }
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="8">No se encontraron remitos.</td>
+            </tr>
+        </ng-template>
+        <ng-template #loadingbody>
+            <tr>
+                <td colspan="8">Cargando remitos...</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

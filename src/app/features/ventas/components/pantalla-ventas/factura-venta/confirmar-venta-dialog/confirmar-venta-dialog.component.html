@@ -1,0 +1,69 @@
+<div class="cvd-wrap">
+
+  <div class="cvd-step" *ngIf="paso === 'confirmar'">
+    <div class="cvd-icon warning">
+      <i class="pi pi-exclamation-triangle"></i>
+    </div>
+    <h2 class="cvd-title">Finalizar venta</h2>
+    <p class="cvd-desc">
+      Estás a punto de registrar la venta. Una vez confirmada,
+      <strong>no podrás modificar los productos ni los importes.</strong>
+      ¿Deseás continuar?
+    </p>
+    <div class="cvd-actions">
+      <button class="cvd-btn secondary" (click)="cancelar()">
+        <i class="pi pi-times"></i> Cancelar
+      </button>
+      <button class="cvd-btn primary" (click)="confirmar()">
+        <i class="pi pi-check"></i> Confirmar venta
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ PASO 2: Tipo de emisión ══ -->
+  <div class="cvd-step" *ngIf="paso === 'emision'">
+    <div class="cvd-icon success">
+      <i class="pi pi-check-circle"></i>
+    </div>
+    <h2 class="cvd-title">¡Venta registrada!</h2>
+    <p class="cvd-desc">Seleccioná qué documento querés emitir para esta venta.</p>
+
+    <div class="cvd-options">
+
+      <button class="cvd-option" (click)="seleccionarEmision('ninguno')">
+        <div class="cvd-option-icon neutral">
+          <i class="pi pi-ban"></i>
+        </div>
+        <div class="cvd-option-info">
+          <span class="cvd-option-title">No emitir nada</span>
+          <span class="cvd-option-desc">Registrar solo en el sistema</span>
+        </div>
+        <i class="pi pi-chevron-right cvd-option-arrow"></i>
+      </button>
+
+      <button class="cvd-option" (click)="seleccionarEmision('remito')">
+        <div class="cvd-option-icon blue">
+          <i class="pi pi-file"></i>
+        </div>
+        <div class="cvd-option-info">
+          <span class="cvd-option-title">Emitir remito</span>
+          <span class="cvd-option-desc">Comprobante interno de entrega</span>
+        </div>
+        <i class="pi pi-chevron-right cvd-option-arrow"></i>
+      </button>
+
+      <button class="cvd-option" (click)="seleccionarEmision('factura')">
+        <div class="cvd-option-icon green">
+          <i class="pi pi-receipt"></i>
+        </div>
+        <div class="cvd-option-info">
+          <span class="cvd-option-title">Emitir factura AFIP</span>
+          <span class="cvd-option-desc">Comprobante fiscal electrónico</span>
+        </div>
+        <i class="pi pi-chevron-right cvd-option-arrow"></i>
+      </button>
+
+    </div>
+  </div>
+
+</div>

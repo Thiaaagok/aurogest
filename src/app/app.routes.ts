@@ -18,6 +18,7 @@ import { AuthGuard } from './features/auth/guards/auth.guard';
 import { HistoricoVentas } from './features/ventas/components/historico-ventas/historico-ventas';
 import { Permisos } from './features/common/enums/roles.enum';
 import { RolesUsuario } from './features/roles-usuario/components/roles-usuario';
+import { RemitoVentaComponent } from './features/remitos/components/remito/remito.component';
 
 export const routes: Routes = [
   {
@@ -119,4 +120,9 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: { permiso: Permisos.VER_HISTORICO_VENTAS }
   },
+  {
+    path: 'remitos',
+    component: RemitoVentaComponent,
+    canActivate: [AuthGuard],
+  }
 ];

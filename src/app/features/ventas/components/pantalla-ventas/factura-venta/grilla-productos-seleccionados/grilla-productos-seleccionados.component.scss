@@ -2,16 +2,85 @@
   display: block;
 }
 
-
-::ng-deep p-table tbody tr td {
-  padding-top: 2.5px !important;
-  padding-bottom: 2.5px !important;
+/* ── Empty state ──────────────────────────────────────── */
+.grilla-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: 3rem 1.5rem;
+  text-align: center;
 }
 
+.grilla-empty-icon {
+  font-size: 2.5rem;
+  color: var(--ag-border);
+}
+
+.grilla-empty-text {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--ag-text-muted);
+}
+
+.grilla-empty-hint {
+  font-size: .8rem;
+  color: var(--ag-border);
+}
+
+/* ── Table overrides ──────────────────────────────────── */
+::ng-deep .grilla-table {
+  .p-datatable-thead > tr > th {
+    padding: .6rem 1rem !important;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    font-weight: 700;
+    color: var(--ag-text-muted);
+    background: var(--ag-surface3);
+    border-bottom: 2px solid var(--ag-border) !important;
+    border-top: none !important;
+  }
+
+  .p-datatable-tbody > tr > td {
+    padding: .55rem 1rem !important;
+    border-bottom: 1px solid var(--ag-border) !important;
+    font-size: .875rem;
+  }
+}
+
+.grilla-row {
+  transition: background .12s;
+
+  &:hover td {
+    background: var(--ag-surface3) !important;
+  }
+}
+
+.col-center { text-align: center !important; }
+.col-descripcion { min-width: 160px; }
+.col-precio { min-width: 100px; }
+
+.item-descripcion {
+  font-weight: 500;
+  color: var(--ag-text);
+}
+
+.precio-unitario {
+  color: var(--ag-text-muted);
+  font-size: .84rem;
+}
+
+.precio-subtotal {
+  font-weight: 700;
+  color: var(--ag-text);
+}
+
+/* ── Qty control ──────────────────────────────────────── */
 .qty-control {
   display: inline-flex;
   align-items: center;
-  gap: 0;
   background: var(--ag-surface3);
   border: 1px solid var(--ag-border);
   border-radius: 8px;
@@ -19,8 +88,8 @@
 }
 
 .qty-btn {
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border: none;
   background: transparent;
   color: var(--ag-text-muted);
@@ -28,20 +97,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: .7rem;
-  transition: background .15s, color .15s;
+  font-size: .65rem;
+  transition: background .13s, color .13s;
 
-  &:hover { background: var(--ag-surface2); color: var(--ag-text); }
-
+  &:hover { background: var(--ag-surface2); }
   &.minus:hover { color: #f87171; }
-  &.plus:hover  { color: #4ade80; }
+  &.plus:hover  { color: var(--ag-accent-light); }
 }
 
 .qty-value {
-  min-width: 28px;
+  min-width: 32px;
   text-align: center;
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
   color: var(--ag-text);
   padding: 0 4px;
   border-left: 1px solid var(--ag-border);
@@ -49,32 +117,44 @@
   line-height: 28px;
 }
 
-/* ── Botón eliminar ──────────────────────────────────── */
+/* ── Delete btn ───────────────────────────────────────── */
 .delete-btn {
-  width: 34px;
-  height: 34px;
-  border: 1px solid rgba(239, 68, 68, .25);
-  background: rgba(239, 68, 68, .08);
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(239, 68, 68, .2);
+  background: rgba(239, 68, 68, .06);
   border-radius: 7px;
   color: #f87171;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: .8rem;
+  font-size: .78rem;
   transition: all .15s;
 
   &:hover {
-    background: rgba(239, 68, 68, .2);
-    border-color: rgba(239, 68, 68, .5);
-    transform: scale(1.08);
+    background: rgba(239, 68, 68, .18);
+    border-color: rgba(239, 68, 68, .45);
+    transform: scale(1.1);
   }
 }
 
-::ng-deep .p-datatable-tbody > tr > td {
-  padding: .500rem .800rem  !important;
+/* ── Total row ────────────────────────────────────────── */
+.grilla-total-row td {
+  background: var(--ag-surface3) !important;
+  border-top: 2px solid var(--ag-border) !important;
+  padding: .7rem 1rem !important;
 }
 
-::ng-deep .p-datatable-thead > tr > th {
-  padding: .500rem .800rem !important;
+.total-label {
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--ag-text-muted);
+}
+
+.total-value {
+  font-size: 2.3rem;
+  font-weight: 800;
 }
