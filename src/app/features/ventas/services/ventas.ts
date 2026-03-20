@@ -1,20 +1,19 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { VentaItem, VentaModel } from '../models/venta.model';
+import { VentaItem, VentaModel, VentasPorMes } from '../models/venta.model';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Config } from '../../common/config/config';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VentasService {
-
   private readonly apiUrl = `${Config.APIURL}/ventas`;
 
   public ventasItem = signal<VentaItem[]>([]);
   private http = inject(HttpClient);
 
-  constructor() { }
+  constructor() {}
 
   obtenerPorId(id: string): Observable<VentaModel> {
     return this.http.get<VentaModel>(`${this.apiUrl}/${id}`);
@@ -25,7 +24,6 @@ export class VentasService {
     fechaHasta?: string;
     productoId?: string;
   }): Observable<VentaModel[]> {
-
     let httpParams = new HttpParams();
 
     if (params.fechaDesde) {
@@ -38,7 +36,9 @@ export class VentasService {
       httpParams = httpParams.set('productoId', params.productoId);
     }
 
-    return this.http.get<VentaModel[]>(`${this.apiUrl}/buscar`, { params: httpParams });
+    return this.http.get<VentaModel[]>(`${this.apiUrl}/buscar`, {
+      params: httpParams,
+    });
   }
 
   crear(venta: Partial<VentaModel>): Observable<VentaModel> {
@@ -46,5 +46,9 @@ export class VentasService {
     venta.UsuarioId = usuario.Id;
 
     return this.http.post<VentaModel>(this.apiUrl, venta);
+  }
+
+  obtenerVentasMesActual(): Observable<VentasPorMes> {
+    return this.http.get<VentasPorMes>(`${this.apiUrl}/mes-actual`);
   }
 }

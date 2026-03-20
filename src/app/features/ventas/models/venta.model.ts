@@ -1,10 +1,9 @@
-import { ProductoStock } from "../../stock/models/producto-stock.model";
-import { UsuarioModel } from "../../usuarios/models/usuario.model";
 import { v4 as uuid } from 'uuid';
 
 export class VentaModel {
     Id: string;
     Fecha: Date;
+    Codigo: number;
     Total: number;
     Items: VentaItem[];
     UsuarioId: string;
@@ -39,3 +38,19 @@ export class ProductoStockLoteVendido {
     PrecioUnitarioCompra: number;
     Subtotal: number;
 }
+
+export class VentaPorDia {
+  Dia: string;
+  Monto: number;
+}
+
+export class VentasPorMes {
+  Anio: number;
+  Mes: number;
+  TotalMonto: number;
+  VariacionMonto: number;
+  VariacionCantidad: number;
+  TotalCantidad: number;
+  PorDia: VentaPorDia[];
+}
+

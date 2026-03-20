@@ -1,1 +1,280 @@
-<p>home works!</p>,
+<p-toast position="top-right" />
+
+<div class="dashboard-wrapper">
+
+  <!-- ══════════ HEADER ══════════ -->
+  <header class="dash-header">
+    <div class="header-left">
+      <span class="header-logo">
+        <i class="pi pi-chart-bar"></i>
+      </span>
+      <div>
+        <h1 class="header-title">Panel de Control</h1>
+        <span class="header-sub">{{ mesActual | titlecase }}</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="clock">{{ horaActual }}</span>
+      <p-button
+        icon="pi pi-refresh"
+        label="Actualizar"
+        severity="secondary"
+        [outlined]="true"
+        size="small"
+        (onClick)="refreshAll()"
+        pTooltip="Recargar todos los datos"
+      />
+    </div>
+  </header>
+
+  <!-- ══════════ KPI ROW ══════════ -->
+  <section class="kpi-row">
+
+    <!-- Ventas del mes — monto -->
+    <div class="kpi-card kpi-ventas">
+      <div class="kpi-icon"><i class="pi pi-dollar"></i></div>
+      <div class="kpi-body">
+        <span class="kpi-label">Facturación del mes</span>
+        <ng-container *ngIf="!loadingVentas; else skelKpi">
+          <span class="kpi-value">{{ formatCurrency(venta.TotalMonto) }}</span>
+          <span class="kpi-badge" [class.positive]="venta.VariacionMonto >= 0" [class.negative]="venta.VariacionMonto < 0">
+            <i [class]="venta.VariacionMonto >= 0 ? 'pi pi-arrow-up' : 'pi pi-arrow-down'"></i>
+            {{ venta.VariacionMonto | number:'1.1-1' }}%
+          </span>
+        </ng-container>
+        <ng-template #skelKpi>
+          <p-skeleton width="140px" height="32px" styleClass="mt-1" />
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Ventas del mes — cantidad -->
+    <div class="kpi-card kpi-pedidos">
+      <div class="kpi-icon"><i class="pi pi-shopping-cart"></i></div>
+      <div class="kpi-body">
+        <span class="kpi-label">Ventas del mes</span>
+        <ng-container *ngIf="!loadingVentas; else skelKpi2">
+          <span class="kpi-value">{{ venta.TotalCantidad | number }}</span>
+          <span class="kpi-badge" [class.positive]="venta.VariacionCantidad >= 0" [class.negative]="venta.VariacionCantidad < 0">
+            <i [class]="venta.VariacionCantidad >= 0 ? 'pi pi-arrow-up' : 'pi pi-arrow-down'"></i>
+            {{ venta.VariacionCantidad | number:'1.1-1' }}%
+          </span>
+        </ng-container>
+        <ng-template #skelKpi2>
+          <p-skeleton width="80px" height="32px" styleClass="mt-1" />
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Bajo stock -->
+    <!-- <div class="kpi-card kpi-stock">
+      <div class="kpi-icon"><i class="pi pi-exclamation-circle"></i></div>
+      <div class="kpi-body">
+        <span class="kpi-label">Productos bajo stock</span>
+        <ng-container *ngIf="!loadingStock; else skelKpi3">
+          <span class="kpi-value">{{ productosBajoStock.length }}</span>
+          <span class="kpi-badge negative">Requieren atención</span>
+        </ng-container>
+        <ng-template #skelKpi3>
+          <p-skeleton width="60px" height="32px" styleClass="mt-1" />
+        </ng-template>
+      </div>
+    </div> -->
+
+    <!-- Actividad no leída -->
+    <!-- <div class="kpi-card kpi-actividad">
+      <div class="kpi-icon"><i class="pi pi-bell"></i></div>
+      <div class="kpi-body">
+        <span class="kpi-label">Actividad reciente</span>
+        <ng-container *ngIf="!loadingActividad; else skelKpi4">
+          <span class="kpi-value">{{ actividadNoLeida }}</span>
+          <span class="kpi-badge neutral">Sin leer</span>
+        </ng-container>
+        <ng-template #skelKpi4>
+          <p-skeleton width="60px" height="32px" styleClass="mt-1" />
+        </ng-template>
+      </div>
+    </div> -->
+
+  </section>
+
+  <!-- ══════════ MAIN GRID ══════════ -->
+  <section class="main-grid">
+
+    <!-- ─── Columna izquierda ─── -->
+    <div class="col-left">
+
+      <!-- Gráfico de ventas -->
+      <p-card styleClass="dash-card chart-card">
+        <ng-template pTemplate="header">
+          <div class="card-header">
+            <span class="card-title"><i class="pi pi-chart-line"></i> Ventas por día</span>
+            <span class="card-sub">{{ mesActual | titlecase }}</span>
+          </div>
+        </ng-template>
+        <div class="chart-wrapper">
+          <ng-container *ngIf="!loadingVentas && chartData; else skelChart">
+            <p-chart type="line" [data]="chartData" [options]="chartOptions" height="220px" />
+          </ng-container>
+          <ng-template #skelChart>
+            <p-skeleton width="100%" height="220px" />
+          </ng-template>
+        </div>
+      </p-card>
+
+      <!-- Tabla bajo stock -->
+      <p-card styleClass="dash-card stock-card">
+        <ng-template pTemplate="header">
+          <div class="card-header">
+            <span class="card-title"><i class="pi pi-box"></i> Bajo stock</span>
+            <p-tag value="Alerta" severity="danger" [rounded]="true" />
+          </div>
+        </ng-template>
+
+        <!-- <ng-container *ngIf="!loadingStock; else skelTable">
+          <p-table
+            [value]="productosBajoStock"
+            [scrollable]="true"
+            scrollHeight="260px"
+            styleClass="stock-table"
+            [rowHover]="true"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Producto</th>
+                <th style="width:90px">Stock</th>
+                <th style="width:110px">Estado</th>
+                <th style="width:130px">Nivel</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-p>
+              <tr>
+                <td>
+                  <div class="product-cell">
+                    <span class="product-name">{{ p.nombre }}</span>
+                    <span class="product-sku">{{ p.sku }}</span>
+                  </div>
+                </td>
+                <td>
+                  <span class="stock-num" [class.stock-zero]="p.stock === 0">
+                    {{ p.stock }} / {{ p.minimo }}
+                  </span>
+                </td>
+                <td>
+                  <p-tag
+                    [value]="getStockLabel(p)"
+                    [severity]="getStockSeverity(p)"
+                    [rounded]="true"
+                  />
+                </td>
+                <td>
+                  <p-progressBar
+                    [value]="getStockProgress(p)"
+                    [showValue]="false"
+                    styleClass="stock-bar"
+                    [class.bar-danger]="getStockSeverity(p) === 'danger'"
+                    [class.bar-warn]="getStockSeverity(p) === 'warn'"
+                  />
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </ng-container> -->
+        <ng-template #skelTable>
+          <div class="skel-list">
+            <p-skeleton *ngFor="let i of [1,2,3,4]" height="42px" styleClass="mb-2" />
+          </div>
+        </ng-template>
+      </p-card>
+
+    </div>
+
+    <!-- ─── Columna derecha ─── -->
+    <div class="col-right">
+
+      <!-- Cotización dólar -->
+      <p-card styleClass="dash-card dolar-card">
+        <ng-template pTemplate="header">
+          <div class="card-header">
+            <span class="card-title"><i class="pi pi-money-bill"></i> Cotización del dólar</span>
+            <span class="card-sub live-dot"><span class="dot"></span> En vivo</span>
+          </div>
+        </ng-template>
+
+        <ng-container *ngIf="!loadingDolar; else skelDolar">
+          <div class="dolar-grid">
+            <div class="dolar-item" *ngFor="let c of cotizaciones">
+              <div class="dolar-nombre">{{ c.Nombre }}</div>
+              <div class="dolar-precios">
+                <div class="dolar-precio">
+                  <span class="dp-label">Compra</span>
+                  <span class="dp-valor">${{ c.Compra | number:'1.0-0' }}</span>
+                </div>
+                <div class="dolar-divider"></div>
+                <div class="dolar-precio">
+                  <span class="dp-label">Venta</span>
+                  <span class="dp-valor">${{ c.Venta | number:'1.0-0' }}</span>
+                </div>
+              </div>
+              <div class="dolar-var" [class.var-up]="c.Variacion >= 0" [class.var-down]="c.Variacion < 0">
+                <i [class]="c.Variacion >= 0 ? 'pi pi-trending-up' : 'pi pi-trending-down'"></i>
+                {{ c.Variacion >= 0 ? '+' : '' }}{{ c.Variacion | number:'1.2-2' }}%
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #skelDolar>
+          <div class="skel-list">
+            <p-skeleton *ngFor="let i of [1,2,3,4,5]" height="56px" styleClass="mb-2" />
+          </div>
+        </ng-template>
+      </p-card>
+
+      <!-- Actividad del sistema -->
+      <!-- <p-card styleClass="dash-card actividad-card">
+        <ng-template pTemplate="header">
+          <div class="card-header">
+            <span class="card-title">
+              <i class="pi pi-bell"></i> Actividad del sistema
+              <p-badge *ngIf="actividadNoLeida > 0" [value]="actividadNoLeida.toString()" severity="danger" styleClass="ml-1" />
+            </span>
+          </div>
+        </ng-template>
+
+        <ng-container *ngIf="!loadingActividad; else skelActividad">
+          <p-scrollPanel styleClass="actividad-scroll" [style]="{ height: '340px' }">
+            <div class="actividad-list">
+              <div
+                class="actividad-item"
+                *ngFor="let item of actividad"
+                [class.no-leido]="!item.leido"
+                (click)="marcarLeido(item)"
+              >
+                <div
+                  class="act-icon"
+                  [style.background]="getActividadBg(item.tipo)"
+                  [style.color]="getActividadColor(item.tipo)"
+                >
+                  <i [class]="getActividadIcon(item.tipo)"></i>
+                </div>
+                <div class="act-body">
+                  <div class="act-titulo">{{ item.titulo }}</div>
+                  <div class="act-desc">{{ item.descripcion }}</div>
+                  <div class="act-hora">{{ item.hora }}</div>
+                </div>
+                <span *ngIf="!item.leido" class="unread-dot"></span>
+              </div>
+            </div>
+          </p-scrollPanel>
+        </ng-container>
+        <ng-template #skelActividad>
+          <div class="skel-list">
+            <p-skeleton *ngFor="let i of [1,2,3,4,5]" height="64px" styleClass="mb-2" />
+          </div>
+        </ng-template>
+      </p-card> -->
+
+    </div>
+
+  </section>
+</div>

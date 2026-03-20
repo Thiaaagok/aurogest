@@ -1,0 +1,321 @@
+.dv-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 0.25rem;
+  font-family: "DM Sans", sans-serif;
+}
+
+// ── KPIs ────────────────────────────────────────────────────────
+.dv-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.dv-kpi {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: var(--ag-surface2);
+  border: 1px solid var(--ag-border);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: var(--ag-border-h);
+  }
+
+  > i {
+    font-size: 1rem;
+    color: var(--ag-text-muted);
+    flex-shrink: 0;
+  }
+
+  &.dv-kpi-total {
+    border-color: var(--ag-accent-glow);
+    background: var(--ag-accent-dim);
+
+    > i {
+      color: var(--ag-accent-light);
+    }
+    .dv-kpi-value {
+      color: var(--ag-accent-light);
+      font-size: 1.05rem;
+    }
+  }
+}
+
+.dv-kpi-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.dv-kpi-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ag-text-muted);
+  font-weight: 500;
+}
+
+.dv-kpi-value {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ag-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ── Margen ──────────────────────────────────────────────────────
+.dv-margen-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--ag-surface2);
+  border: 1px solid var(--ag-border);
+  border-radius: 10px;
+  padding: 0.75rem 1.25rem;
+  flex-wrap: wrap;
+}
+
+.dv-margen-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.dv-margen-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ag-text-muted);
+}
+
+.dv-margen-value {
+  font-size: 0.92rem;
+  font-weight: 700;
+
+  &.costo {
+    color: var(--ag-text-muted);
+  }
+  &.venta {
+    color: var(--ag-text);
+  }
+  &.margen {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    &.positivo {
+      color: #22c55e;
+    }
+    &.negativo {
+      color: #ef4444;
+    }
+  }
+}
+
+.dv-margen-sep {
+  color: var(--ag-text-faint);
+  font-size: 1rem;
+}
+
+// ── Items title ─────────────────────────────────────────────────
+.dv-items-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ag-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  i {
+    color: var(--ag-accent);
+  }
+}
+
+// ── Items ───────────────────────────────────────────────────────
+.dv-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.dv-item {
+  background: var(--ag-surface2);
+  border: 1px solid var(--ag-border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: var(--ag-border-h);
+  }
+}
+
+.dv-item-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;  // ← más padding
+}
+
+.dv-item-index {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--ag-accent-dim);
+  color: var(--ag-accent-light);
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.dv-item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dv-item-nombre {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ag-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dv-item-desc {
+  font-size: 0.78rem;  // ← más grande
+  color: var(--ag-text-muted);
+}
+
+.dv-item-stats {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;  // ← más separación
+  flex-shrink: 0;
+}
+.dv-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+
+  &.dv-stat-accent .dv-stat-value {
+    color: var(--ag-accent-light);
+    font-weight: 700;
+  }
+}
+
+.dv-stat-label {
+  font-size: 0.68rem;  // ← más grande
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ag-text-muted);
+}
+
+
+.dv-stat-value {
+  font-size: 0.95rem;  // ← más grande
+  font-weight: 600;
+  color: var(--ag-text);
+}
+
+// ── Lotes ───────────────────────────────────────────────────────
+.dv-lotes {
+  border-top: 1px solid var(--ag-border);
+  padding: 0.75rem 1.25rem 1rem;  // ← más padding
+  background: var(--ag-surface3);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.dv-lotes-title {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ag-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.25rem;
+
+  i {
+    color: var(--ag-accent);
+    font-size: 0.65rem;
+  }
+}
+
+.dv-lote {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.dv-lote-id {
+  font-size: 0.72rem;  // ← más visible
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--ag-text-muted);
+  background: var(--ag-surface2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--ag-border);
+}
+
+.dv-lote-stats {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  font-size: 0.82rem;  // ← más grande
+  color: var(--ag-text-muted);
+
+  strong { color: var(--ag-text); }
+}
+
+
+.dv-lote-subtotal strong {
+  color: var(--ag-accent-light);
+}
+
+// ── Empty ───────────────────────────────────────────────────────
+.dv-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  color: var(--ag-text-muted);
+  font-size: 0.85rem;
+  border: 1px dashed var(--ag-border);
+  border-radius: 10px;
+
+  i {
+    font-size: 1.2rem;
+  }
+}
+
+// ── Footer ──────────────────────────────────────────────────────
+.dv-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.25rem;
+}

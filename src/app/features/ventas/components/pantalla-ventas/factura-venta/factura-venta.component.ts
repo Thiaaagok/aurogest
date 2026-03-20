@@ -7,6 +7,12 @@ import { VentaModel } from '../../../models/venta.model';
 import { VentasService } from '../../../services/ventas';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ConfirmarVentaDialogComponent } from './confirmar-venta-dialog/confirmar-venta-dialog.component';
+import { RemitosService } from '../../../../remitos/services/remitos.service';
+import { CreateRemitoDto } from '../../../../remitos/models/remito.model';
+import {
+  DatosRemitoDialogComponent,
+  DatosRemitoEmision,
+} from './datos-remito-dialog/datos-remito-dialog.component';
 
 @Component({
   selector: 'app-factura-venta',
@@ -19,9 +25,9 @@ import { ConfirmarVentaDialogComponent } from './confirmar-venta-dialog/confirma
   styleUrl: './factura-venta.component.scss',
 })
 export class FacturaVentaComponent {
-
   private ventasService = inject(VentasService);
   private dialogService = inject(DialogService);
+  private remitoService = inject(RemitosService);
 
   finalizarVenta() {
     const dialog = this.dialogService.open(ConfirmarVentaDialogComponent, {
@@ -49,13 +55,12 @@ export class FacturaVentaComponent {
         nuevaVenta.UsuarioId = '123';
 
         this.ventasService.crear(nuevaVenta).subscribe({
-          next: () => {
+          next: (venta) => {
             this.ventasService.ventasItem.set([]);
 
-            // Acá manejás cada caso según lo que eligió
             switch (emision) {
               case 'remito':
-                // this.remitoService.generar(nuevaVenta);
+                this.abrirDialogDatosRemito(venta.Id);
                 break;
               case 'factura':
                 // this.afipService.emitir(nuevaVenta);
@@ -71,5 +76,32 @@ export class FacturaVentaComponent {
         });
       },
     );
+  }
+
+  private abrirDialogDatosRemito(ventaId: string) {
+    const dialog = this.dialogService.open(DatosRemitoDialogComponent, {
+      width: '480px',
+      height: 'fit-content',
+      modal: true,
+      header: undefined,
+      styleClass: 'backdrop-blur-sm !border-0 bg-transparent cvd-dialog',
+    });
+
+    dialog.onClose.subscribe((datos: DatosRemitoEmision | null) => {
+      if (datos === null) return;
+      const dto = new CreateRemitoDto();
+      dto.VentaId = ventaId;
+      dto.Observaciones = datos.observaciones;
+      dto.ReceptorNombre = datos.receptorNombre;
+      dto.ReceptorDireccion = datos.receptorDireccion;
+      dto.ReceptorCuit = datos.receptorCuit;
+
+      this.remitoService.crear(dto).subscribe({
+        next: (remito) => {
+          this.remitoService.imprimirRemito(remito.Id);
+        },
+        error: (err) => console.error(err),
+      });
+    });
   }
 }

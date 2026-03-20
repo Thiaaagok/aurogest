@@ -22,7 +22,7 @@ export class CompraItem {
   ProveedorId?: string;
   CompraId: string;
   ProductoId: string;
-  PrecioUnitarioCompra: number;
+  PrecioUnitario: number;
   Cantidad: number;
   Subtotal: number;
   Frontend: CompraItemFrontend;

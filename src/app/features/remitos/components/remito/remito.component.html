@@ -69,15 +69,11 @@
         @if(!cargando){
         <ng-template #body let-remito>
             <tr class="cursor-pointer">
-                <td>{{ remito.numero }}</td>
-                <td>{{ remito.fechaEmision | date: 'dd/MM/yyyy' }}</td>
-                <td>
-                    <p-tag [value]="remito.estado"
-                        [severity]="remito.estado === 'EMITIDO' ? 'success' : remito.estado === 'PENDIENTE' ? 'warn' : 'danger'">
-                    </p-tag>
-                </td>
-                <td>{{ remito.venta.total | currency:'ARS':'symbol' }}</td>
-                <td>{{ remito.observaciones ?? '-' }}</td>
+                <td>{{ remito.Numero }}</td>
+                <td>{{ remito.FechaEmision | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ remito.Estado }}</td>
+                <td>{{ remito.Total | currency:'ARS':'symbol' }}</td>
+                <td>{{ remito.Observaciones ?? '-' }}</td>
             </tr>
         </ng-template>
         }

@@ -1,0 +1,115 @@
+<div class="dv-wrap">
+
+  <!-- KPIs -->
+  <div class="dv-kpis">
+    <div class="dv-kpi">
+      <i class="pi pi-calendar"></i>
+      <div class="dv-kpi-body">
+        <span class="dv-kpi-label">Fecha</span>
+        <span class="dv-kpi-value">{{ venta.Fecha | date: 'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+    </div>
+    <div class="dv-kpi">
+      <i class="pi pi-user"></i>
+      <div class="dv-kpi-body">
+        <span class="dv-kpi-label">Usuario</span>
+        <span class="dv-kpi-value">{{ usuario }}</span>
+      </div>
+    </div>
+    <div class="dv-kpi">
+      <i class="pi pi-box"></i>
+      <div class="dv-kpi-body">
+        <span class="dv-kpi-label">Productos</span>
+        <span class="dv-kpi-value">{{ venta.Items?.length || 0 }}</span>
+      </div>
+    </div>
+    <div class="dv-kpi dv-kpi-total">
+      <i class="pi pi-wallet"></i>
+      <div class="dv-kpi-body">
+        <span class="dv-kpi-label">Total venta</span>
+        <span class="dv-kpi-value">{{ venta.Total | currency:'ARS':'symbol':'1.0-0' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Margen -->
+  <div class="dv-margen-row">
+    <div class="dv-margen-item">
+      <span class="dv-margen-label">Costo total</span>
+      <span class="dv-margen-value costo">{{ totalCosto | currency:'ARS':'symbol':'1.0-0' }}</span>
+    </div>
+    <div class="dv-margen-sep">→</div>
+    <div class="dv-margen-item">
+      <span class="dv-margen-label">Venta total</span>
+      <span class="dv-margen-value venta">{{ venta.Total | currency:'ARS':'symbol':'1.0-0' }}</span>
+    </div>
+    <div class="dv-margen-sep">→</div>
+    <div class="dv-margen-item">
+      <span class="dv-margen-label">Margen</span>
+      <span class="dv-margen-value margen" [class.positivo]="margen >= 0" [class.negativo]="margen < 0">
+        <i [class]="margen >= 0 ? 'pi pi-arrow-up' : 'pi pi-arrow-down'"></i>
+        {{ margen }}%
+      </span>
+    </div>
+  </div>
+
+  <!-- Items -->
+  <div class="dv-items-title">
+    <i class="pi pi-list"></i> Items vendidos
+  </div>
+
+  <div class="dv-items">
+    <div class="dv-item" *ngFor="let item of venta.Items; let i = index">
+
+      <!-- Cabecera del item -->
+      <div class="dv-item-header">
+        <div class="dv-item-index">{{ i + 1 }}</div>
+        <div class="dv-item-info">
+          <span class="dv-item-nombre">{{ obtenerNombreProducto(item.ProductoId) }}</span>
+          <span class="dv-item-desc" *ngIf="item.Descripcion">{{ item.Descripcion }}</span>
+        </div>
+        <div class="dv-item-stats">
+            <div class="dv-stat">
+                <span class="dv-stat-label">Cant.</span>
+                <span class="dv-stat-value">{{ item.Cantidad }}</span>
+            </div>
+            <div class="dv-stat">
+                <span class="dv-stat-label">P. venta unit.</span>
+                <span class="dv-stat-value">{{ item.PrecioUnitarioVenta | currency:'ARS':'symbol':'1.0-0' }}</span>
+            </div>
+            <div class="dv-stat dv-stat-accent">
+                <span class="dv-stat-label">Subtotal</span>
+                <span class="dv-stat-value">{{ item.Subtotal | currency:'ARS':'symbol':'1.0-0' }}</span>
+            </div>
+            </div>
+      </div>
+
+      <!-- Lotes afectados -->
+      <div class="dv-lotes" *ngIf="item.LotesVendidos?.length">
+        <div class="dv-lotes-title">
+          <i class="pi pi-layers"></i> Lotes afectados
+        </div>
+        <div class="dv-lote" *ngFor="let lote of item.LotesVendidos">
+          <span class="dv-lote-id">{{ lote.ProductoStockLoteId | slice:0:8 }}...</span>
+          <div class="dv-lote-stats">
+            <span>Vendido: <strong>{{ lote.CantidadVendida }}</strong></span>
+            <span>Restante: <strong>{{ lote.CantidadRestante }}</strong></span>
+            <span>Costo unit.: <strong>{{ lote.PrecioUnitarioCompra | currency:'ARS':'symbol':'1.0-0' }}</strong></span>
+            <span class="dv-lote-subtotal">Costo: <strong>{{ lote.Subtotal | currency:'ARS':'symbol':'1.0-0' }}</strong></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="dv-empty" *ngIf="!venta.Items?.length">
+      <i class="pi pi-inbox"></i> Sin items registrados
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="dv-footer">
+    <button pButton label="Cerrar" icon="pi pi-times" class="p-button-outlined p-button-sm" (click)="cerrar()"></button>
+  </div>
+
+</div>

@@ -62,3 +62,62 @@
 ::ng-deep .p-datepicker{
   width: 100% !important;
 }
+
+.detalle-compra {
+  padding: 1rem 1.5rem;
+  background: var(--ag-surface2);
+  border-top: 1px solid var(--ag-border);
+}
+
+.detalle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.detalle-titulo {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--ag-text);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  i { color: var(--ag-accent); }
+}
+
+.detalle-total {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ag-accent-light);
+}
+
+.item-producto {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-nombre {
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+::ng-deep .items-table {
+  .p-datatable-thead > tr > th {
+    background: var(--ag-surface3) !important;
+    font-size: 0.72rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: var(--ag-text-muted) !important;
+    padding: 0.5rem 0.75rem !important;
+  }
+
+  .p-datatable-tbody > tr > td {
+    font-size: 0.82rem !important;
+    padding: 0.5rem 0.75rem !important;
+    background: var(--ag-surface2) !important;
+    color: var(--ag-text) !important;
+    border-color: var(--ag-border) !important;
+  }
+}

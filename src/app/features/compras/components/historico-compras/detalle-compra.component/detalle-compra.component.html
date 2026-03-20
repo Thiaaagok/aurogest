@@ -1,0 +1,76 @@
+<div class="dc-wrap">
+
+  <!-- KPIs superiores -->
+  <div class="dc-kpis">
+    <div class="dc-kpi">
+      <i class="pi pi-calendar"></i>
+      <div class="dc-kpi-body">
+        <span class="dc-kpi-label">Fecha</span>
+        <span class="dc-kpi-value">{{ compra.Fecha | date: 'dd/MM/yyyy' }}</span>
+      </div>
+    </div>
+    <div class="dc-kpi">
+      <i class="pi pi-clock"></i>
+      <div class="dc-kpi-body">
+        <span class="dc-kpi-label">Hora</span>
+        <span class="dc-kpi-value">{{ compra.Fecha | date: 'HH:mm' }}</span>
+      </div>
+    </div>
+    <div class="dc-kpi">
+      <i class="pi pi-box"></i>
+      <div class="dc-kpi-body">
+        <span class="dc-kpi-label">Productos</span>
+        <span class="dc-kpi-value">{{ compra.Items?.length || 0 }}</span>
+      </div>
+    </div>
+    <div class="dc-kpi dc-kpi-total">
+      <i class="pi pi-wallet"></i>
+      <div class="dc-kpi-body">
+        <span class="dc-kpi-label">Total</span>
+        <span class="dc-kpi-value">{{ compra.Total | currency:'ARS':'symbol':'1.0-0' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Items -->
+  <div class="dc-items-title">
+    <i class="pi pi-list"></i> Items de la compra
+  </div>
+
+  <div class="dc-items">
+    <div class="dc-item" *ngFor="let item of compra.Items; let i = index">
+      <div class="dc-item-index">{{ i + 1 }}</div>
+      <div class="dc-item-info">
+        <span class="dc-item-nombre">{{ obtenerNombreProducto(item.ProductoId) }}</span>
+        <span class="dc-item-proveedor" *ngIf="obtenerNombreProveedor(item.ProveedorId) !== '—'">
+          <i class="pi pi-truck"></i> {{ obtenerNombreProveedor(item.ProveedorId) }}
+        </span>
+      </div>
+      <div class="dc-item-stats">
+        <div class="dc-stat">
+          <span class="dc-stat-label">Cantidad</span>
+          <span class="dc-stat-value">{{ item.Cantidad }}</span>
+        </div>
+        <div class="dc-stat">
+          <span class="dc-stat-label">Precio unit.</span>
+          <span class="dc-stat-value">{{ item.PrecioUnitario | currency:'ARS':'symbol':'1.0-0' }}</span>
+        </div>
+        <div class="dc-stat dc-stat-accent">
+          <span class="dc-stat-label">Subtotal</span>
+          <span class="dc-stat-value">{{ item.Subtotal | currency:'ARS':'symbol':'1.0-0' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dc-empty" *ngIf="!compra.Items?.length">
+      <i class="pi pi-inbox"></i>
+      Sin items registrados
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="dc-footer">
+    <button pButton label="Cerrar" icon="pi pi-times" class="p-button-outlined p-button-sm" (click)="cerrar()"></button>
+  </div>
+
+</div>

@@ -62,3 +62,13 @@
 ::ng-deep .p-datepicker{
   width: 100% !important;
 }
+
+.venta-codigo {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ag-accent-light);
+  background: var(--ag-accent-dim);
+  padding: 2px 8px;
+  border-radius: 6px;
+}

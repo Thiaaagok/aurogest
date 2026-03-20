@@ -10,6 +10,8 @@ import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
 import { FormsModule } from '@angular/forms';
+import { DialogService } from 'primeng/dynamicdialog';
+import { DetalleVentaComponent } from './detalle-venta.component/detalle-venta.component';
 
 @Component({
   selector: 'app-historico-ventas',
@@ -24,13 +26,12 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './historico-ventas.scss',
 })
 export class HistoricoVentas {
-
   cargando: boolean;
   fechasRango: Date[] = [];
   Usuario: UsuarioModel;
   Producto: ProductoModel;
 
-  ventas: VentaModel[]
+  ventas: VentaModel[];
   usuariosCombo: UsuarioModel[] = [];
   productosCombo: ProductoModel[] = [];
 
@@ -38,8 +39,7 @@ export class HistoricoVentas {
   private productosService = inject(ProductosService);
   private ventasService = inject(VentasService);
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
     this.fechasRango[0] = new Date();
@@ -48,7 +48,6 @@ export class HistoricoVentas {
     this.cargarProductosCombo();
     this.obtenerVentas();
   }
-
 
   obtenerVentas() {
     if (!this.fechasRango[0] || !this.fechasRango[1]) return;
@@ -80,31 +79,46 @@ export class HistoricoVentas {
   }
 
   buscarUsuarioPorVenta(venta: VentaModel) {
-    return this.usuariosCombo.find(usuario => usuario.Id == venta.UsuarioId);
+    return this.usuariosCombo.find((usuario) => usuario.Id == venta.UsuarioId);
   }
 
   cargarUsuariosCombo() {
     this.usuariosService.obtenerTodos().subscribe({
       next: (response: UsuarioModel[]) => {
-        this.usuariosCombo = response.filter(usuario => usuario.Activo);
+        this.usuariosCombo = response.filter((usuario) => usuario.Activo);
       },
       error: (err) => {
         console.log(err);
       },
-      complete: () => { },
+      complete: () => {},
     });
   }
 
   cargarProductosCombo() {
-    this.productosService.obtenerTodos()
-      .subscribe({
-        next: (response: ProductoModel[]) => {
-          this.productosCombo = response.filter(producto => producto.Activo);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-        complete: () => { },
-      });
+    this.productosService.obtenerTodos().subscribe({
+      next: (response: ProductoModel[]) => {
+        this.productosCombo = response.filter((producto) => producto.Activo);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {},
+    });
+  }
+
+  private dialogService = inject(DialogService);
+
+  verDetalle(venta: VentaModel): void {
+    this.dialogService.open(DetalleVentaComponent, {
+      header: `Venta #${venta.Codigo} — ${new Date(venta.Fecha).toLocaleDateString('es-AR')}`,
+      width: '65%',
+      data: {
+        venta,
+        usuarios: this.usuariosCombo,
+        productos: this.productosCombo,
+      },
+      modal: true,
+      styleClass: 'backdrop-blur-sm !border-0',
+    });
   }
 }

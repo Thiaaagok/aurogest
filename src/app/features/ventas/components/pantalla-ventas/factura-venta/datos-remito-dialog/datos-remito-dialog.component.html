@@ -1,0 +1,43 @@
+<div class="drd-wrap">
+
+  <div class="drd-step">
+    <div class="drd-icon blue">
+      <i class="pi pi-file"></i>
+    </div>
+    <h2 class="drd-title">Datos del remito</h2>
+    <p class="drd-desc">Todos los campos son opcionales. Podés omitirlos y crear el remito de todas formas.</p>
+
+    <div class="drd-form">
+      <div class="drd-field">
+        <label>Receptor</label>
+        <input pInputText [(ngModel)]="receptorNombre" placeholder="Nombre o razón social" />
+      </div>
+      <div class="drd-field">
+        <label>CUIT</label>
+        <input pInputText [(ngModel)]="receptorCuit" placeholder="20-12345678-9" />
+      </div>
+      <div class="drd-field">
+        <label>Dirección</label>
+        <input pInputText [(ngModel)]="receptorDireccion" placeholder="Calle 123, Ciudad" />
+      </div>
+      <div class="drd-field">
+        <label>Observaciones</label>
+        <textarea pInputTextarea [(ngModel)]="observaciones"
+                  rows="3" placeholder="Notas adicionales..."></textarea>
+      </div>
+    </div>
+
+    <div class="drd-actions">
+      <button class="drd-btn secondary" (click)="cancelar()">
+        <i class="pi pi-times"></i> Cancelar
+      </button>
+      <button class="drd-btn neutral" (click)="omitir()">
+        <i class="pi pi-forward"></i> Omitir datos
+      </button>
+      <button class="drd-btn primary" (click)="crear()">
+        <i class="pi pi-check"></i> Crear remito
+      </button>
+    </div>
+  </div>
+
+</div>

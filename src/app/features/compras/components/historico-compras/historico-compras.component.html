@@ -68,7 +68,7 @@
 
         @if(!cargando){
         <ng-template #body let-compra>
-            <tr class="cursor-pointer">
+            <tr class="cursor-pointer" (click)="verDetalle(compra)">
                 <td>{{ compra.Fecha | date: 'dd/MM/yyyy' }}</td>
                 <td>{{ compra.Total | currency:'ARS':'symbol' }}</td>
                 <td>{{ buscarUsuarioPorCompra(compra)?.Usuario }}</td>

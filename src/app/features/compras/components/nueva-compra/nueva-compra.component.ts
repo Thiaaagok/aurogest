@@ -116,7 +116,7 @@ export class NuevaCompraComponent {
     if (producto) {
       this.nuevoItem.Frontend.Producto = producto;
       this.nuevoItem.ProductoId = productoId;
-      this.nuevoItem.PrecioUnitarioCompra = producto.PrecioCompra;
+      this.nuevoItem.PrecioUnitario = producto.PrecioCompra;
       this.proveedoresCombo = producto.Proveedores;
       this.nuevoItem.Subtotal = producto.PrecioCompra * this.nuevoItem.Cantidad;
     }
@@ -247,9 +247,9 @@ export class NuevaCompraComponent {
     dialog.onClose
       .subscribe((response: any) => {
         if (response.resultado) {
-          compraItem.PrecioUnitarioCompra = parseFloat(Number(response.nuevoPrecio).toFixed(2));
+          compraItem.PrecioUnitario = parseFloat(Number(response.nuevoPrecio).toFixed(2));
           compraItem.Subtotal = parseFloat(
-            (compraItem.PrecioUnitarioCompra * compraItem.Cantidad).toFixed(2)
+            (compraItem.PrecioUnitario * compraItem.Cantidad).toFixed(2)
           );
         }
       })
