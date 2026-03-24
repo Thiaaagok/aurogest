@@ -21,9 +21,7 @@ export class HomeComponent {
   ventasService = inject(VentasService);
   cotizacionesService = inject(CotizacionesService);
 
-  constructor(
-    private messageService: MessageService,
-  ) {
+  constructor(private messageService: MessageService) {
     this.utilitiesService.setTituloPagina('Home');
     this.utilitiesService.setearLogin(false);
   }
@@ -82,6 +80,7 @@ export class HomeComponent {
         }
         this.venta = data;
         this.initChart();
+        this.updateChart();
         this.loadingVentas = false;
       },
       error: () => {
@@ -318,12 +317,24 @@ export class HomeComponent {
     };
   }
 
-  /* updateChart(): void {
+  updateChart(): void {
+    const hoy = new Date();
+    const diasEnMes = hoy.getDate();
+
+    const diasCompletos = Array.from({ length: diasEnMes }, (_, i) => ({
+      Dia: i + 1,
+      Monto: 0,
+    }));
+
+    this.venta.PorDia.forEach((d) => {
+      diasCompletos[parseInt(d.Dia) - 1].Monto = d.Monto;
+    });
+
     this.chartData = {
-      labels: this.ventas.porDia.map((d) => `${d.dia}`),
+      labels: diasCompletos.map((d) => `${d.Dia}`),
       datasets: [
         {
-          data: this.ventas.porDia.map((d) => d.monto),
+          data: diasCompletos.map((d) => d.Monto),
           borderColor: '#6366f1',
           backgroundColor: 'rgba(99,102,241,0.12)',
           borderWidth: 2.5,
@@ -337,7 +348,7 @@ export class HomeComponent {
         },
       ],
     };
-  } */
+  }
 
   // ─── Helpers ────────────────────────────────────────────────
 

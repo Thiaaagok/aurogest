@@ -19,110 +19,122 @@ import { HistoricoVentas } from './features/ventas/components/historico-ventas/h
 import { Permisos } from './features/common/enums/roles.enum';
 import { RolesUsuario } from './features/roles-usuario/components/roles-usuario';
 import { RemitoVentaComponent } from './features/remitos/components/remito/remito.component';
+import { LogsSesionesComponent } from './features/registros/components/logs-sesiones.component';
+import { LogsEventosComponent } from './features/registros/components/logs-eventos.component';
+import { LogsErroresComponent } from './features/registros/components/logs-errores.component';
 
 export const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'usuarios',
     component: GrillaUsuariosComponent,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.VER_USUARIOS }
+    data: { permiso: Permisos.VER_USUARIOS },
   },
   {
     path: 'roles-usuario',
     component: RolesUsuario,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.VER_ROLES }
+    data: { permiso: Permisos.VER_ROLES },
   },
   {
     path: 'empresas',
     component: GrillaEmpresasComponent,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.VER_EMPRESAS }
+    data: { permiso: Permisos.VER_EMPRESAS },
   },
   {
     path: 'proveedores',
     component: GrillaProveedoresComponent,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.VER_PROVEEDORES }
+    data: { permiso: Permisos.VER_PROVEEDORES },
   },
   {
     path: 'productos',
     component: GrillaProductosComponent,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.VER_PRODUCTOS }
+    data: { permiso: Permisos.VER_PRODUCTOS },
   },
   {
     path: 'productos/nuevo',
     component: NuevoProductoComponent,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.CREAR_PRODUCTO }
+    data: { permiso: Permisos.CREAR_PRODUCTO },
   },
   {
     path: 'productos/editar/:id',
     component: EditarProductoComponent,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.EDITAR_PRODUCTO }
+    data: { permiso: Permisos.EDITAR_PRODUCTO },
   },
   {
     path: 'marcas',
     component: MarcasComponent,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.VER_MARCAS }
+    data: { permiso: Permisos.VER_MARCAS },
   },
   {
     path: 'productos-tipo',
     component: TipoProductoComponent,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.VER_TIPOS_PRODUCTO }
+    data: { permiso: Permisos.VER_TIPOS_PRODUCTO },
   },
   {
     path: 'productos-categoria',
     component: CategoriaProductoComponent,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.VER_CATEGORIAS_PRODUCTO }
+    data: { permiso: Permisos.VER_CATEGORIAS_PRODUCTO },
   },
   {
     path: 'stock',
     component: StockComponent,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.VER_STOCK }
+    data: { permiso: Permisos.VER_STOCK },
   },
   {
     path: 'compras/nueva',
     component: NuevaCompraComponent,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.CREAR_COMPRA }
+    data: { permiso: Permisos.CREAR_COMPRA },
   },
   {
     path: 'compras/grilla',
     component: HistoricoComprasComponent,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.VER_HISTORICO_COMPRAS }
+    data: { permiso: Permisos.VER_HISTORICO_COMPRAS },
   },
   {
     path: 'ventas/nueva',
     component: PantallaVentasComponent,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.CREAR_VENTA }
+    data: { permiso: Permisos.CREAR_VENTA },
   },
   {
     path: 'ventas/grilla',
     component: HistoricoVentas,
     canActivate: [AuthGuard],
-    data: { permiso: Permisos.VER_HISTORICO_VENTAS }
+    data: { permiso: Permisos.VER_HISTORICO_VENTAS },
   },
   {
     path: 'remitos',
     component: RemitoVentaComponent,
     canActivate: [AuthGuard],
-  }
+  },
+  {
+    path: 'logs',
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'sesiones', component: LogsSesionesComponent, canActivate: [AuthGuard], },
+      { path: 'eventos', component: LogsEventosComponent, canActivate: [AuthGuard], },
+      { path: 'errores', component: LogsErroresComponent, canActivate: [AuthGuard], },
+    ],
+  },
 ];

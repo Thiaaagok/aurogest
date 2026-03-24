@@ -77,6 +77,19 @@ export const NAV_CONFIG: NavSection[] = [
     ],
   },
   {
+  section: 'Sistema',
+  items: [
+    {
+      key: 'logs', label: 'Logs', icon: 'pi pi-list',
+      children: [
+        { label: 'Sesiones',  route: 'logs/sesiones', icon: 'pi pi-sign-in' },
+        { label: 'Eventos',   route: 'logs/eventos',  icon: 'pi pi-bell' },
+        { label: 'Errores',   route: 'logs/errores',  icon: 'pi pi-exclamation-triangle' },
+      ],
+    },
+  ],
+},
+  {
     section: 'Análisis',
     items: [
       {
