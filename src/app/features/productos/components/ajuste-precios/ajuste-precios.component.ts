@@ -3,11 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { CustomMaterialModule } from '../../../common/material/custom-material.module';
-import { FloatLabel } from 'primeng/floatlabel';
 import { AjustePrecioRequestDto, ProductoPrecioPreview, ProductoSimpleModel, TipoPrecio, TIPOS_PRECIO } from '../../models/ajuste-precio.model';
 import { AjustePreciosService } from '../../services/ajuste-precios.service';
 import { AlertasService } from '../../../common/services/alertas.service';
-import { SumByPipe } from '../../../common/pipes/sum-by.pipe';
 
 
 
@@ -16,7 +14,7 @@ type Paso = 'configurar' | 'preview' | 'aplicando';
 @Component({
   selector: 'app-ajuste-precios',
   standalone: true,
-  imports: [PrimeNgModule, CommonModule, CustomMaterialModule, FormsModule, SumByPipe],
+  imports: [PrimeNgModule, CommonModule, CustomMaterialModule, FormsModule],
   templateUrl: './ajuste-precios.component.html',
   styleUrl:    './ajuste-precios.component.scss',
 })
