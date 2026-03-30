@@ -1,30 +1,43 @@
 .dv-wrap {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  padding: 0.25rem;
+  height: 75vh;
   font-family: "DM Sans", sans-serif;
+}
+
+.dv-scroll-content {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 0.5rem;
+  padding-right: 0.35rem;
 }
 
 // ── KPIs ────────────────────────────────────────────────────────
 .dv-kpis {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0.75rem;
+  gap: 0.9rem;
 
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
   }
 }
 
 .dv-kpi {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.75rem;
   background: var(--ag-surface2);
   border: 1px solid var(--ag-border);
-  border-radius: 10px;
-  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
   transition: border-color 0.15s;
 
   &:hover {
@@ -32,7 +45,7 @@
   }
 
   > i {
-    font-size: 1rem;
+    font-size: 1.15rem;
     color: var(--ag-text-muted);
     flex-shrink: 0;
   }
@@ -44,9 +57,10 @@
     > i {
       color: var(--ag-accent-light);
     }
+
     .dv-kpi-value {
       color: var(--ag-accent-light);
-      font-size: 1.05rem;
+      font-size: 1.08rem;
     }
   }
 }
@@ -54,20 +68,20 @@
 .dv-kpi-body {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
   min-width: 0;
 }
 
 .dv-kpi-label {
-  font-size: 0.65rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--ag-text-muted);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .dv-kpi-value {
-  font-size: 0.92rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--ag-text);
   white-space: nowrap;
@@ -82,42 +96,48 @@
   gap: 1rem;
   background: var(--ag-surface2);
   border: 1px solid var(--ag-border);
-  border-radius: 10px;
-  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  padding: 0.9rem 1.25rem;
   flex-wrap: wrap;
 }
 
 .dv-margen-item {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
   flex: 1;
+  min-width: 150px;
 }
 
 .dv-margen-label {
-  font-size: 0.65rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--ag-text-muted);
+  font-weight: 600;
 }
 
 .dv-margen-value {
-  font-size: 0.92rem;
+  font-size: 1rem;
   font-weight: 700;
 
   &.costo {
-    color: var(--ag-text-muted);
+    color: var(--ag-text);
   }
+
   &.venta {
     color: var(--ag-text);
   }
+
   &.margen {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
+
     &.positivo {
       color: #22c55e;
     }
+
     &.negativo {
       color: #ef4444;
     }
@@ -131,17 +151,18 @@
 
 // ── Items title ─────────────────────────────────────────────────
 .dv-items-title {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
   color: var(--ag-text-muted);
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
 
   i {
     color: var(--ag-accent);
+    font-size: 0.95rem;
   }
 }
 
@@ -149,13 +170,13 @@
 .dv-items {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.75rem;
 }
 
 .dv-item {
   background: var(--ag-surface2);
   border: 1px solid var(--ag-border);
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   transition: border-color 0.15s;
 
@@ -166,18 +187,19 @@
 
 .dv-item-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
-  padding: 1rem 1.25rem;  // ← más padding
+  flex-wrap: wrap;
+  padding: 1rem 1.25rem;
 }
 
 .dv-item-index {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: var(--ag-accent-dim);
   color: var(--ag-accent-light);
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   font-weight: 700;
   display: grid;
   place-items: center;
@@ -186,15 +208,15 @@
 
 .dv-item-info {
   flex: 1;
-  min-width: 0;
+  min-width: 220px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .dv-item-nombre {
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
   color: var(--ag-text);
   white-space: nowrap;
   overflow: hidden;
@@ -202,21 +224,25 @@
 }
 
 .dv-item-desc {
-  font-size: 0.78rem;  // ← más grande
+  font-size: 0.9rem;
   color: var(--ag-text-muted);
 }
 
 .dv-item-stats {
   display: flex;
-  align-items: center;
-  gap: 1.75rem;  // ← más separación
-  flex-shrink: 0;
+  align-items: flex-start;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  flex: 1;
 }
+
 .dv-stat {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 1px;
+  gap: 3px;
+  min-width: 110px;
 
   &.dv-stat-accent .dv-stat-value {
     color: var(--ag-accent-light);
@@ -225,31 +251,34 @@
 }
 
 .dv-stat-label {
-  font-size: 0.68rem;  // ← más grande
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--ag-text-muted);
+  font-weight: 600;
 }
 
-
 .dv-stat-value {
-  font-size: 0.95rem;  // ← más grande
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
   color: var(--ag-text);
 }
 
 // ── Lotes ───────────────────────────────────────────────────────
 .dv-lotes {
   border-top: 1px solid var(--ag-border);
-  padding: 0.75rem 1.25rem 1rem;  // ← más padding
+  padding: 0.9rem 1.25rem 1rem;
   background: var(--ag-surface3);
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.65rem;
+  max-height: 220px;
+  overflow-y: auto;
 }
+
 .dv-lotes-title {
-  font-size: 0.68rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--ag-text-muted);
@@ -260,24 +289,24 @@
 
   i {
     color: var(--ag-accent);
-    font-size: 0.65rem;
+    font-size: 0.75rem;
   }
 }
 
 .dv-lote {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  align-items: flex-start;
+  gap: 0.85rem;
   flex-wrap: wrap;
 }
 
 .dv-lote-id {
-  font-size: 0.72rem;  // ← más visible
-  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-family: "JetBrains Mono", monospace;
   color: var(--ag-text-muted);
   background: var(--ag-surface2);
-  padding: 2px 8px;
-  border-radius: 4px;
+  padding: 3px 8px;
+  border-radius: 5px;
   border: 1px solid var(--ag-border);
 }
 
@@ -285,12 +314,13 @@
   display: flex;
   gap: 1.25rem;
   flex-wrap: wrap;
-  font-size: 0.82rem;  // ← más grande
+  font-size: 0.9rem;
   color: var(--ag-text-muted);
 
-  strong { color: var(--ag-text); }
+  strong {
+    color: var(--ag-text);
+  }
 }
-
 
 .dv-lote-subtotal strong {
   color: var(--ag-accent-light);
@@ -304,12 +334,12 @@
   gap: 0.5rem;
   padding: 2rem;
   color: var(--ag-text-muted);
-  font-size: 0.85rem;
+  font-size: 1rem;
   border: 1px dashed var(--ag-border);
-  border-radius: 10px;
+  border-radius: 12px;
 
   i {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
 }
 
@@ -317,5 +347,7 @@
 .dv-footer {
   display: flex;
   justify-content: flex-end;
-  padding-top: 0.25rem;
+  padding: 1rem 0.5rem 0 0.5rem;
+  border-top: 1px solid var(--ag-border);
+  flex-shrink: 0;
 }

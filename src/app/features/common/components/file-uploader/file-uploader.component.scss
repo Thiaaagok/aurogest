@@ -106,16 +106,16 @@
   flex-direction: column;
   gap: .15rem;
   font-size: .875rem;
-  color: var(--fu-text);
+  color: var(--ag-text)
 
   strong { font-weight: 600; }
-  span { color: var(--fu-text-muted); font-size: .8rem; }
+  span { color: var(--ag-text); font-size: .8rem; }
 }
 
 .dropzone-hint {
   margin: 0;
   font-size: .75rem;
-  color: var(--fu-text-muted);
+  color: var(--ag-text)
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -504,4 +504,8 @@
   transition: background .15s;
 
   &:hover { background: var(--fu-accent-dark); }
+}
+
+.agregar-span{
+  color: var(--ag-text)
 }

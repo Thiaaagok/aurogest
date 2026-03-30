@@ -3,10 +3,8 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
-  AfterViewInit,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { RendimientosService } from '../services/rendimientos.service';
 import {
@@ -14,6 +12,8 @@ import {
   ProductoAnalizado,
   RendimientoAnalizado,
 } from '../models/rendimiento.model';
+import { CustomMaterialModule } from '../../common/material/custom-material.module';
+import { PrimeNgModule } from '../../common/material/primeng.module';
 
 Chart.register(...registerables);
 
@@ -30,12 +30,16 @@ interface ProductoVM extends ProductoAnalizado {
 @Component({
   selector: 'app-rendimiento-analizado',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CustomMaterialModule, PrimeNgModule],
   templateUrl: './rendimiento-analizado.component.html',
   styleUrl: './rendimiento-analizado.component.scss',
 })
 export class RendimientoAnalizadoComponent implements OnInit {
+  chartExpanded = true;
   private _chartCanvas?: ElementRef<HTMLCanvasElement>;
+
+  filtroProducto = '';
+  productosFiltrados: any[] = [];
 
   @ViewChild('chartCanvas')
   set chartCanvasSetter(canvas: ElementRef<HTMLCanvasElement> | undefined) {
@@ -128,6 +132,8 @@ export class RendimientoAnalizadoComponent implements OnInit {
       };
     });
 
+    this.productosFiltrados = [...this.productosVM];
+
     this.totalTV = productos.reduce((a, p) => a + p.TotalVendido, 0);
     this.totalCT = productos.reduce((a, p) => a + p.CostoTotal, 0);
     this.totalTI = productos.reduce((a, p) => a + p.TotalInvertido, 0);
@@ -195,5 +201,18 @@ export class RendimientoAnalizadoComponent implements OnInit {
 
   get chartHeight(): string {
     return this.productosVM.length * 60 + 80 + 'px';
+  }
+
+  filtrarProductos() {
+    const filtro = this.filtroProducto.toLowerCase().trim();
+
+    if (!filtro) {
+      this.productosFiltrados = [...this.productosVM];
+      return;
+    }
+
+    this.productosFiltrados = this.productosVM.filter((p) =>
+      (p.NombreProducto ?? p.ProductoId).toLowerCase().includes(filtro),
+    );
   }
 }

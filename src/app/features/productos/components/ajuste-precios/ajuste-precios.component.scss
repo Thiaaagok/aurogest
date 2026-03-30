@@ -30,7 +30,44 @@
 .text-green-600 { color: #16a34a; }
 .text-red-600   { color: #dc2626; }
 
-// Listbox custom item
-::ng-deep .p-listbox-item {
-  padding: 0.5rem 0.75rem !important;
+body.ag-dark {
+  ::ng-deep .p-listbox {
+    background: var(--ag-surface2) !important;
+    border-color: var(--ag-border) !important;
+
+    .p-listbox-header {
+      background: var(--ag-surface3) !important;
+      border-color: var(--ag-border) !important;
+    }
+
+    .p-listbox-filter {
+      background: var(--ag-surface2) !important;
+      color: var(--ag-text) !important;
+      border-color: var(--ag-border-h) !important;
+    }
+
+    .p-listbox-option {
+      background: transparent !important;
+      color: var(--ag-text) !important;
+
+      &:hover {
+        background: var(--ag-surface3) !important;
+      }
+
+      &.p-listbox-option-selected {
+        background: var(--ag-accent-dim) !important;
+        color: var(--ag-accent-light) !important;
+      }
+    }
+
+    .p-checkbox-box {
+      background: var(--ag-surface3) !important;
+      border-color: var(--ag-border-h) !important;
+
+      &.p-highlight {
+        background: var(--ag-accent) !important;
+        border-color: var(--ag-accent) !important;
+      }
+    }
+  }
 }

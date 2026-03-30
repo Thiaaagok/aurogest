@@ -17,11 +17,12 @@ import { ProductosService } from '../../../productos/services/producto.service';
 import { AlertasService } from '../../../common/services/alertas.service';
 import { PrimeNgModule } from '../../../common/material/primeng.module';
 import { QrScannerService } from '../../../common/services/qrScanner.service';
+import { CustomMaterialModule } from '../../../common/material/custom-material.module';
 
 @Component({
   selector: 'app-nueva-compra',
   standalone: true,
-  imports: [CommonModule, FormsModule, PrimeNgModule, ToastModule],
+  imports: [FormsModule, PrimeNgModule, ToastModule,CustomMaterialModule],
   templateUrl: './nueva-compra.component.html',
   styleUrl: './nueva-compra.component.scss',
 })

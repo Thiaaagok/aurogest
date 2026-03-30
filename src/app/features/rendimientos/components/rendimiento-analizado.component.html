@@ -68,24 +68,39 @@
 
     <!-- Gráfico comparativo -->
     <div class="ra-chart-area">
-      <div class="ra-chart-header">
-        <span class="ra-chart-title">Comparativa por producto</span>
-        <div class="ra-legend">
-          <span class="ra-leg-item">
-            <span class="ra-leg-dot" style="background: #1d9e75"></span>Total
-            vendido
-          </span>
-          <span class="ra-leg-item">
-            <span class="ra-leg-dot" style="background: #378add"></span>Costo
-            total
-          </span>
-          <span class="ra-leg-item">
-            <span class="ra-leg-dot" style="background: #ef9f27"></span>Stock
-            restante (IR)
-          </span>
+      <div
+        class="ra-chart-header clickable"
+        (click)="chartExpanded = !chartExpanded"
+      >
+        <div class="ra-chart-left">
+          <span class="ra-chart-title">Comparativa por producto</span>
+
+          <div class="ra-legend" *ngIf="chartExpanded">
+            <span class="ra-leg-item">
+              <span class="ra-leg-dot" style="background: #1d9e75"></span>
+              Total vendido
+            </span>
+            <span class="ra-leg-item">
+              <span class="ra-leg-dot" style="background: #378add"></span>
+              Costo total
+            </span>
+            <span class="ra-leg-item">
+              <span class="ra-leg-dot" style="background: #ef9f27"></span>
+              Stock restante (IR)
+            </span>
+          </div>
         </div>
+
+        <span class="ra-toggle-btn">
+          {{ chartExpanded ? "▾" : "▸" }}
+        </span>
       </div>
-      <div class="ra-chart-wrap" [style.height]="chartHeight">
+
+      <div
+        class="ra-chart-wrap"
+        *ngIf="chartExpanded"
+        [style.height]="chartHeight"
+      >
         <canvas #chartCanvas></canvas>
       </div>
     </div>
@@ -95,8 +110,18 @@
     <!-- Detalle por producto -->
     <div class="ra-section">
       <div class="ra-section-label">Detalle por producto</div>
+      <div class="ra-search-box">
+        <i class="pi pi-search"></i>
+        <input
+          type="text"
+          [(ngModel)]="filtroProducto"
+          (input)="filtrarProductos()"
+          placeholder="Buscar por nombre del producto..."
+          class="ra-search-input"
+        />
+      </div>
       <div class="ra-products-list">
-        <div class="ra-product-card" *ngFor="let p of productosVM">
+        <div class="ra-product-card" *ngFor="let p of productosFiltrados">
           <!-- Cabecera del producto -->
           <div class="ra-product-header" (click)="toggleCard(p)">
             <div>

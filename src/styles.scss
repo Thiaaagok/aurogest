@@ -340,15 +340,160 @@ body.ag-dark {
     color: var(--ag-text) !important;
   }
 
+  .archivo-item{
+    background: #1e2535 !important;
+  }
+
   // Fondo del overlay
   .swal2-container {
     background: rgba(0, 0, 0, 0.6) !important;
   }
 
+  .dropzone{
+    background: #1e2535 !important;
+  }
+  
   .p-dialog {
+    background: #1e2535 !important;
+    border: 1px solid #2a3347 !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .p-listbox {
+    background: var(--ag-surface2) !important;
+    border-color: var(--ag-border) !important;
+
+    .p-listbox-header {
+      background: var(--ag-surface3) !important;
+      border-color: var(--ag-border) !important;
+    }
+
+    .p-listbox-filter {
+      background: var(--ag-surface2) !important;
+      color: var(--ag-text) !important;
+      border-color: var(--ag-border-h) !important;
+    }
+
+    .p-listbox-option {
+      background: transparent !important;
+      color: var(--ag-text) !important;
+
+      &:hover {
+        background: var(--ag-surface3) !important;
+      }
+
+      &.p-listbox-option-selected {
+        background: var(--ag-accent-dim) !important;
+        color: var(--ag-accent-light) !important;
+      }
+    }
+
+    .p-checkbox-box {
+      background: var(--ag-surface3) !important;
+      border-color: var(--ag-border-h) !important;
+
+      &.p-highlight {
+        background: var(--ag-accent) !important;
+        border-color: var(--ag-accent) !important;
+      }
+    }
+  }
+
+  .p-selectbutton {
+    background: var(--ag-surface3) !important;
+    border-color: var(--ag-border) !important;
+
+    .p-togglebutton {
+      background: transparent !important;
+      border-color: var(--ag-border) !important;
+      color: var(--ag-text-muted) !important;
+
+      &:hover {
+        background: var(--ag-surface2) !important;
+        color: var(--ag-text) !important;
+      }
+
+      &.p-highlight {
+        background: var(--ag-accent-dim) !important;
+        border-color: var(--ag-accent) !important;
+        color: var(--ag-accent-light) !important;
+      }
+    }
+  }
+
+  .p-overlay,
+  .p-overlaypanel,
+  .p-select-overlay,
+  .p-autocomplete-overlay,
+  .p-datepicker,
+  .p-multiselect-overlay,
+  .p-menu,
+  .p-tieredmenu,
+  .p-contextmenu,
+  .p-confirm-popup,
+  .p-tooltip,
+  .p-popover {
+    background: var(--ag-surface2) !important;
+    color: var(--ag-text) !important;
+    border: 1px solid var(--ag-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  /* items dentro */
+  .p-select-option,
+  .p-autocomplete-option,
+  .p-menu-item-content,
+  .p-multiselect-option,
+  .p-datepicker-calendar td > span {
+    color: var(--ag-text) !important;
     background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
+    transition: background 0.15s ease;
+  }
+
+  .p-select-option:hover,
+  .p-autocomplete-option:hover,
+  .p-menu-item-content:hover,
+  .p-multiselect-option:hover,
+  .p-datepicker-calendar td > span:hover {
+    background: var(--ag-surface3) !important;
+  }
+
+  /* item seleccionado */
+  .p-select-option.p-select-option-selected,
+  .p-multiselect-option.p-highlight {
+    background: var(--ag-accent-dim) !important;
+    color: var(--ag-accent-light) !important;
+  }
+
+  /* header de overlays */
+  .p-multiselect-header,
+  .p-datepicker-header {
+    background: var(--ag-surface3) !important;
+    border-bottom: 1px solid var(--ag-border) !important;
+    color: var(--ag-text) !important;
+  }
+
+  /* footer */
+  .p-datepicker-buttonbar {
+    background: var(--ag-surface3) !important;
+    border-top: 1px solid var(--ag-border) !important;
+  }
+
+  /* tooltip */
+  .p-tooltip .p-tooltip-text {
+    background: var(--ag-surface3) !important;
+    color: var(--ag-text) !important;
+    border: 1px solid var(--ag-border) !important;
+    border-radius: 8px;
+  }
+
+  .p-select-label{
+    color: var(--ag-text) !important;
+  }
+
+  .p-dialog-title{
+    color: var(--ag-text) !important;
   }
 }
 
