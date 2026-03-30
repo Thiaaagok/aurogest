@@ -57,6 +57,8 @@ export const Permisos = {
   // Ventas
   CREAR_VENTA: 'crear-venta',
   VER_HISTORICO_VENTAS: 'ver-historico-ventas',
+
+  CAMBIAR_ESTADO_TICKETS: 'cambiar-estado-tickets'
 } as const;
 
 export const permisosDisponibles = [
@@ -153,6 +155,12 @@ export const permisosDisponibles = [
       { label: 'Ver histórico ventas', value: Permisos.VER_HISTORICO_VENTAS },
     ],
   },
+  {
+    label: 'Tickets',
+    items: [
+      { label: 'Cambiar estado tickets', value: Permisos.CAMBIAR_ESTADO_TICKETS },
+    ],
+  }
 ];
 
 export type PermisoKey = (typeof Permisos)[keyof typeof Permisos];

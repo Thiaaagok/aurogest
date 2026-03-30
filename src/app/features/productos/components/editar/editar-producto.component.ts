@@ -21,13 +21,24 @@ import { Select } from 'primeng/select';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FileUploadEvent } from 'primeng/fileupload';
 import { ProductoImagenesComponent } from './producto-imagenes/producto-imagenes.component';
+import { FileUploaderComponent, FileUploaderConfig } from '../../../common/components/file-uploader/file-uploader.component';
+import { Config } from '../../../common/config/config';
 
 @Component({
   selector: 'app-editar-producto',
-  imports: [PrimeNgModule, CustomMaterialModule, ReactiveFormsModule, FormsModule, CommonModule,
+  imports: [
+    PrimeNgModule,
+    CustomMaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CommonModule,
     InputTextModule,
     ToastModule,
-    FloatLabel, Select, MultiSelectModule, ProductoImagenesComponent],
+    FloatLabel,
+    Select,
+    MultiSelectModule,
+    FileUploaderComponent,
+  ],
   templateUrl: './editar-producto.component.html',
   styleUrl: './editar-producto.component.scss',
 })
@@ -47,7 +58,7 @@ export class EditarProductoComponent {
   private proveedoresService = inject(ProveedoresService);
   private productoTiposService = inject(ProductoTiposService);
   private productoCategoriasService = inject(ProductoCategoriasService);
-  private marcasService = inject(MarcasService)
+  private marcasService = inject(MarcasService);
 
   ngOnInit() {
     this.parametro = this.config.data;
@@ -60,22 +71,24 @@ export class EditarProductoComponent {
 
   onSubmit() {
     this.cargando = true;
-    this.productosService.editar(this.productoEditar.Id, this.productoEditar).subscribe({
-      next: (response: ProductoModel) => {
-        this.cargando = false;
-        this.ref.close();
-      },
-      error: (err) => {
-        this.cargando = false;
-        console.log(err);
-      },
-      complete: () => { },
-    });
+    this.productosService
+      .editar(this.productoEditar.Id, this.productoEditar)
+      .subscribe({
+        next: (response: ProductoModel) => {
+          this.cargando = false;
+          this.ref.close();
+        },
+        error: (err) => {
+          this.cargando = false;
+          console.log(err);
+        },
+        complete: () => {},
+      });
   }
 
   onImagenesChange(imagenes: string[]): void {
     this.productoEditar.Imagenes = imagenes;
-  } 
+  }
 
   obtenerProducto() {
     this.cargando = true;
@@ -83,151 +96,116 @@ export class EditarProductoComponent {
       next: (response: ProductoModel) => {
         this.cargando = false;
         this.productoEditar = response;
-        console.log(this.productoEditar.Imagenes)
       },
       error: (err) => {
         this.cargando = false;
         console.log(err);
       },
-      complete: () => { },
+      complete: () => {},
     });
   }
 
   eliminarProducto() {
-    this.productosService.eliminar(this.productoEditar.Id)
-      .subscribe({
-        next: ((response: boolean) => {
-          this.cargando = false;
-          this.obtenerProducto();
-        }),
-        error: (err) => {
-          this.cargando = false;
-          console.log(err);
-        },
-        complete: () => { }
-      })
+    this.productosService.eliminar(this.productoEditar.Id).subscribe({
+      next: (response: boolean) => {
+        this.cargando = false;
+        this.obtenerProducto();
+      },
+      error: (err) => {
+        this.cargando = false;
+        console.log(err);
+      },
+      complete: () => {},
+    });
   }
 
   reactivarProducto() {
-    this.productosService.reactivar(this.productoEditar.Id)
-      .subscribe({
-        next: ((response: boolean) => {
-          this.cargando = false;
-          this.obtenerProducto();
-        }),
-        error: (err) => {
-          this.cargando = false;
-          console.log(err);
-        },
-        complete: () => { }
-      })
+    this.productosService.reactivar(this.productoEditar.Id).subscribe({
+      next: (response: boolean) => {
+        this.cargando = false;
+        this.obtenerProducto();
+      },
+      error: (err) => {
+        this.cargando = false;
+        console.log(err);
+      },
+      complete: () => {},
+    });
   }
-
 
   cerrar() {
     this.ref.close();
   }
 
   cargarTiposProductosCombo() {
-    this.productoTiposService.obtenerTodos()
-      .subscribe({
-        next: (response: ProductoTipoModel[]) => {
-          this.cargando = false;
-          this.tiposProductosCombo = response;
-        },
-        error: (err) => {
-          this.cargando = false;
-          console.log(err);
-        },
-        complete: () => { },
-      });
+    this.productoTiposService.obtenerTodos().subscribe({
+      next: (response: ProductoTipoModel[]) => {
+        this.cargando = false;
+        this.tiposProductosCombo = response;
+      },
+      error: (err) => {
+        this.cargando = false;
+        console.log(err);
+      },
+      complete: () => {},
+    });
   }
 
   cargarMarcasProductosCombo() {
-    this.marcasService.obtenerTodos()
-      .subscribe({
-        next: (response: MarcaModel[]) => {
-          this.cargando = false;
-          this.marcasProductosCombo = response;
-        },
-        error: (err) => {
-          this.cargando = false;
-          console.log(err);
-        },
-        complete: () => { },
-      });
+    this.marcasService.obtenerTodos().subscribe({
+      next: (response: MarcaModel[]) => {
+        this.cargando = false;
+        this.marcasProductosCombo = response;
+      },
+      error: (err) => {
+        this.cargando = false;
+        console.log(err);
+      },
+      complete: () => {},
+    });
   }
 
   cargarCategoriasProductosCombo() {
-    this.productoCategoriasService.obtenerTodos()
-      .subscribe({
-        next: (response: ProductoCategoriaModel[]) => {
-          this.cargando = false;
-          this.categoriasProductosCombo = response;
-        },
-        error: (err) => {
-          this.cargando = false;
-          console.log(err);
-        },
-        complete: () => { },
-      });
+    this.productoCategoriasService.obtenerTodos().subscribe({
+      next: (response: ProductoCategoriaModel[]) => {
+        this.cargando = false;
+        this.categoriasProductosCombo = response;
+      },
+      error: (err) => {
+        this.cargando = false;
+        console.log(err);
+      },
+      complete: () => {},
+    });
   }
 
   cargarProveedoresCombo() {
-    this.proveedoresService.obtenerTodos()
-      .subscribe({
-        next: (response: ProveedorModel[]) => {
-          this.cargando = false;
-          this.proveedoresCombo = response;
-        },
-        error: (err) => {
-          this.cargando = false;
-          console.log(err);
-        },
-        complete: () => { },
-      });
+    this.proveedoresService.obtenerTodos().subscribe({
+      next: (response: ProveedorModel[]) => {
+        this.cargando = false;
+        this.proveedoresCombo = response;
+      },
+      error: (err) => {
+        this.cargando = false;
+        console.log(err);
+      },
+      complete: () => {},
+    });
   }
 
   limpiarModel() {
     this.productoEditar = new ProductoModel();
   }
 
-  columnasFormulario: number = 1;
-
-  get gridStyles() {
-    return {
-      'grid-template-columns': `repeat(${this.columnasFormulario}, 1fr)`
-    };
-  }
-
-  imagenPreview: string | ArrayBuffer | null = null;
-
-  subirImagen(event: any) {
-    const file: File = event.files[0];
-    if (!file) return;
-    this.productoEditar.Imagen = file;
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagenPreview = reader.result;
-    };
-    reader.readAsDataURL(file);
-
-    event.options.clear();
-  }
-
-  onUpload(event: FileUploadEvent) {
-    for (let file of event.files) {
-      this.ImagenesProducto.push(file);
-    }
-    this.subir();
-  }
-
-  subir() {
-    this.productosService.subirImagenes(this.ImagenesProducto)
-      .subscribe(urls => {
-        this.productoEditar.Imagenes = urls;
-      });
-  }
-
-
+  uploaderConfig: FileUploaderConfig = {
+    apiUrl: `${Config.APIURL}/productos`,
+    uploadPath: '/upload',
+    filesBaseUrl: `${Config.APIURL}/uploads/producto-imagenes`,
+    fieldName: 'imagenes',
+    responseKey: 'imagenes',  
+    maxFiles: 10,
+    accept: ['application/pdf', 'image/jpeg', 'image/png'],
+    title: 'Archivo adjunto',
+    dropzoneText: 'Arrastrá tu archivo acá',
+  };
 }

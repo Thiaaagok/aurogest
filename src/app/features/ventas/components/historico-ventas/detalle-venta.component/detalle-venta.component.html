@@ -20,7 +20,7 @@
       <i class="pi pi-box"></i>
       <div class="dv-kpi-body">
         <span class="dv-kpi-label">Productos</span>
-        <span class="dv-kpi-value">{{ venta.Items?.length || 0 }}</span>
+        <span class="dv-kpi-value">{{ venta.Items.length || 0 }}</span>
       </div>
     </div>
     <div class="dv-kpi dv-kpi-total">
@@ -85,7 +85,7 @@
       </div>
 
       <!-- Lotes afectados -->
-      <div class="dv-lotes" *ngIf="item.LotesVendidos?.length">
+      <div class="dv-lotes" *ngIf="item.LotesVendidos.length">
         <div class="dv-lotes-title">
           <i class="pi pi-layers"></i> Lotes afectados
         </div>
@@ -102,7 +102,7 @@
 
     </div>
 
-    <div class="dv-empty" *ngIf="!venta.Items?.length">
+    <div class="dv-empty" *ngIf="!venta.Items.length">
       <i class="pi pi-inbox"></i> Sin items registrados
     </div>
   </div>

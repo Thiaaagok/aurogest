@@ -1,0 +1,93 @@
+<div class="card flex flex-col gap-4">
+  <form #form="ngForm" novalidate class="flex flex-col gap-4">
+    <!-- Título -->
+    <p-floatlabel variant="in">
+      <input
+        pInputText
+        id="titulo"
+        name="titulo"
+        class="w-100"
+        [(ngModel)]="nuevoTicket.Titulo"
+        required
+      />
+      <label for="titulo">Título</label>
+    </p-floatlabel>
+
+    <!-- Prioridad + Modulo -->
+    <div class="flex gap-4">
+      <p-floatlabel variant="in" class="flex-1">
+        <p-select
+          [(ngModel)]="nuevoTicket.Prioridad"
+          name="prioridad"
+          inputId="prioridad"
+          [options]="prioridadesOpciones"
+          optionLabel="label"
+          optionValue="value"
+          class="w-full"
+        />
+        <label for="prioridad">Prioridad</label>
+      </p-floatlabel>
+
+      <p-floatlabel variant="in" class="flex-1">
+        <p-select
+          [(ngModel)]="nuevoTicket.Modulo"
+          name="modulo"
+          inputId="modulo"
+          [options]="modulosOpciones"
+          optionLabel="label"
+          optionValue="value"
+          class="w-full"
+        />
+        <label for="modulo">Modulo</label>
+      </p-floatlabel>
+    </div>
+
+    <!-- Descripción -->
+    <p-floatlabel variant="in">
+      <textarea
+        pTextarea
+        id="descripcion"
+        name="descripcion"
+        rows="5"
+        class="w-100"
+        [(ngModel)]="nuevoTicket.Descripcion"
+        required
+      ></textarea>
+      <label for="descripcion">Descripción del problema</label>
+    </p-floatlabel>
+
+    <!-- Archivo adjunto -->
+    <div class="flex flex-col gap-1">
+      <label class="text-sm font-medium text-color-secondary">
+        Archivo adjunto (opcional)
+      </label>
+
+      <app-file-uploader
+        [entityId]="nuevoTicket.Id"
+        [archivosIniciales]="archivosAdjuntos"
+        [config]="uploaderConfig"
+        (archivosChange)="onArchivosAdjuntosChange($event)"
+        (errorOcurrido)="onErrorUploader($event)"
+      >
+      </app-file-uploader>
+    </div>
+
+    <!-- Acciones -->
+    <div class="flex justify-end gap-2 pt-2">
+      <p-button
+        label="Cancelar"
+        icon="pi pi-times"
+        variant="outlined"
+        [disabled]="cargando"
+        (click)="cerrar()"
+      />
+      <p-button
+        label="Enviar ticket"
+        icon="pi pi-send"
+        severity="success"
+        [disabled]="!form.valid || cargando"
+        (click)="onSubmit()"
+      />
+    </div>
+  </form>
+</div>

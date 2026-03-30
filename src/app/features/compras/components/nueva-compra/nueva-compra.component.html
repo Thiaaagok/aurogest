@@ -1,141 +1,232 @@
-<p-toast [showTransitionOptions]="'250ms'" [showTransformOptions]="'translateX(100%)'" [hideTransitionOptions]="'150ms'"
-    [hideTransformOptions]="'translateX(100%)'" />
-<div class="botonera-flotante">
-    <div class="botonera-contenedor">
-        <button mat-mini-fab color="primary" matTooltip="Crear una nueva compra" (click)="onSubmit()">
-            <i class="fa-solid fa-floppy-disk"></i>
-        </button>
-        <button mat-mini-fab color="primary" matTooltip="Ver historial de compras" (click)="verHistorialCompras()">
-            <i class="fa-solid fa-list"></i>
-        </button>
-    </div>
+<p-toast
+  [showTransitionOptions]="'250ms'"
+  [showTransformOptions]="'translateX(100%)'"
+  [hideTransitionOptions]="'150ms'"
+  [hideTransformOptions]="'translateX(100%)'"
+/>
+
+<!-- ── Topbar ── -->
+<div class="nc-topbar">
+  <div class="nc-topbar-left">
+    <h1 class="nc-page-title">Nueva compra</h1>
+    <span class="nc-item-count" *ngIf="nuevaCompra.Items.length > 0">
+      {{ nuevaCompra.Items.length }} {{ nuevaCompra.Items.length === 1 ? 'ítem' : 'ítems' }}
+    </span>
+  </div>
+  <div class="nc-topbar-right">
+    <button class="nc-btn nc-btn-secondary" (click)="verHistorialCompras()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M1 3h12M1 7h8M1 11h5"/>
+      </svg>
+      Historial
+    </button>
+    <button
+      class="nc-btn nc-btn-primary"
+      (click)="onSubmit()"
+      [disabled]="cargando || nuevaCompra.Items.length === 0"
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M2 7l4 4 6-7"/>
+      </svg>
+      {{ cargando ? 'Guardando...' : 'Confirmar compra' }}
+    </button>
+  </div>
 </div>
-<div class="card">
-    <div class="font-semibold text-xl mb-4">Nueva Compra</div>
-    <p-table #grillaCompras [value]="nuevaCompra.Items" dataKey="Id" [rows]="10" [rowHover]="true"
-        [showGridlines]="true" [paginator]="true"
-        [globalFilterFields]="['Producto.Nombre', 'Proveedor.Nombre', 'Cantidad', 'PrecioUnitario', 'Subtotal']"
-        responsiveLayout="scroll">
 
-        <ng-template #caption>
-            <form #form="ngForm">
-                <div class="flex flex-wrap items-center gap-2">
-                    <div class="flex flex-col w-20 gap-0">
-                        <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-                            <p-select [(ngModel)]="productoSeleccionado" inputId="producto" [options]="productosCombo"
-                                optionLabel="Descripcion" class="w-100" variant="filled" name="producto" [filter]="true"
-                                (onChange)="productoSeleccionadoEvent($event.value)" [showClear]="true"
-                                (onClear)="limpiarProductoSeleccionado()" optionValue="Id">
-                            </p-select>
-                            <label for="producto">Producto</label>
-                        </p-floatlabel>
-                    </div>
-                    <div class="flex flex-col w-20 gap-0">
-                        <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-                            <p-select [(ngModel)]="nuevoItem.Frontend.Proveedor" inputId="proveedor" [options]="proveedoresCombo"
-                                optionLabel="Descripcion" class="w-100" variant="filled" name="proveedor"
-                                [filter]="true" [showClear]="true">
-                            </p-select>
-                            <label for="proveedor">Proveedor</label>
-                        </p-floatlabel>
-                    </div>
-                    <div class="flex flex-col gap-0">
-                        <p-floatlabel variant="in">
-                            <p-inputnumber [(ngModel)]="nuevoItem.Cantidad" name="cantidad" inputId="cantidad"
-                                [showButtons]="true" mode="decimal" (ngModelChange)="cantidadCambio($event)"
-                                [required]="true" [min]="1" />
-                            <label for="cantidad">Cantidad</label>
-                        </p-floatlabel>
-                    </div>
-                    <div class="flex flex-col gap-0">
-                        <p-floatlabel variant="in">
-                            <p-inputnumber [(ngModel)]="nuevoItem.Subtotal" name="subtotal" inputId="subtotal"
-                                [showButtons]="true" mode="decimal" readonly [min]="0" />
-                            <label for="subtotal">Subtotal</label>
-                        </p-floatlabel>
-                    </div>
-                </div>
-            </form>
-            <div class="flex flex-wrap items-center gap-2">
-                <p-button label="Nuevo item"
-                    [disabled]=" !nuevoItem.Frontend.Producto || !nuevoItem.Cantidad || nuevoItem.Cantidad <= 0" class="mt-2"
-                    icon="pi pi-plus-circle" (click)="crearNuevoItem()" />
-            </div>
-        </ng-template>
+<!-- ── Contenido ── -->
+<div class="nc-content">
 
-        <ng-template #header>
-            <tr>
-                <th>
-                    <div class="flex justify-between items-center">
-                        Producto
-                        <p-columnFilter type="text" field="Frontend.Producto.Descripcion" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-between items-center">
-                        Proveedor
-                        <p-columnFilter type="text" field="Frontend.Proveedor.Descripcion" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-between items-center">
-                        Cantidad
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-between items-center">
-                        Precio Unitario
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-between items-center">
-                        Subtotal
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-between items-center">
-                        Acciones
-                    </div>
-                </th>
-            </tr>
-        </ng-template>
+  <!-- ── Formulario agregar ítem ── -->
+  <div class="nc-section-label">AGREGAR ÍTEM</div>
+  <div class="nc-add-card">
+    <form #form="ngForm">
+      <div class="nc-fields-row">
 
-        <ng-template #body let-compraItem>
-            <tr class="cursor-pointer">
-                <td>{{ compraItem.Frontend.Producto?.Descripcion }}</td>
-                <td>{{ compraItem.Frontend.Proveedor?.Descripcion }}</td>
-                <td>
-                    <p-button icon="pi pi-minus" styleClass="p-button-rounded p-button-danger p-button-sm custom-shadow"
-                        [style]="{'font-size':'1.2rem'}" (onClick)="disminuirCantidad($event, compraItem)">
-                    </p-button>
+        <!-- Producto -->
+        <div class="nc-field">
+          <label class="nc-field-label" for="producto">PRODUCTO</label>
+          <p-select
+            [(ngModel)]="productoSeleccionado"
+            inputId="producto"
+            [options]="productosCombo"
+            optionLabel="Descripcion"
+            optionValue="Id"
+            name="producto"
+            [filter]="true"
+            [showClear]="true"
+            placeholder="Seleccionar producto"
+            (onChange)="productoSeleccionadoEvent($event.value)"
+            (onClear)="limpiarProductoSeleccionado()"
+            class="nc-p-select"
+          />
+        </div>
 
-                    <input type="number" [(ngModel)]="compraItem.Cantidad"
-                        (ngModelChange)="cambiarCantidad($event, compraItem)" class="cantidad-input" min="1"
-                        style="width: 60px; text-align: center; margin: 0 6px;">
+        <!-- Proveedor -->
+        <div class="nc-field">
+          <label class="nc-field-label" for="proveedor">PROVEEDOR</label>
+          <p-select
+            [(ngModel)]="nuevoItem.Frontend.Proveedor"
+            inputId="proveedor"
+            [options]="proveedoresCombo"
+            optionLabel="Descripcion"
+            name="proveedor"
+            [filter]="true"
+            [showClear]="true"
+            placeholder="Seleccionar proveedor"
+            class="nc-p-select"
+          />
+        </div>
 
-                    <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-success p-button-sm custom-shadow"
-                        [style]="{'font-size':'1.2rem'}" (onClick)="aumentarCantidad($event, compraItem)">
-                    </p-button>
-                </td>
-                <td>
-                    {{ compraItem.PrecioUnitarioCompra | currency:'ARS':'symbol' }}
-                    <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-info p-button-sm custom-shadow"
-                        [style]="{'font-size':'1.2rem'}" (onClick)="editarPrecioCompra(compraItem)">
-                    </p-button>
-                </td>
-                <td style="width: 25%;">{{ compraItem.Subtotal | currency:'ARS':'symbol' }}</td>
-                <td>
-                    <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-sm custom-shadow"
-                        [style]="{'font-size':'1.5rem'}" pTooltip="Eliminar item" (onClick)="eliminarItem(compraItem)">
-                    </p-button>
-                </td>
-            </tr>
-        </ng-template>
+        <!-- Cantidad -->
+        <div class="nc-field nc-field-sm">
+          <label class="nc-field-label" for="cantidad">CANTIDAD</label>
+          <p-inputnumber
+            [(ngModel)]="nuevoItem.Cantidad"
+            name="cantidad"
+            inputId="cantidad"
+            [showButtons]="true"
+            mode="decimal"
+            [min]="1"
+            [required]="true"
+            (ngModelChange)="cantidadCambio($event)"
+            class="nc-inputnumber"
+          />
+        </div>
 
-        <ng-template #emptymessage>
-            <tr>
-                <td colspan="6">No se cargaron ítems de compra.</td>
-            </tr>
-        </ng-template>
-    </p-table>
+        <!-- Precio unitario -->
+        <div class="nc-field nc-field-sm">
+          <label class="nc-field-label">PRECIO UNIT.</label>
+          <div class="nc-price-display">
+            {{ (nuevoItem.PrecioUnitario || 0) | currency:'ARS':'symbol':'1.2-2' }}
+          </div>
+        </div>
+
+        <!-- Subtotal -->
+        <div class="nc-field nc-field-sm">
+          <label class="nc-field-label">SUBTOTAL</label>
+          <div class="nc-subtotal-display">
+            {{ (nuevoItem.Subtotal || 0) | currency:'ARS':'symbol':'1.2-2' }}
+          </div>
+        </div>
+
+      </div>
+    </form>
+
+    <div class="nc-add-footer">
+      <button
+        class="nc-btn nc-btn-primary nc-btn-sm"
+        [disabled]="!nuevoItem.Frontend.Producto || !nuevoItem.Cantidad || nuevoItem.Cantidad <= 0"
+        (click)="crearNuevoItem()"
+      >
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 1v10M1 6h10"/>
+        </svg>
+        Agregar ítem
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Tabla de ítems ── -->
+  <div class="nc-section-label">
+    ÍTEMS DE LA COMPRA
+    <span class="nc-total-inline" *ngIf="nuevaCompra.Items.length > 0">
+      Total: {{ totalCompra | currency:'ARS':'symbol':'1.2-2' }}
+    </span>
+  </div>
+
+  <div class="nc-table-card">
+
+    <!-- Header tabla -->
+    <div class="nc-table-head">
+      <div class="nc-th nc-col-producto">Producto</div>
+      <div class="nc-th nc-col-proveedor">Proveedor</div>
+      <div class="nc-th nc-col-cantidad">Cantidad</div>
+      <div class="nc-th nc-col-precio">Precio unit.</div>
+      <div class="nc-th nc-col-subtotal">Subtotal</div>
+      <div class="nc-th nc-col-acciones"></div>
+    </div>
+
+    <!-- Filas -->
+    <ng-container *ngIf="nuevaCompra.Items.length > 0; else emptyState">
+      <div
+        *ngFor="let item of nuevaCompra.Items"
+        class="nc-table-row"
+      >
+        <!-- Producto -->
+        <div class="nc-td nc-col-producto">
+          <span class="nc-product-name">{{ item.Frontend.Producto.Descripcion }}</span>
+        </div>
+
+        <!-- Proveedor -->
+        <div class="nc-td nc-col-proveedor nc-td-muted">
+          {{ item.Frontend.Proveedor.Descripcion || '—' }}
+        </div>
+
+        <!-- Cantidad -->
+        <div class="nc-td nc-col-cantidad">
+          <div class="nc-qty-ctrl">
+            <button
+              class="nc-qty-btn"
+              (click)="disminuirCantidad($event, item)"
+              [disabled]="item.Cantidad <= 1"
+            >−</button>
+            <input
+              type="number"
+              class="nc-qty-input"
+              [(ngModel)]="item.Cantidad"
+              (ngModelChange)="cambiarCantidad($event, item)"
+              min="1"
+            />
+            <button class="nc-qty-btn" (click)="aumentarCantidad($event, item)">+</button>
+          </div>
+        </div>
+
+        <!-- Precio unitario -->
+        <div class="nc-td nc-col-precio">
+          <span>{{ item.PrecioUnitario | currency:'ARS':'symbol':'1.2-2' }}</span>
+          <button class="nc-edit-price-btn" title="Editar precio" (click)="editarPrecioCompra(item)">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M7.5 1.5 9 3 3.5 8.5H2v-1.5L7.5 1.5Z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Subtotal -->
+        <div class="nc-td nc-col-subtotal nc-td-strong">
+          {{ item.Subtotal | currency:'ARS':'symbol':'1.2-2' }}
+        </div>
+
+        <!-- Acciones -->
+        <div class="nc-td nc-col-acciones">
+          <button class="nc-delete-btn" title="Eliminar ítem" (click)="eliminarItem(item)">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M2 3.5h9M5 3.5v-1h3v1M5.5 5.5v3M7.5 5.5v3M3 3.5l.6 6a.5.5 0 0 0 .5.5h3.8a.5.5 0 0 0 .5-.5l.6-6"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Footer total -->
+      <div class="nc-table-footer">
+        <div class="nc-footer-spacer"></div>
+        <div class="nc-footer-total-label">TOTAL</div>
+        <div class="nc-footer-total-val">
+          {{ totalCompra | currency:'ARS':'symbol':'1.2-2' }}
+        </div>
+        <div></div>
+      </div>
+    </ng-container>
+
+    <ng-template #emptyState>
+      <div class="nc-empty">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".3">
+          <rect x="4" y="4" width="24" height="24" rx="3"/>
+          <path d="M4 12h24M10 18h4M10 22h8"/>
+        </svg>
+        <p>No hay ítems cargados</p>
+        <span>Seleccioná un producto y hacé click en "Agregar ítem"</span>
+      </div>
+    </ng-template>
+
+  </div>
 </div>

@@ -1,0 +1,229 @@
+<div class="card">
+  <div class="font-semibold text-xl mb-4">Ajuste de Precios por Porcentaje</div>
+
+  <!-- ═══════════════════════════════════════════════
+       PASO 1 — CONFIGURACIÓN
+  ════════════════════════════════════════════════ -->
+  @if (paso === 'configurar') {
+
+    <div class="flex flex-col gap-5">
+
+      <!-- Parámetros del ajuste -->
+      <div class="surface-50 border-round p-4 flex flex-wrap gap-4 items-end">
+
+        <!-- Porcentaje -->
+        <div class="flex flex-col gap-1">
+          <label class="text-sm font-medium">
+            Porcentaje de ajuste
+            <span class="text-color-secondary text-xs ml-1">(negativo = descuento)</span>
+          </label>
+          <p-inputnumber
+            [(ngModel)]="porcentaje"
+            [useGrouping]="false"
+            mode="decimal"
+            [minFractionDigits]="0"
+            [maxFractionDigits]="2"
+            [min]="-99"
+            [max]="1000"
+            suffix="%"
+            placeholder="Ej: 10 o -5"
+            inputStyleClass="w-10rem" />
+        </div>
+
+        <!-- Tipo de precio -->
+        <div class="flex flex-col gap-1">
+          <label class="text-sm font-medium">Precio a modificar</label>
+          <p-selectbutton
+            [(ngModel)]="tipoPrecio"
+            [options]="tiposOpciones"
+            optionLabel="label"
+            optionValue="value" />
+        </div>
+
+        <!-- Indicador visual del ajuste -->
+        @if (porcentaje !== null && porcentaje !== 0) {
+          <div class="flex items-center gap-2 px-3 py-2 border-round"
+            [class]="estaAumentando
+              ? 'bg-green-50 border-1 border-green-300'
+              : 'bg-red-50 border-1 border-red-300'">
+            <i [class]="estaAumentando ? 'pi pi-arrow-up text-green-600' : 'pi pi-arrow-down text-red-600'"></i>
+            <span [class]="estaAumentando ? 'text-green-700 font-semibold' : 'text-red-700 font-semibold'">
+              {{ estaAumentando ? 'Aumento' : 'Descuento' }} del {{ porcentaje | number:'1.0-2' }}%
+            </span>
+          </div>
+        }
+
+      </div>
+
+      <!-- Selector de productos -->
+      <div class="flex flex-col gap-2">
+        <div class="flex justify-between items-center">
+          <span class="font-medium">
+            Productos
+            <span class="text-color-secondary text-sm ml-1">
+              ({{ productosSeleccionados.length }} de {{ productos.length }} seleccionados)
+            </span>
+          </span>
+          <p-button
+            [label]="todosSeleccionados ? 'Deseleccionar todos' : 'Seleccionar todos'"
+            [icon]="todosSeleccionados ? 'pi pi-times' : 'pi pi-check-square'"
+            [severity]="todosSeleccionados ? 'secondary' : 'info'"
+            variant="outlined"
+            size="small"
+            (click)="toggleTodos()" />
+        </div>
+
+        <p-listbox
+          [(ngModel)]="productosSeleccionados"
+          [options]="productos"
+          optionLabel="Descripcion"
+          [multiple]="true"
+          [checkbox]="true"
+          [filter]="true"
+          filterPlaceholder="Buscar producto..."
+          [listStyle]="{ 'max-height': '320px' }"
+          styleClass="w-full">
+          <ng-template #item let-producto>
+            <div class="flex justify-between items-center w-full gap-3">
+              <span class="flex-1">{{ producto.Descripcion }}</span>
+              <div class="flex gap-3 text-sm text-color-secondary">
+                <span>Venta: {{ producto.PrecioVenta | currency:'ARS':'symbol':'1.2-2' }}</span>
+                <span>Compra: {{ producto.PrecioCompra | currency:'ARS':'symbol':'1.2-2' }}</span>
+              </div>
+            </div>
+          </ng-template>
+        </p-listbox>
+      </div>
+
+      <!-- Acción -->
+      <div class="flex justify-end">
+        <p-button
+          label="Ver precios actualizados"
+          icon="pi pi-eye"
+          severity="success"
+          [disabled]="!formularioValido || cargandoPreview"
+          [loading]="cargandoPreview"
+          (click)="calcularPreview()" />
+      </div>
+
+    </div>
+  }
+
+  <!-- ═══════════════════════════════════════════════
+       PASO 2 — PREVIEW
+  ════════════════════════════════════════════════ -->
+  @if (paso === 'preview') {
+
+    <div class="flex flex-col gap-4">
+
+      <!-- Resumen del ajuste -->
+      <div class="flex flex-wrap gap-3 items-center justify-between surface-50 border-round p-3">
+        <div class="flex gap-3 items-center flex-wrap">
+          <p-tag
+            [value]="estaAumentando ? 'Aumento' : 'Descuento'"
+            [severity]="estaAumentando ? 'success' : 'danger'" />
+          <span class="font-bold text-lg">{{ porcentaje | number:'1.0-2' }}%</span>
+          <span class="text-color-secondary">sobre precio de
+            {{ { VENTA: 'venta', COMPRA: 'compra', AMBOS: 'venta y compra' }[tipoPrecio] }}
+          </span>
+          <span class="text-color-secondary">·</span>
+          <span class="font-medium">{{ preview.length }} producto(s)</span>
+        </div>
+        <div class="flex gap-2">
+          <p-button label="Volver" icon="pi pi-arrow-left" variant="outlined"
+            severity="secondary" (click)="volverAConfigurar()" />
+          <p-button label="Confirmar y aplicar" icon="pi pi-check"
+            severity="success" [loading]="aplicando"
+            (click)="confirmarAplicar()" />
+        </div>
+      </div>
+
+      <!-- Tabla de preview -->
+      <p-table
+        [value]="preview"
+        [rows]="20"
+        [paginator]="preview.length > 20"
+        [rowHover]="true"
+        [showGridlines]="true"
+        responsiveLayout="scroll">
+
+        <ng-template #header>
+          <tr>
+            <th style="min-width:16rem">Producto</th>
+
+            @if (mostrarVenta()) {
+              <th style="min-width:10rem" class="text-center">Venta actual</th>
+              <th style="min-width:10rem" class="text-center">Venta nueva</th>
+            }
+            @if (mostrarCompra()) {
+              <th style="min-width:10rem" class="text-center">Compra actual</th>
+              <th style="min-width:10rem" class="text-center">Compra nueva</th>
+            }
+
+            <th style="min-width:9rem" class="text-center">Diferencia</th>
+          </tr>
+        </ng-template>
+
+        <ng-template #body let-item>
+          <tr>
+            <td class="font-medium">{{ item.Descripcion }}</td>
+
+            @if (mostrarVenta()) {
+              <td class="text-center text-color-secondary">
+                {{ item.PrecioVentaActual | currency:'ARS':'symbol':'1.2-2' }}
+              </td>
+              <td class="text-center font-semibold">
+                {{ item.PrecioVentaNuevo | currency:'ARS':'symbol':'1.2-2' }}
+              </td>
+            }
+            @if (mostrarCompra()) {
+              <td class="text-center text-color-secondary">
+                {{ item.PrecioCompraActual | currency:'ARS':'symbol':'1.2-2' }}
+              </td>
+              <td class="text-center font-semibold">
+                {{ item.PrecioCompraNuevo | currency:'ARS':'symbol':'1.2-2' }}
+              </td>
+            }
+
+            <td class="text-center">
+              <span class="flex items-center justify-center gap-1 font-semibold"
+                [class]="colorDiferencia(item.Diferencia)">
+                <i [class]="iconoDiferencia(item.Diferencia)"></i>
+                {{ item.Diferencia | currency:'ARS':'symbol':'1.2-2' }}
+              </span>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template #emptymessage>
+          <tr><td colspan="7">No hay productos para mostrar.</td></tr>
+        </ng-template>
+
+        <!-- Footer con totales -->
+        <ng-template #summary>
+          <div class="flex flex-wrap gap-4 justify-end text-sm text-color-secondary">
+            @if (mostrarVenta()) {
+              <span>
+                Promedio venta actual:
+                <strong>
+                  {{ (preview | sumBy: 'PrecioVentaActual') / preview.length
+                    | currency:'ARS':'symbol':'1.2-2' }}
+                </strong>
+              </span>
+              <span>
+                Promedio venta nueva:
+                <strong>
+                  {{ (preview | sumBy: 'PrecioVentaNuevo') / preview.length
+                    | currency:'ARS':'symbol':'1.2-2' }}
+                </strong>
+              </span>
+            }
+          </div>
+        </ng-template>
+
+      </p-table>
+
+    </div>
+  }
+
+</div>

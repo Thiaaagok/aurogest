@@ -6,10 +6,9 @@ import { ProductoStock } from '../models/producto-stock.model';
 
 @Injectable({ providedIn: 'root' })
 export class StockService {
-
   private readonly apiUrl = `${Config.APIURL}/stock`;
 
-  private http = inject(HttpClient)
+  private http = inject(HttpClient);
 
   obtenerTodos(): Observable<ProductoStock[]> {
     return this.http.get<ProductoStock[]>(`${this.apiUrl}`);
@@ -23,7 +22,10 @@ export class StockService {
     return this.http.post<ProductoStock>(this.apiUrl, usuario);
   }
 
-  editar(id: string, usuario: Partial<ProductoStock>): Observable<ProductoStock> {
+  editar(
+    id: string,
+    usuario: Partial<ProductoStock>,
+  ): Observable<ProductoStock> {
     return this.http.put<ProductoStock>(`${this.apiUrl}/${id}`, usuario);
   }
 
@@ -36,8 +38,12 @@ export class StockService {
   }
 
   obtenerProductoStockPorCodigoBarra(codigoBarra: string) {
-    return this.http.get<ProductoStock>(`${this.apiUrl}codigo-barra/${codigoBarra}`);
+    return this.http.get<ProductoStock>(
+      `${this.apiUrl}codigo-barra/${codigoBarra}`,
+    );
   }
 
-
+  obtenerCriticos(): Observable<ProductoStock[]> {
+    return this.http.get<ProductoStock[]>(`${this.apiUrl}/criticos`);
+  }
 }

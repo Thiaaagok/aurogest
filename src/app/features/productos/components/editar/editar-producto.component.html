@@ -1,27 +1,50 @@
 <div class="card">
   <form #form="ngForm" novalidate class="grid-formulario">
-
     <div class="col-span-1">
       <p-floatlabel variant="in">
-        <input pInputText type="text" id="codigo" class="w-100" #codigo="ngModel" name="codigo"
-          [(ngModel)]="productoEditar.Codigo" required />
+        <input
+          pInputText
+          type="text"
+          id="codigo"
+          class="w-100"
+          #codigo="ngModel"
+          name="codigo"
+          [(ngModel)]="productoEditar.Codigo"
+          required
+        />
         <label for="codigo">Código</label>
       </p-floatlabel>
     </div>
 
     <div class="col-span-1">
       <p-floatlabel variant="in">
-        <input pInputText type="text" id="descripcion" class="w-100" #descripcion="ngModel" name="descripcion"
-          [(ngModel)]="productoEditar.Descripcion" required />
+        <input
+          pInputText
+          type="text"
+          id="descripcion"
+          class="w-100"
+          #descripcion="ngModel"
+          name="descripcion"
+          [(ngModel)]="productoEditar.Descripcion"
+          required
+        />
         <label for="descripcion">Descripción</label>
       </p-floatlabel>
     </div>
 
     <div class="col-span-1">
       <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-        <p-select [(ngModel)]="productoEditar.Tipo" inputId="productoTipo" [options]="tiposProductosCombo"
-          optionLabel="Descripcion" class="w-100" variant="filled" name="productoTipo" [filter]="true"
-          [showClear]="true">
+        <p-select
+          [(ngModel)]="productoEditar.Tipo"
+          inputId="productoTipo"
+          [options]="tiposProductosCombo"
+          optionLabel="Descripcion"
+          class="w-100"
+          variant="filled"
+          name="productoTipo"
+          [filter]="true"
+          [showClear]="true"
+        >
         </p-select>
         <label for="productoTipo">Tipo</label>
       </p-floatlabel>
@@ -29,9 +52,17 @@
 
     <div class="col-span-1">
       <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-        <p-select [(ngModel)]="productoEditar.Marca" inputId="marca" [options]="marcasProductosCombo"
-          optionLabel="Descripcion" class="w-100" variant="filled" name="productoMarca" [filter]="true"
-          [showClear]="true">
+        <p-select
+          [(ngModel)]="productoEditar.Marca"
+          inputId="marca"
+          [options]="marcasProductosCombo"
+          optionLabel="Descripcion"
+          class="w-100"
+          variant="filled"
+          name="productoMarca"
+          [filter]="true"
+          [showClear]="true"
+        >
         </p-select>
         <label for="marca">Marca</label>
       </p-floatlabel>
@@ -39,9 +70,17 @@
 
     <div class="col-span-1">
       <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-        <p-select [(ngModel)]="productoEditar.Categoria" inputId="categoria" [options]="categoriasProductosCombo"
-          optionLabel="Descripcion" class="w-100" variant="filled" name="productoCategoria" [filter]="true"
-          [showClear]="true">
+        <p-select
+          [(ngModel)]="productoEditar.Categoria"
+          inputId="categoria"
+          [options]="categoriasProductosCombo"
+          optionLabel="Descripcion"
+          class="w-100"
+          variant="filled"
+          name="productoCategoria"
+          [filter]="true"
+          [showClear]="true"
+        >
         </p-select>
         <label for="categoria">Categoria</label>
       </p-floatlabel>
@@ -49,36 +88,66 @@
 
     <div class="col-span-1">
       <p-floatlabel class="w-100 md:w-56 relative" variant="in">
-        <p-multiSelect [(ngModel)]="productoEditar.Proveedores" inputId="proveedores" [options]="proveedoresCombo"
-          optionLabel="Descripcion" class="w-100" variant="filled" name="proveedores" [filter]="true"
-          [showClear]="true">
+        <p-multiSelect
+          [(ngModel)]="productoEditar.Proveedores"
+          inputId="proveedores"
+          [options]="proveedoresCombo"
+          optionLabel="Descripcion"
+          class="w-100"
+          variant="filled"
+          name="proveedores"
+          [filter]="true"
+          [showClear]="true"
+        >
         </p-multiSelect>
         <label for="proveedores">Proveedores</label>
       </p-floatlabel>
     </div>
 
-    <app-producto-imagenes
-  [productoId]="productoEditar.Id"
-  [imagenesIniciales]="productoEditar.Imagenes"
-  (imagenesChange)="onImagenesChange($event)">
-</app-producto-imagenes>
-
-
+    <app-file-uploader
+      [entityId]="productoEditar.Id"
+      [archivosIniciales]="productoEditar.Imagenes"
+      [config]="uploaderConfig"
+      (archivosChange)="onImagenesChange($event)"
+    >
+    </app-file-uploader>
 
     <div class="col-span-full flex justify-end gap-2 pt-4">
-      <p-button label="Cancelar" icon="pi pi-times" class="p-button-outlined" [disabled]="cargando"
-        (click)="cerrar()"></p-button>
+      <p-button
+        label="Cancelar"
+        icon="pi pi-times"
+        class="p-button-outlined"
+        [disabled]="cargando"
+        (click)="cerrar()"
+      ></p-button>
 
-      @if(productoEditar.Activo){
-      <p-button label="Eliminar" severity="danger" matTooltip="Eliminar producto" icon="pi pi-trash"
-        (click)="eliminarProducto()" [disabled]="cargando"></p-button>
-      }@else{
-      <p-button label="Reactivar" severity="info" matTooltip="Reactivar producto" icon="pi pi-unlock"
-        (click)="reactivarProducto()" [disabled]="cargando"></p-button>
+      @if (productoEditar.Activo) {
+        <p-button
+          label="Eliminar"
+          severity="danger"
+          matTooltip="Eliminar producto"
+          icon="pi pi-trash"
+          (click)="eliminarProducto()"
+          [disabled]="cargando"
+        ></p-button>
+      } @else {
+        <p-button
+          label="Reactivar"
+          severity="info"
+          matTooltip="Reactivar producto"
+          icon="pi pi-unlock"
+          (click)="reactivarProducto()"
+          [disabled]="cargando"
+        ></p-button>
       }
 
-      <p-button label="Guardar" severity="success" icon="pi pi-check" (click)="onSubmit()"
-        [disabled]="!form.valid || cargando">
+      <p-button
+        label="Guardar"
+        severity="success"
+        icon="pi pi-check"
+        (click)="onSubmit()"
+        [disabled]="!form.valid || cargando"
+      >
       </p-button>
     </div>
   </form>

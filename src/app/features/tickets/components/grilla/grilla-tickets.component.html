@@ -1,0 +1,125 @@
+<div class="botonera-flotante">
+  <div class="botonera-contenedor">
+    <button mat-mini-fab color="accent" matTooltip="Recargar tickets" (click)="buscar()">
+      <i class="fa-solid fa-arrows-rotate"></i>
+    </button>
+    <button mat-mini-fab color="primary" matTooltip="Nuevo ticket" (click)="abrirNuevo()">
+      <i class="fa-solid fa-square-plus"></i>
+    </button>
+  </div>
+</div>
+
+<div class="card">
+  <div class="font-semibold text-xl mb-4">Tickets</div>
+
+  <p-table
+    #grillaTickets
+    [value]="tickets"
+    dataKey="Id"
+    [rows]="10"
+    [loading]="cargando"
+    [rowHover]="true"
+    [showGridlines]="true"
+    [paginator]="true"
+    [globalFilterFields]="['Titulo', 'Descripcion', 'Usuario.Usuario']"
+    responsiveLayout="scroll"
+  >
+    <!-- CAPTION — filtros -->
+    <ng-template #caption>
+      <div class="flex flex-wrap items-center gap-2">
+
+        <!-- Rango de fechas -->
+        <p-floatlabel variant="in" class="w-65">
+          <p-datepicker [(ngModel)]="fechasRango" inputId="rangoFechas" showIcon
+            iconDisplay="input" selectionMode="range" [readonlyInput]="true"
+            class="w-full" />
+          <label for="rangoFechas">Rango de fechas</label>
+        </p-floatlabel>
+
+        <!-- Estado -->
+        <p-floatlabel variant="in" class="w-45">
+          <p-select [(ngModel)]="estadoFiltro" inputId="estado"
+            [options]="estadosOpciones" optionLabel="label" optionValue="value"
+            class="w-full" [showClear]="true" />
+          <label for="estado">Estado</label>
+        </p-floatlabel>
+
+        <!-- Prioridad -->
+        <p-floatlabel variant="in" class="w-45">
+          <p-select [(ngModel)]="prioridadFiltro" inputId="prioridad"
+            [options]="prioridadesOpciones" optionLabel="label" optionValue="value"
+            class="w-full" [showClear]="true" />
+          <label for="prioridad">Prioridad</label>
+        </p-floatlabel>
+
+        <!-- Categoría -->
+        <p-floatlabel variant="in" class="w-45">
+          <p-select [(ngModel)]="moduloFiltro" inputId="modulo"
+            [options]="modulosOpciones" optionLabel="label" optionValue="value"
+            class="w-full" [showClear]="true" />
+          <label for="modulo">Modulo</label>
+        </p-floatlabel>
+
+        <!-- Usuario -->
+        <p-floatlabel variant="in" class="w-55">
+          <p-select [(ngModel)]="usuarioFiltro" inputId="usuario"
+            [options]="usuariosCombo" optionLabel="Usuario"
+            class="w-full" [filter]="true" [showClear]="true" />
+          <label for="usuario">Usuario</label>
+        </p-floatlabel>
+
+        <div class="flex gap-2 mt-1">
+          <button pButton type="button" label="Buscar" icon="pi pi-search"
+            class="p-button-outlined" (click)="buscar()"></button>
+          <button pButton type="button" label="Limpiar" icon="pi pi-filter-slash"
+            class="p-button-outlined p-button-secondary"
+            (click)="limpiarFiltros(grillaTickets)"></button>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- HEADER -->
+    <ng-template #header>
+      <tr>
+        <th style="min-width: 6rem">Nº</th>
+        <th style="min-width: 16rem">
+          <div class="flex justify-between items-center">
+            Título
+            <p-columnFilter type="text" field="Titulo" display="menu" />
+          </div>
+        </th>
+        <th style="min-width: 10rem">Modulo</th>
+        <th style="min-width: 9rem">Estado</th>
+        <th style="min-width: 9rem">Prioridad</th>
+        <th style="min-width: 11rem">Usuario</th>
+        <th style="min-width: 11rem">Fecha</th>
+      </tr>
+    </ng-template>
+
+    <!-- BODY -->
+    @if (!cargando) {
+      <ng-template #body let-ticket>
+        <tr (click)="abrirDetalle(ticket)" class="cursor-pointer">
+          <td>{{ ticket.Numero | number: '5.0-0' }}</td>
+          <td>{{ ticket.Titulo }}</td>
+          <td>{{ ticket.Modulo }}</td>
+          <td>
+            <p-tag [value]="ticket.Estado" [severity]="severidadEstado(ticket.Estado)" />
+          </td>
+          <td>
+            <p-tag [value]="ticket.Prioridad" [severity]="severidadPrioridad(ticket.Prioridad)" />
+          </td>
+          <td>{{ ticket.Usuario?.Usuario ?? '-' }}</td>
+          <td>{{ ticket.FechaCreacion | date: 'dd/MM/yyyy HH:mm' }}</td>
+        </tr>
+      </ng-template>
+    }
+
+    <ng-template #emptymessage>
+      <tr><td colspan="7">No se encontraron tickets.</td></tr>
+    </ng-template>
+    <ng-template #loadingbody>
+      <tr><td colspan="7">Cargando tickets...</td></tr>
+    </ng-template>
+  </p-table>
+</div>

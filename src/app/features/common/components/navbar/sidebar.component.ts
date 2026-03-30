@@ -56,6 +56,7 @@ export const NAV_CONFIG: NavSection[] = [
         key: 'productos', label: 'Productos', icon: 'pi pi-box',
         children: [
           { label: 'Productos',   route: 'productos',          icon: 'pi pi-box' },
+          { label: 'Ajuste Precios', route: 'ajuste-precios',  icon: 'pi pi-box'},
           { label: 'Marcas',      route: 'marcas',             icon: 'pi pi-tag' },
           { label: 'Tipos',       route: 'productos-tipo',     icon: 'pi pi-cog' },
           { label: 'Categorías',  route: 'productos-categoria',icon: 'pi pi-cog' },
@@ -87,14 +88,16 @@ export const NAV_CONFIG: NavSection[] = [
         { label: 'Errores',   route: 'logs/errores',  icon: 'pi pi-exclamation-triangle' },
       ],
     },
+    {
+      key: 'tickets', label: 'Tickets', icon: 'pi pi-ticket', route: 'tickets'
+    }
   ],
 },
   {
     section: 'Análisis',
     items: [
       {
-        key: 'reportes', label: 'Reportes', icon: 'pi pi-chart-bar',
-        children: [],   
+        key: 'rendimientos', label: 'Rendimientos', icon: 'pi pi-chart-bar', route: 'rendimientos'
       },
     ],
   },

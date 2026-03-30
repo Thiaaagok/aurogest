@@ -1,0 +1,189 @@
+<div class="ra-root">
+  <!-- Estado: cargando -->
+  <div class="ra-loading" *ngIf="cargando">
+    <div class="ra-spinner"></div>
+    <span>Cargando análisis...</span>
+  </div>
+
+  <!-- Estado: error -->
+  <div class="ra-error" *ngIf="!cargando && error">
+    <span>{{ error }}</span>
+  </div>
+
+  <!-- Contenido principal -->
+  <ng-container *ngIf="!cargando && !error && data">
+    <!-- Header -->
+    <div class="ra-header">
+      <div>
+        <div class="ra-header-title">Análisis de rendimiento</div>
+        <div class="ra-header-sub">Resumen consolidado de productos</div>
+      </div>
+      <span class="ra-badge"
+        >{{ data.ProductosAnalizados.length }} productos</span
+      >
+    </div>
+
+    <!-- Período -->
+    <div class="ra-date-row">
+      <span class="ra-date-label">Período:</span>
+      <span class="ra-date-range">
+        {{ data.FechaDesde | date: "dd/MM/yyyy" }} —
+        {{ data.FechaHasta | date: "dd/MM/yyyy" }}
+      </span>
+    </div>
+
+    <!-- Métricas consolidadas -->
+    <div class="ra-section">
+      <div class="ra-section-label">Totales consolidados</div>
+      <div class="ra-metrics-grid">
+        <div class="ra-metric-card">
+          <div class="ra-metric-label">Total vendido</div>
+          <div class="ra-metric-value positive">{{ fmtCurrency(totalTV) }}</div>
+          <div class="ra-metric-sub">suma TV</div>
+        </div>
+        <div class="ra-metric-card">
+          <div class="ra-metric-label">Costo total</div>
+          <div class="ra-metric-value">{{ fmtCurrency(totalCT) }}</div>
+          <div class="ra-metric-sub">suma CT</div>
+        </div>
+        <div class="ra-metric-card">
+          <div class="ra-metric-label">Total invertido</div>
+          <div class="ra-metric-value">{{ fmtCurrency(totalTI) }}</div>
+          <div class="ra-metric-sub">CT + IR</div>
+        </div>
+        <div class="ra-metric-card">
+          <div class="ra-metric-label">Rendimiento promedio</div>
+          <div class="ra-metric-value warn">{{ fmtRatio(avgRend) }}</div>
+          <div class="ra-metric-sub">TV / CT</div>
+        </div>
+        <div class="ra-metric-card">
+          <div class="ra-metric-label">Índice recuperación</div>
+          <div class="ra-metric-value">{{ fmtRatio(avgIR) }}</div>
+          <div class="ra-metric-sub">TV / TI promedio</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="ra-divider" />
+
+    <!-- Gráfico comparativo -->
+    <div class="ra-chart-area">
+      <div class="ra-chart-header">
+        <span class="ra-chart-title">Comparativa por producto</span>
+        <div class="ra-legend">
+          <span class="ra-leg-item">
+            <span class="ra-leg-dot" style="background: #1d9e75"></span>Total
+            vendido
+          </span>
+          <span class="ra-leg-item">
+            <span class="ra-leg-dot" style="background: #378add"></span>Costo
+            total
+          </span>
+          <span class="ra-leg-item">
+            <span class="ra-leg-dot" style="background: #ef9f27"></span>Stock
+            restante (IR)
+          </span>
+        </div>
+      </div>
+      <div class="ra-chart-wrap" [style.height]="chartHeight">
+        <canvas #chartCanvas></canvas>
+      </div>
+    </div>
+
+    <hr class="ra-divider" />
+
+    <!-- Detalle por producto -->
+    <div class="ra-section">
+      <div class="ra-section-label">Detalle por producto</div>
+      <div class="ra-products-list">
+        <div class="ra-product-card" *ngFor="let p of productosVM">
+          <!-- Cabecera del producto -->
+          <div class="ra-product-header" (click)="toggleCard(p)">
+            <div>
+              <div class="ra-product-name">
+                {{ p.NombreProducto ?? p.ProductoId }}
+              </div>
+              <div class="ra-product-id">{{ p.ProductoId }}</div>
+            </div>
+            <div class="ra-header-right">
+              <span class="ra-rend-pill" [ngClass]="p.rendimientoClass">
+                {{ fmtRatio(p.RendimientoTotal) }} · {{ p.rendimientoLabel }}
+              </span>
+              <span class="ra-toggle-btn">{{ p.expanded ? "▾" : "▸" }}</span>
+            </div>
+          </div>
+
+          <!-- Body expandible -->
+          <div class="ra-product-body" *ngIf="p.expanded">
+            <div class="ra-prod-metric">
+              <div class="ra-prod-label">Total vendido (TV)</div>
+              <div class="ra-prod-val tv-color">
+                {{ fmtCurrency(p.TotalVendido) }}
+              </div>
+            </div>
+            <div class="ra-prod-metric">
+              <div class="ra-prod-label">Costo total (CT)</div>
+              <div class="ra-prod-val ct-color">
+                {{ fmtCurrency(p.CostoTotal) }}
+              </div>
+            </div>
+            <div class="ra-prod-metric">
+              <div class="ra-prod-label">Inventario restante (IR)</div>
+              <div class="ra-prod-val ir-color">{{ fmtCurrency(p.IR) }}</div>
+            </div>
+            <div class="ra-prod-metric">
+              <div class="ra-prod-label">Total invertido (TI)</div>
+              <div class="ra-prod-val">{{ fmtCurrency(p.TotalInvertido) }}</div>
+            </div>
+            <div class="ra-prod-metric">
+              <div class="ra-prod-label">Rendimiento ventas</div>
+              <div class="ra-prod-val">{{ fmtRatio(p.RendimientoTotal) }}</div>
+            </div>
+            <div class="ra-prod-metric">
+              <div class="ra-prod-label">Índice recuperación</div>
+              <div class="ra-prod-val">
+                {{ fmtRatio(p.IndiceRecuperacion) }}
+              </div>
+            </div>
+            <div class="ra-prod-metric">
+              <div class="ra-prod-label">Resultado neto</div>
+              <div
+                class="ra-prod-val"
+                [ngClass]="p.ResultadoNeto >= 0 ? 'positive' : 'negative'"
+              >
+                {{ fmtCurrency(p.ResultadoNeto) }}
+              </div>
+            </div>
+
+            <!-- Barras proporcionales -->
+            <div class="ra-bar-wrap">
+              <div class="ra-bar-row">
+                <span class="ra-bar-label">Total vendido</span>
+                <div class="ra-bar-track">
+                  <div class="ra-bar-fill tv" [style.width.%]="p.tvPct"></div>
+                </div>
+                <span class="ra-bar-val">{{
+                  fmtCurrency(p.TotalVendido)
+                }}</span>
+              </div>
+              <div class="ra-bar-row">
+                <span class="ra-bar-label">Costo total</span>
+                <div class="ra-bar-track">
+                  <div class="ra-bar-fill ct" [style.width.%]="p.ctPct"></div>
+                </div>
+                <span class="ra-bar-val">{{ fmtCurrency(p.CostoTotal) }}</span>
+              </div>
+              <div class="ra-bar-row">
+                <span class="ra-bar-label">Stock restante</span>
+                <div class="ra-bar-track">
+                  <div class="ra-bar-fill ir" [style.width.%]="p.irPct"></div>
+                </div>
+                <span class="ra-bar-val">{{ fmtCurrency(p.IR) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,36 @@
+.botonera-flotante {
+  position: fixed;
+  top: calc(var(--ag-topbar-h) + 8px);
+  right: 2%;
+  z-index: 95;
+  background: var(--ag-surface2);
+  border: 1px solid var(--ag-border);
+  border-radius: 12px;
+  padding: 14px 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+
+  @media (min-width: 576px) { width: 20%; }
+  @media (min-width: 992px)  { width: 14%; }
+}
+
+.botonera-contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+::ng-deep button.mat-mdc-mini-fab.mat-mdc-button-base {
+  width: 35px !important;
+  height: 35px !important;
+}
+
+// Colores de diferencia
+.text-green-600 { color: #16a34a; }
+.text-red-600   { color: #dc2626; }
+
+// Listbox custom item
+::ng-deep .p-listbox-item {
+  padding: 0.5rem 0.75rem !important;
+}

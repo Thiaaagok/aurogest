@@ -1,0 +1,393 @@
+/* rendimiento-analizado.component.scss */
+
+:host {
+  display: block;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* ══════════════════════════════════════════════
+   Root
+   ══════════════════════════════════════════════ */
+.ra-root {
+  background: var(--ag-surface2);
+  border: 1px solid var(--ag-border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
+
+}
+
+/* ══════════════════════════════════════════════
+   Loading / Error
+   ══════════════════════════════════════════════ */
+.ra-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 3.5rem;
+  color: var(--ag-text-muted);
+  font-size: .875rem;
+}
+
+.ra-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--ag-border);
+  border-top-color: var(--ag-accent-light);
+  border-radius: 50%;
+  animation: ra-spin .7s linear infinite;
+}
+
+@keyframes ra-spin { to { transform: rotate(360deg); } }
+
+.ra-error {
+  padding: 3rem;
+  text-align: center;
+  color: #f87171;
+  font-size: .875rem;
+}
+
+/* ══════════════════════════════════════════════
+   Header
+   ══════════════════════════════════════════════ */
+.ra-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 1.25rem 1.5rem .875rem;
+  border-bottom: 1px solid var(--ag-border);
+  background: var(--ag-surface3);
+}
+
+.ra-header-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ag-text);
+  letter-spacing: .01em;
+}
+
+.ra-header-sub {
+  font-size: .78rem;
+  color: var(--ag-text-muted);
+  margin-top: 2px;
+}
+
+.ra-badge {
+  font-size: .7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: var(--ag-accent-dim);
+  color: var(--ag-accent-light);
+  border: 1px solid var(--ag-border);
+  letter-spacing: .03em;
+}
+
+/* ══════════════════════════════════════════════
+   Fecha
+   ══════════════════════════════════════════════ */
+.ra-date-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: .875rem 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+.ra-date-label {
+  font-size: .75rem;
+  color: var(--ag-text-muted);
+}
+
+.ra-date-range {
+  font-size: .8rem;
+  font-weight: 600;
+  background: var(--ag-surface3);
+  border: 1px solid var(--ag-border);
+  border-radius: 8px;
+  padding: 4px 12px;
+  color: var(--ag-text);
+}
+
+/* ══════════════════════════════════════════════
+   Sección genérica
+   ══════════════════════════════════════════════ */
+.ra-section {
+  padding: 1.25rem 1.5rem;
+}
+
+.ra-section-label {
+  font-size: .68rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 700;
+  color: var(--ag-text-muted);
+  margin-bottom: 12px;
+}
+
+/* ══════════════════════════════════════════════
+   Métricas consolidadas
+   ══════════════════════════════════════════════ */
+.ra-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.ra-metric-card {
+  background: var(--ag-surface3);
+  border: 1px solid var(--ag-border);
+  border-radius: 10px;
+  padding: 14px 14px 12px;
+  transition: border-color .15s;
+
+  &:hover { border-color: var(--ag-accent-light); }
+}
+
+.ra-metric-label {
+  font-size: .72rem;
+  color: var(--ag-text-muted);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.ra-metric-value {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--ag-text);
+  line-height: 1;
+
+  &.positive { color: var(--ag-green, #34d399); }
+  &.warn     { color: var(--ag-amber, #fbbf24); }
+}
+
+.ra-metric-sub {
+  font-size: .65rem;
+  color: var(--ag-text-muted);
+  margin-top: 4px;
+  opacity: .7;
+}
+
+/* ══════════════════════════════════════════════
+   Divisor
+   ══════════════════════════════════════════════ */
+.ra-divider {
+  border: none;
+  border-top: 1px solid var(--ag-border);
+  margin: 0;
+}
+
+/* ══════════════════════════════════════════════
+   Gráfico
+   ══════════════════════════════════════════════ */
+.ra-chart-area {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.ra-chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.ra-chart-title {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--ag-text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.ra-legend {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ra-leg-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .7rem;
+  color: var(--ag-text-muted);
+}
+
+.ra-leg-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.ra-chart-wrap {
+  position: relative;
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════════
+   Lista de productos
+   ══════════════════════════════════════════════ */
+.ra-products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ra-product-card {
+  background: var(--ag-surface3);
+  border: 1px solid var(--ag-border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color .15s;
+
+  &:hover { border-color: var(--ag-accent-light); }
+}
+
+.ra-product-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--ag-border);
+  cursor: pointer;
+  gap: 12px;
+  transition: background .13s;
+  user-select: none;
+
+  &:hover { background: var(--ag-accent-dim); }
+}
+
+.ra-product-name {
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--ag-text);
+}
+
+.ra-product-id {
+  font-size: .68rem;
+  color: var(--ag-text-muted);
+  margin-top: 1px;
+  font-family: monospace;
+}
+
+.ra-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Pills de rendimiento ── */
+.ra-rend-pill {
+  font-size: .7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  letter-spacing: .02em;
+
+  &.rend-high {
+    background: rgba(52,211,153,.12);
+    color: #34d399;
+    border: 1px solid rgba(52,211,153,.2);
+  }
+  &.rend-med {
+    background: rgba(251,191,36,.12);
+    color: #fbbf24;
+    border: 1px solid rgba(251,191,36,.2);
+  }
+  &.rend-low {
+    background: rgba(248,113,113,.12);
+    color: #f87171;
+    border: 1px solid rgba(248,113,113,.2);
+  }
+}
+
+.ra-toggle-btn {
+  font-size: .85rem;
+  color: var(--ag-text-muted);
+  line-height: 1;
+}
+
+/* ── Body del producto ── */
+.ra-product-body {
+  padding: 14px 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  background: var(--ag-surface2);
+}
+
+.ra-prod-label {
+  font-size: .68rem;
+  color: var(--ag-text-muted);
+  margin-bottom: 3px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.ra-prod-val {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--ag-text);
+
+  &.tv-color { color: #34d399; }
+  &.ct-color { color: var(--ag-accent-light); }
+  &.ir-color { color: #fbbf24; }
+}
+
+/* ── Barras ── */
+.ra-bar-wrap {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--ag-border);
+}
+
+.ra-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ra-bar-label {
+  font-size: .68rem;
+  color: var(--ag-text-muted);
+  width: 95px;
+  flex-shrink: 0;
+}
+
+.ra-bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--ag-surface3);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--ag-border);
+}
+
+.ra-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width .45s cubic-bezier(.4,0,.2,1);
+
+  &.tv { background: #34d399; }
+  &.ct { background: var(--ag-accent-light); }
+  &.ir { background: #fbbf24; }
+}
+
+.ra-bar-val {
+  font-size: .68rem;
+  color: var(--ag-text-muted);
+  width: 65px;
+  text-align: right;
+  flex-shrink: 0;
+  font-weight: 600;
+}

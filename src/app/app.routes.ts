@@ -22,6 +22,10 @@ import { RemitoVentaComponent } from './features/remitos/components/remito/remit
 import { LogsSesionesComponent } from './features/registros/components/logs-sesiones.component';
 import { LogsEventosComponent } from './features/registros/components/logs-eventos.component';
 import { LogsErroresComponent } from './features/registros/components/logs-errores.component';
+import { GrillaTicketsComponent } from './features/tickets/components/grilla/grilla-tickets.component';
+import { NuevoTicketComponent } from './features/tickets/components/nuevo/nuevo-ticket.component';
+import { AjustePreciosComponent } from './features/productos/components/ajuste-precios/ajuste-precios.component';
+import { RendimientoAnalizadoComponent } from './features/rendimientos/components/rendimiento-analizado.component';
 
 export const routes: Routes = [
   {
@@ -62,6 +66,11 @@ export const routes: Routes = [
     component: GrillaProductosComponent,
     canActivate: [AuthGuard],
     data: { permiso: Permisos.VER_PRODUCTOS },
+  },
+  {
+    path: 'ajuste-precios',
+    component: AjustePreciosComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'productos/nuevo',
@@ -137,4 +146,19 @@ export const routes: Routes = [
       { path: 'errores', component: LogsErroresComponent, canActivate: [AuthGuard], },
     ],
   },
+  {
+    path: 'tickets',
+    canActivate: [AuthGuard],
+    component: GrillaTicketsComponent
+  },
+  {
+    path: 'tickets/nuevo',
+    canActivate: [AuthGuard],
+    component: NuevoTicketComponent
+  },
+  {
+    path: 'rendimientos',
+    canActivate: [AuthGuard],
+    component: RendimientoAnalizadoComponent
+  }
 ];

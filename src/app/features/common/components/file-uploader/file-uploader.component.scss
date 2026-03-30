@@ -1,0 +1,507 @@
+// file-uploader/file-uploader.component.scss
+// ──────────────────────────────────────────────────────────────────────────────
+// Variables (compatible con cualquier tema Angular/PrimeNG)
+// ──────────────────────────────────────────────────────────────────────────────
+
+:host {
+  --fu-radius: 10px;
+  --fu-border: #d1d5db;
+  --fu-border-active: #6366f1;
+  --fu-bg: #f9fafb;
+  --fu-bg-hover: #f3f4f6;
+  --fu-text: #374151;
+  --fu-text-muted: #6b7280;
+  --fu-accent: #6366f1;
+  --fu-accent-dark: #4f46e5;
+  --fu-danger: #ef4444;
+  --fu-success: #10b981;
+  --fu-warning: #f59e0b;
+  --fu-shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+  --fu-shadow-hover: 0 4px 12px rgba(0,0,0,.12);
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Contenedor raíz
+// ──────────────────────────────────────────────────────────────────────────────
+
+.uploader {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Header
+// ──────────────────────────────────────────────────────────────────────────────
+
+.uploader-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.uploader-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--fu-text);
+}
+
+.counter {
+  font-size: 0.8rem;
+  color: var(--fu-text-muted);
+  background: var(--fu-bg);
+  border: 1px solid var(--fu-border);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Dropzone
+// ──────────────────────────────────────────────────────────────────────────────
+
+.dropzone {
+  border: 2px dashed var(--fu-border);
+  border-radius: var(--fu-radius);
+  background: var(--fu-bg);
+  padding: 2rem 1.5rem;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color .2s, background .2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+
+  &:hover:not(.disabled) {
+    border-color: var(--fu-accent);
+    background: #eef2ff;
+  }
+
+  &.dragging {
+    border-color: var(--fu-accent);
+    background: #eef2ff;
+    box-shadow: 0 0 0 4px rgba(99,102,241,.12);
+  }
+
+  &.disabled {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+}
+
+.dropzone-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--fu-accent);
+  opacity: .7;
+
+  svg { width: 100%; height: 100%; }
+}
+
+.dropzone-text {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+  font-size: .875rem;
+  color: var(--fu-text);
+
+  strong { font-weight: 600; }
+  span { color: var(--fu-text-muted); font-size: .8rem; }
+}
+
+.dropzone-hint {
+  margin: 0;
+  font-size: .75rem;
+  color: var(--fu-text-muted);
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Grid
+// ──────────────────────────────────────────────────────────────────────────────
+
+.archivos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: .75rem;
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Ítem
+// ──────────────────────────────────────────────────────────────────────────────
+
+.archivo-item {
+  border: 1px solid var(--fu-border);
+  border-radius: var(--fu-radius);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: var(--fu-shadow);
+  transition: box-shadow .2s, transform .15s;
+  cursor: grab;
+  position: relative;
+
+  &:hover { box-shadow: var(--fu-shadow-hover); }
+  &:active { cursor: grabbing; }
+
+  &.dragging-item {
+    opacity: .4;
+    transform: scale(.97);
+  }
+
+  &.drag-over-item {
+    border-color: var(--fu-accent);
+    box-shadow: 0 0 0 2px rgba(99,102,241,.3);
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Thumbnail
+// ──────────────────────────────────────────────────────────────────────────────
+
+.thumb-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--fu-bg);
+}
+
+.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumb-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fu-text-muted);
+
+  svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+.file-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: .65rem;
+  color: var(--fu-text);
+  background: rgba(255,255,255,.9);
+  padding: 3px 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Overlays de estado
+// ──────────────────────────────────────────────────────────────────────────────
+
+.thumb-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-ring {
+  position: relative;
+  width: 40px;
+  height: 40px;
+
+  svg { width: 40px; height: 40px; }
+}
+
+.progress-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .65rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.error-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .2rem;
+  color: #fff;
+
+  span { font-size: 1.25rem; }
+  small { font-size: .6rem; text-align: center; padding: 0 4px; }
+}
+
+.pending-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot-pulse {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .4; transform: scale(.7); }
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Badges
+// ──────────────────────────────────────────────────────────────────────────────
+
+.portada-badge {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: var(--fu-accent);
+  color: #fff;
+  font-size: .6rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Drag handle
+// ──────────────────────────────────────────────────────────────────────────────
+
+.drag-handle {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  color: #fff;
+  opacity: 0;
+  transition: opacity .15s;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
+
+  svg { width: 100%; height: 100%; }
+}
+
+.archivo-item:hover .drag-handle {
+  opacity: .8;
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Acciones
+// ──────────────────────────────────────────────────────────────────────────────
+
+.item-actions {
+  display: flex;
+  justify-content: center;
+  gap: .25rem;
+  padding: .4rem;
+  background: #fff;
+  border-top: 1px solid var(--fu-border);
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--fu-border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fu-text-muted);
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+
+  svg { width: 14px; height: 14px; }
+
+  &:hover {
+    background: var(--fu-bg-hover);
+    color: var(--fu-text);
+  }
+
+  &:disabled {
+    opacity: .4;
+    cursor: default;
+  }
+}
+
+.btn-portada-active {
+  color: var(--fu-warning);
+  border-color: var(--fu-warning);
+  background: #fffbeb;
+}
+
+.btn-delete {
+  &:hover {
+    background: #fee2e2;
+    color: var(--fu-danger);
+    border-color: var(--fu-danger);
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Agregar más
+// ──────────────────────────────────────────────────────────────────────────────
+
+.add-more {
+  cursor: pointer;
+  border: 2px dashed var(--fu-border);
+  box-shadow: none;
+
+  &:hover {
+    border-color: var(--fu-accent);
+    .add-more-inner { color: var(--fu-accent); }
+  }
+}
+
+.add-more-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  gap: .4rem;
+  color: var(--fu-text-muted);
+  font-size: .75rem;
+  transition: color .15s;
+
+  svg { width: 24px; height: 24px; }
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Botón subir
+// ──────────────────────────────────────────────────────────────────────────────
+
+.upload-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-upload {
+  background: var(--fu-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--fu-radius);
+  padding: .55rem 1.25rem;
+  font-size: .875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+
+  &:hover:not(:disabled) { background: var(--fu-accent-dark); }
+  &:disabled { opacity: .6; cursor: not-allowed; }
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Modal crop
+// ──────────────────────────────────────────────────────────────────────────────
+
+.crop-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.crop-modal-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: min(560px, 95vw);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+
+  h4 {
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--fu-text);
+  }
+}
+
+.crop-area {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #000;
+  user-select: none;
+}
+
+.crop-canvas {
+  display: block;
+  max-width: 100%;
+}
+
+.crop-selection {
+  position: absolute;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 9999px rgba(0,0,0,.5);
+  cursor: move;
+}
+
+.crop-handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.3);
+  border-radius: 2px;
+
+  &.nw { top: -5px;    left: -5px;   cursor: nw-resize; }
+  &.ne { top: -5px;    right: -5px;  cursor: ne-resize; }
+  &.sw { bottom: -5px; left: -5px;   cursor: sw-resize; }
+  &.se { bottom: -5px; right: -5px;  cursor: se-resize; }
+}
+
+.crop-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: .5rem;
+  margin-top: 1rem;
+}
+
+.btn-secondary {
+  padding: .45rem 1rem;
+  border: 1px solid var(--fu-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--fu-text);
+  font-size: .875rem;
+  cursor: pointer;
+  transition: background .15s;
+
+  &:hover { background: var(--fu-bg-hover); }
+}
+
+.btn-primary {
+  padding: .45rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--fu-accent);
+  color: #fff;
+  font-size: .875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+
+  &:hover { background: var(--fu-accent-dark); }
+}
